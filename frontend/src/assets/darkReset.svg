@@ -1,0 +1,11 @@
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer circle -->
+  <circle cx="12" cy="12" r="9" stroke="#A0A0B2" stroke-width="2" fill="none"/>
+
+  <!-- Centered & scaled arrow -->
+  <g transform="translate(1.5, 1.5) scale(0.8)">
+    <path fill-rule="evenodd" clip-rule="evenodd"
+      d="M8.87 10.5046L10.8204 12.4504L9.76045 13.511L6 9.75456L9.76045 5.99805L10.8204 7.05871L8.87 9.00456H18V18H11.9532V16.5H16.5V10.5046H8.87Z"
+      fill="#A0A0B2"/>
+  </g>
+</svg>

@@ -1,0 +1,81 @@
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router';
+import sun from '../assets/sun.svg';
+import moon from '../assets/moon.svg';
+import qb from '../assets/quizB.svg'
+import ham from '../assets/ham.svg'
+import darkham from '../assets/darkham.svg'
+import ModeContext from '../context/context.js'
+import leftA from '../assets/lightLeft.svg'
+import darkleftA from '../assets/darkArrow.svg'
+const Nav = ({ hide }) => {
+    const { mode, setmode , show, setshow } = useContext(ModeContext)
+
+   
+    useEffect(() => {
+
+    }, [show])
+    const navigate = useNavigate()
+
+    const handelHome = () => {
+        navigate('/')
+    }
+    const handelLogin = () => {
+        navigate('/login')
+    }
+
+    const handleMode = () => {
+        if (mode == "light") {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.setItem("theme", "light");
+        }
+        setmode(prev => (prev === "dark" ? "light" : "dark"));
+    };
+    const handelShow = () => {
+        if (!hide) {
+            if (show === "show") {
+                setshow("dontShow")
+                localStorage.setItem("side", "dontshow")
+            }
+            else {
+                setshow("show");
+                localStorage.setItem("side", "show")
+            }
+        } else {
+            navigate("/create")
+        }
+        console.log(show)
+    }
+    return (
+
+            <div className=' w-[100vw] h-15  bg-primary text-[#1C1C1E] dark:bg-primary-dark  dark:text-[#F1F1F1]  fixed top-0 left-0 
+        z-50 flex items-center justify-between gap-0 p-3 box-border transition-colors duration-500 ease-in-out shadow dark:shadow-amber-50'>
+                <div className=' flex items-center justify-center gap-2 shrink-0 '>
+                    <div className='text-[#1A1A1A] rounded-full h-10 w-10  flex items-center justify-center transition-colors duration-100 ease-in hover:bg-[#E0F0FF] dark:hover:bg-[#29293e]' onClick={handelShow}>
+                        <img src={(hide) ? ((mode === "dark") ? darkleftA : leftA) : ((mode === "dark") ? darkham : ham)} className='h-8' alt="" />
+                    </div>
+                    <img src={qb} className='h-10' alt="" onClick={handelHome} />
+                </div>
+
+                <div className='flex items-center justify-center gap-2 shrink-0'>
+                    <div
+                        className="h-5 w-12 rounded-full flex items-center  bg-white shadow dark:bg-gray-200 relative cursor-pointer"
+                        onClick={handleMode}
+                    >
+                        <img
+                            src={mode === "dark" ? moon : sun}
+                            alt=""
+                            className={`h-[20px] p-[1px] rounded-full absolute transition-all duration-500 ${mode === "dark" ? 'translate-x-[24px]' : 'translate-x-[2px]'
+                                }`}
+                        />
+                    </div>
+                    <button className=' h-10 w-30 rounded-md bg-[#4A90E2]  hover:bg-[#357ABD] text-white dark:bg-[#4C9AFF] dark:hover:bg-[#72B5FF] text-xl transition-colors duration-500 ease-in-out cursor-pointer' onClick={handelLogin}>
+                        Login
+                    </button>
+                </div>
+            </div>
+    );
+};
+
+export default Nav;
