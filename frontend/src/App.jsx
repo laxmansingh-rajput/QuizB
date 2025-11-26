@@ -15,35 +15,19 @@ import Creation from './components/creations.jsx';
 import WorkSpace from './components/workSpace.jsx';
 
 function App() {
-  const [mode, setmode] = useState("dark");
-  const [show, setshow] = useState("show");
+  const [mode, setmode] = useState(() => {
+    return localStorage.getItem("mode") || "light";
+  });
+
+  const [show, setshow] = useState(()=>{
+        return localStorage.getItem("side") || "show";
+  });
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", mode);
+    localStorage.setItem("mode", mode);
   }, [mode]);
-
-  useEffect(() => {
-    let val = localStorage.getItem("side")
-    if (val) {
-      setshow(val)
-    } else {
-      setshow("show")
-    }
-  }, [])
-
-  useEffect(() => {
-    let theme = localStorage.getItem("theme");
-    if (!theme) {
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      theme = systemPrefersDark ? "dark" : "light";
-      localStorage.setItem("theme", theme);
-    }
-    setmode(theme);
-    const s = localStorage.getItem("side")
-    if (s) {
-      setshow(s);
-    }
-  }, []);
-
+  
   const router = createBrowserRouter([
     {
       path: "/",

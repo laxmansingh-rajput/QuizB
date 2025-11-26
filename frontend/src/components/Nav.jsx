@@ -15,24 +15,20 @@ const Nav = ({ hide }) => {
     useEffect(() => {
 
     }, [show])
+    
     const navigate = useNavigate()
 
-    const handelHome = () => {
+    const handleHome = () => {
         navigate('/')
     }
-    const handelLogin = () => {
+    const handleLogin = () => {
         navigate('/login')
     }
 
     const handleMode = () => {
-        if (mode == "light") {
-            localStorage.setItem("theme", "dark");
-        } else {
-            localStorage.setItem("theme", "light");
-        }
         setmode(prev => (prev === "dark" ? "light" : "dark"));
     };
-    const handelShow = () => {
+    const handleShow = () => {
         if (!hide) {
             if (show === "show") {
                 setshow("dontShow")
@@ -52,10 +48,10 @@ const Nav = ({ hide }) => {
             <div className=' w-[100vw] h-15  bg-primary text-[#1C1C1E] dark:bg-primary-dark  dark:text-[#F1F1F1]  fixed top-0 left-0 
         z-50 flex items-center justify-between gap-0 p-3 box-border transition-colors duration-500 ease-in-out shadow dark:shadow-amber-50'>
                 <div className=' flex items-center justify-center gap-2 shrink-0 '>
-                    <div className='text-[#1A1A1A] rounded-full h-10 w-10  flex items-center justify-center transition-colors duration-100 ease-in hover:bg-[#E0F0FF] dark:hover:bg-[#29293e]' onClick={handelShow}>
+                    <div className='text-[#1A1A1A] rounded-full h-10 w-10  flex items-center justify-center transition-colors duration-100 ease-in hover:bg-[#E0F0FF] dark:hover:bg-[#29293e]' onClick={handleShow}>
                         <img src={(hide) ? ((mode === "dark") ? darkleftA : leftA) : ((mode === "dark") ? darkham : ham)} className='h-8' alt="" />
                     </div>
-                    <img src={qb} className='h-10' alt="" onClick={handelHome} />
+                    <img src={qb} className='h-10' alt="" onClick={handleHome} />
                 </div>
 
                 <div className='flex items-center justify-center gap-2 shrink-0'>
@@ -70,7 +66,7 @@ const Nav = ({ hide }) => {
                                 }`}
                         />
                     </div>
-                    <button className=' h-10 w-30 rounded-md bg-[#4A90E2]  hover:bg-[#357ABD] text-white dark:bg-[#4C9AFF] dark:hover:bg-[#72B5FF] text-xl transition-colors duration-500 ease-in-out cursor-pointer' onClick={handelLogin}>
+                    <button className=' h-10 w-30 rounded-md bg-[#4A90E2]  hover:bg-[#357ABD] text-white dark:bg-[#4C9AFF] dark:hover:bg-[#72B5FF] text-xl transition-colors duration-500 ease-in-out cursor-pointer' onClick={handleLogin}>
                         Login
                     </button>
                 </div>

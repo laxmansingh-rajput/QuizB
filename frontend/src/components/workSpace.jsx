@@ -243,7 +243,7 @@ const WorkSpace = () => {
                 )}
             </div>
 
-            <div className={` ${toolBar ? "w-30 sticky min-h-[88vh] max-[700px]:fixed max-[700px]:right-2 max-[700px]:border" : "w-10  fixed right-0 h-10"} rounded-xl  bg-[#FFFF] text-[#5F6A7D] dark:bg-[#1F1F2F] flex flex-col items-center justify-center gap-5 transition-all duration-300 ease-in-out`}>
+            <div className={` ${toolBar ? " w-30 sticky min-h-[88vh] max-[700px]:fixed max-[700px]:right-2 max-[700px]:border" : "w-10  fixed right-0 h-10"} rounded-xl  bg-[#FFFF] text-[#5F6A7D] dark:bg-[#1F1F2F] flex flex-col items-center justify-center gap-5 transition-all duration-300 ease-in-out`}>
                 <div className={`relative h-[88vh] w-full flex flex-col items-center justify-center gap-5 ${!toolBar ? "h-0" : ""}  `}>
                     <img src={right} className={`h-8 w-8 absolute top-1 right-1 transition-all duration-300 ease-in-out cursor-pointer  rounded-lg ${toolBar ? '' : 'rotate-180'}`} onClick={handeTool} alt="toggle" />
                     {toolBar && (

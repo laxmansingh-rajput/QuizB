@@ -22,7 +22,8 @@ const Home = () => {
   }
   return (
     <div className='h-[100vh] w-[100vw] fixed left-0 bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#F1F1F1]'>
-      <div className={'h-full max-[750px]:w-full  w-8/10 pt-20  bg-[#F4F9FF] flex items-start justify-center text-xl text-[#1A1A1A] overflow-auto dark:bg-primary-dark dark:text-[#F1F1F1] transition-all duration-500 ease-in-out fixed min-w-[700px]:left-0 right-0 ' + (`${(show == "show") && "p-4"} `) + ((show != "show") ? 'w-full' : ' max-[950px]:w-3/4')
+      <div className={'h-full max-[750px]:w-full  w-8/10 pt-20  bg-[#F4F9FF] flex items-start justify-center text-xl text-[#1A1A1A]                                    overflow-auto dark:bg-primary-dark dark:text-[#F1F1F1] transition-all duration-500 ease-in-out fixed min-w-[700px]:left-0 right-0 ' +
+       (`${(show == "show") && "p-4"} `) + ((show != "show") ? 'w-full' : ' max-[950px]:w-3/4')
       }>
         <div className={'flex flex-col gap-3 mb-10 dark:text-[#F1F1F1] max-[900px]:w-full p-2 ' + ((show != "show") ? "w-4/5" : "")}>
           <div className='flex flex-col gap-5 w-full'>
