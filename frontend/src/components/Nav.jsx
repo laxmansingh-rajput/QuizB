@@ -11,11 +11,6 @@ import darkleftA from '../assets/darkArrow.svg'
 const Nav = ({ hide }) => {
     const { mode, setmode , show, setshow } = useContext(ModeContext)
 
-   
-    useEffect(() => {
-
-    }, [show])
-    
     const navigate = useNavigate()
 
     const handleHome = () => {

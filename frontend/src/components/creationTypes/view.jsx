@@ -1,12 +1,12 @@
 import React from 'react';
-import edit from '../assets/lightedit.svg';
-import darkedit from '../assets/darkedit.svg';
-import ModeContext from '../context/context.js';
+import edit from '../../assets/lightedit.svg';
+import darkedit from '../../assets/darkedit.svg';
+import ModeContext from '../../context/context.js';
 import { useContext } from 'react';
-import cancel from '../assets/cancel.svg';
-import darkcancel from '../assets/darkcancel.svg';
-import del from '../assets/delete.svg';
-import darkdel from '../assets/darkdelete.svg';
+import cancel from '../../assets/cancel.svg';
+import darkcancel from '../../assets/darkcancel.svg';
+import del from '../../assets/delete.svg';
+import darkdel from '../../assets/darkdelete.svg';
 
 const View = ({ List, setview, setcurr, setList }) => {
     const { mode } = useContext(ModeContext);

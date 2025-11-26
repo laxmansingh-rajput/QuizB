@@ -42,12 +42,12 @@ const Create = () => {
           <div
             className={
               'h-auto cards w-full flex items-center gap-12 justify-center max-[730px]:flex-col mt-10 ' +
-              (shouldStack ? 'flex-col' : '') 
+              (shouldStack ? 'flex-col' : '')
             }
           >
-            <Card name="Quiz" svg={quiz} darksvg={darkquiz} />
-            <Card name="Survey" svg={survey} darksvg={darksurvey} />
-            <Card name="Use AI" svg={bot} darksvg={darkbot} />
+            <Card name="Quiz" w={width} svg={quiz} darksvg={darkquiz} />
+            <Card name="Survey" w={width} svg={survey} darksvg={darksurvey} />
+            <Card name="Use AI" w={width} svg={bot} darksvg={darkbot} />
           </div>
         </div>
       </div>
