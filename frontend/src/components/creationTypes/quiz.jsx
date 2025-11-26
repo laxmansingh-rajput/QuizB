@@ -156,7 +156,8 @@ const quiz = () => {
     };
 
     return (
-        <div className='min-h-[100vh] w-[100vw] bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#A0A0B2] pt-17 flex items-start justify-center gap-2 p-2 box-border relative'>
+        <div className='min-h-[100vh] w-[100vw] bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#A0A0B2]  flex items-start 
+        justify-center gap-2 box-border relative pt-17'>
             <div className={`w-3/4 max-[700px]:w-full rounded-xl flex flex-col gap-2 ${!viewVisible ? ' min-h-87 ' : ' h-[87vh] overflow-y-scroll scrollbar-thin '}`}>
                 {viewVisible ? (
                     <View List={List} setList={setList} setview={setView} setcurr={setcurr} />
