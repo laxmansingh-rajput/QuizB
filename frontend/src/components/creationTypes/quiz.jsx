@@ -4,7 +4,7 @@ import ModeContext from '../../context/context.js';
 import single from '../../assets/s.svg'
 import multiple from '../../assets/m.svg'
 import cross from '../../assets/cross.svg'
-import toolBar from './toolBar.jsx';
+import Tool from './toolBar.jsx';
 const quiz = () => {
     const [toolbar, settoolbar] = useState(true)
     const { mode, setshow, show } = useContext(ModeContext);
@@ -130,8 +130,8 @@ const quiz = () => {
                     </div>
                 </div>
             </div>
-            <div className='border-2  row-start-1 row-end-3 rounded-xl '>
-               <toolbar />
+            <div className='border-2  row-start-1 row-end-3 rounded-xl p-1 '>
+               <Tool />
             </div>
             <div className='border-2 h-full rounded-xl '>
 
