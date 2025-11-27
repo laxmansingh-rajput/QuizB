@@ -4,6 +4,7 @@ import ModeContext from '../../context/context.js';
 import single from '../../assets/s.svg'
 import multiple from '../../assets/m.svg'
 import cross from '../../assets/cross.svg'
+import toolBar from './toolBar.jsx';
 const quiz = () => {
     const [toolbar, settoolbar] = useState(true)
     const { mode, setshow, show } = useContext(ModeContext);
@@ -58,12 +59,23 @@ const quiz = () => {
         console.log(e.target.value)
         const correct = list[qno - 1].correct;
         if (type) {
-        correct.forEach(element => {
-            
-        });
+            correct.forEach((value, index) => {
+                if (index == e.target.value) {
+                    correct[index] = !value;
+                    console.log(!value)
+                } else { correct[index] = false; }
+            });
         } else {
-
+            correct.forEach((value, index) => {
+                if (index == e.target.value) {
+                    correct[index] = !value;
+                    console.log(!value)
+                }
+            });
         }
+        const updatedList = [...list]
+        updatedList.correct = correct;
+        setlist(updatedList)
     }
 
     return (
@@ -83,11 +95,13 @@ const quiz = () => {
                                 </div>
                             ))
                         }
-                        <div className=' w-full absolute bottom-12 border-1 h-10 flex items-center justify-around'>
+                        <div className=' w-full absolute bottom-12 border-1 rounded-xl  h-10 flex items-center justify-around'>
+                            <div className='font-bold '>Correct answer{type?"":"s"}:</div>
                             {
                                 list[qno - 1].options.map((checked, i) => (
                                     <div className='flex items-center justify-center gap-1 text-ms'>
-                                        <input type={type ? "radio" : "checkbox"} value={i} name='curr' defaultChecked={checked} onChange={(e, i) => handelCorrect(e)}
+                                        <input type={type ? "radio" : "checkbox"} value={i} name='curr' checked={list[qno - 1].correct[i]}
+                                            onChange={(e, i) => handelCorrect(e)}
                                         />
                                         <div >{Arr[i]}</div>
                                     </div>
@@ -117,7 +131,7 @@ const quiz = () => {
                 </div>
             </div>
             <div className='border-2  row-start-1 row-end-3 rounded-xl '>
-                hello
+               <toolbar />
             </div>
             <div className='border-2 h-full rounded-xl '>
 
