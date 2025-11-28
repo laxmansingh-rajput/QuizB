@@ -18,7 +18,7 @@ const WorkSpace = () => {
     }
 
     return (
-        <div className='h-full w-[100vw] bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#A0A0B2] 
+        <div className='h-[100vh] w-[100vw] bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#A0A0B2] 
         flex items-center justify-center   '>
             <ComponentToRender />
         </div>

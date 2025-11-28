@@ -61,7 +61,7 @@ const Nav = ({ hide }) => {
                                 }`}
                         />
                     </div>
-                    <button className=' h-10 w-30 rounded-md bg-[#4A90E2]  hover:bg-[#357ABD] text-white dark:bg-[#4C9AFF] dark:hover:bg-[#72B5FF] text-xl transition-colors duration-500 ease-in-out cursor-pointer' onClick={handleLogin}>
+                    <button className=' h-8 w-25 rounded-md bg-[#4A90E2]  hover:bg-[#357ABD] text-white dark:bg-[#4C9AFF] dark:hover:bg-[#72B5FF] text-sm font-semibold transition-colors duration-500 ease-in-out cursor-pointer' onClick={handleLogin}>
                         Login
                     </button>
                 </div>

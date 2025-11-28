@@ -4,18 +4,30 @@ import ModeContext from '../../context/context.js';
 import single from '../../assets/s.svg'
 import multiple from '../../assets/m.svg'
 import cross from '../../assets/cross.svg'
-import Tool from './toolBar.jsx';
+import ToolBar from './toolBar.jsx';
+import Questions from './questionBar.jsx'
+import { useEffectEvent } from 'react';
 const quiz = () => {
-    const [toolbar, settoolbar] = useState(true)
     const { mode, setshow, show } = useContext(ModeContext);
     const location = useLocation();
-    const [list, setlist] = useState([{ question: "", options: ["", "", ""], correct: [false, false, false] }]);
-    const [type, settype] = useState(false)
+    const [list, setlist] = useState(() => {
+        const lista = localStorage.getItem('list');
+        if (lista) {
+            try {
+                return JSON.parse(lista);
+            } catch (err) {
+                console.error("Error parsing list from localStorage", err);
+            }
+        }
+        return [{ question: "", options: ["", "", ""], correct: [false, false, false], type: true }]
+    });
     const [err, seterr] = useState("")
-    const [qno, setqno] = useState(1)
+    const [qno, setqno] = useState(list.length > 2 ? list.length : 1);
+    const [type, settype] = useState(list[qno - 1].type);
+
     const Arr = ['A', 'B', 'C', 'D']
     useEffect(() => {
-        console.log(list)
+        localStorage.setItem('list', JSON.stringify(list));
 
     }, [list])
 
@@ -74,68 +86,78 @@ const quiz = () => {
             });
         }
         const updatedList = [...list]
-        updatedList.correct = correct;
+        updatedList[qno - 1].correct = [...correct];
         setlist(updatedList)
     }
-
+    const main = useRef(null)
+    const [height, setheight] = useState(0)
+    const [width, setwidth] = useState(0)
+   
     return (
-        <div className='h-[100vh]  bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#A0A0B2]  box-border pt-17  p-2 overflow-y-auto
-        grid grid-cols-[85vw_12vw] grid-rows-[9fr_1fr]  gap-4 '>
-            <div className='border-2 h-full  row-start-1 col-start-1 col-end-2  p-2 box-border rounded-xl relative flex flex-col gap-15'>
-                <textarea className="question h-20 max-h-25   w-full border-b-2  p-1 focus:outline-none resize-none" placeholder="Enter The Question"
-                    value={`${list[qno - 1].question}`} maxLength={150} onChange={(e) => { QuestionHandeler(e) }} >
-                </textarea>
-                <div className="options flex flex-col h-2/3  w-full items-center justify-around  gap-5 ">
-                    <div className='flex flex-col gap-5 w-1/2 h-80 relative '>
-                        {
-                            list[qno - 1].options.map((opt, i) => (
-                                <div key={i} className='h-10 w-full rounded-xl border-1 p-1 flex items-center'>
-                                    <input type="text" className='h-full w-full focus:outline-none ' placeholder={`Enter option ${i + 1}`} value={`${list[qno - 1].options[i]}`} onChange={(e) => optionHandeler(e, i)} />
-                                    <img src={cross} className='h-6 cursor-pointer' onClick={() => { handelRemoveOption(i) }} alt="" />
-                                </div>
-                            ))
-                        }
-                        <div className=' w-full absolute bottom-12 border-1 rounded-xl  h-10 flex items-center justify-around'>
-                            <div className='font-bold '>Correct answer{type?"":"s"}:</div>
+        <div ref={main} className='h-[100vh] w-[100vw] bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#A0A0B2]  box-border pt-18  p-2 
+        '>
+            <div className={`h-[calc(100vh-5rem)] w-[calc(100vw-rem)] grid grid-cols-[9fr_1fr] grid-rows-[9fr_1fr]  gap-2  `}>
+                <div className='border-2 max-h-full h-full  row-start-1 col-start-1 col-end-2  p-2 box-border rounded-xl relative flex flex-col gap-15'>
+                    <textarea className="question h-20 max-h-25   w-full border-b-2  p-1 focus:outline-none resize-none" placeholder="Enter The Question"
+                        value={`${list[qno - 1].question}`} maxLength={150} onChange={(e) => { QuestionHandeler(e) }} >
+                    </textarea>
+                    <div className="options flex flex-col h-3/4 gap-2 w-full items-center    ">
+                        <div className='flex flex-col gap-3 w-2/3  h-full  relative '>
                             {
-                                list[qno - 1].options.map((checked, i) => (
-                                    <div className='flex items-center justify-center gap-1 text-ms'>
-                                        <input type={type ? "radio" : "checkbox"} value={i} name='curr' checked={list[qno - 1].correct[i]}
-                                            onChange={(e, i) => handelCorrect(e)}
-                                        />
-                                        <div >{Arr[i]}</div>
+                                list[qno - 1].options.map((opt, i) => (
+                                    <div key={i} className='h-8 w-full text-sm rounded-xl border-1 p-1 flex items-center'>
+                                        <input type="text" className='h-full w-full focus:outline-none ' placeholder={`Enter option ${i + 1}`} maxLength={150} value={`${list[qno - 1].options[i]}`} onChange={(e) => optionHandeler(e, i)} />
+                                        <img src={cross} className='h-5 cursor-pointer' onClick={() => { handelRemoveOption(i) }} alt="" />
                                     </div>
                                 ))
                             }
-                        </div>
-                        <div className='  text-red-600 w-full absolute bottom-2'>
-                            {`${err}`}
+                            <div className=' w-full absolute bottom-25 border-1 rounded-xl text-sm h-8 flex items-center justify-around'>
+                                <div className='font-bold '>Correct answer{type ? "" : "s"}:</div>
+                                {
+                                    list[qno - 1].options.map((checked, i) => (
+                                        <div key={i} className='flex items-center justify-center gap-1 text-ms'>
+                                            <input type={type ? "radio" : "checkbox"} value={i} name='curr' checked={list[qno - 1].correct[i]}
+                                                onChange={(e, i) => handelCorrect(e)}
+                                            />
+                                            <div >{Arr[i]}</div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                            <div className='  text-red-600 w-full text-sm font-bold absolute bottom-10'>
+                                {`${err}`}
+                            </div>
                         </div>
                     </div>
-                    <button type="button" className=' bg-[#4A90E2]  hover:bg-[#357ABD] text-white dark:bg-[#4C9AFF] dark:hover:bg-[#72B5FF] text-xl transition-colors duration-500 ease-in-out cursor-pointer rounded-md px-3 py-1 relative ' onClick={() => { handelAddOption() }}>
-                        Add Option
-                    </button>
-                </div>
-                <div className="correctOptions">
-
-                </div>
-                <div className='absolute bottom-2 left-2 font-bold'>
-                    {`Q.${qno}`}
-                </div>
-                <div className='absolute bottom-2 right-2 w-45 flex items-center justify-around'>
-                    <span className='text-sm font-bold'>{(type) ? "Single Choice" : "Multiple Choice"}</span>
-                    <div className=' h-[20px] w-[40px] border-[1px] rounded-full flex items-center
-                 ' onClick={() => { settype(!type) }}>
-                        <img src={type == true ? single : multiple} className={`select-none h-full transition-transform duration-300 ease-in-out transform ${type == true ? "translate-x-0" : "translate-x-[20px]"} `} alt="" />
+                    <div className='h-auto w-full absolute left-0 bottom-2'>
+                        <button type="button" className=' bg-[#4A90E2]  hover:bg-[#357ABD] text-white dark:bg-[#4C9AFF] dark:hover:bg-[#72B5FF] text-sm font-semibold transition-colors duration-500 ease-in-out cursor-pointer rounded-md px-3 py-1 relative ' onClick={() => { handelAddOption() }}>
+                            Add Option
+                        </button>
+                    </div>
+                    <div className='absolute bottom-2 left-2 font-bold'>
+                        {`Q${qno}.`}
+                    </div>
+                    <div className='absolute bottom-2 right-2 w-45 flex items-center justify-around'>
+                        <span className='text-sm font-bold'>{(type) ? "Single Choice" : "Multiple Choice"}</span>
+                        <div className=' h-[20px] w-[40px] border-[1px] rounded-full flex items-center
+                 ' onClick={() => {
+                                settype(!type)
+                                const updatedList = [...list]
+                                updatedList[qno - 1].type = updatedList[qno - 1].type ? false : true
+                                setlist(updatedList)
+                                settype(updatedList[qno - 1].type ? true : false)
+                            }}>
+                            <img src={type == true ? single : multiple} className={`select-none h-full transition-transform duration-300 ease-in-out transform ${type == true ? "translate-x-0" : "translate-x-[20px]"} `} alt="" />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className='border-2  row-start-1 row-end-3 rounded-xl p-1 '>
-               <Tool />
-            </div>
-            <div className='border-2 h-full rounded-xl '>
-
-            </div>
+                <div className='border-2  row-start-1 row-end-3 rounded-xl p-1 '>
+                    <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
+                </div>
+                <div className=' max-h-f-full h-full rounded-xl row-start-2 row-end-2 col-start-1 col-end-1 '>
+                    <Questions list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
+                </div>
+            </div >
         </div>
     );
 };
