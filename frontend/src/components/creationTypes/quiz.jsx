@@ -92,7 +92,7 @@ const quiz = () => {
     const main = useRef(null)
     const [height, setheight] = useState(0)
     const [width, setwidth] = useState(0)
-   
+
     return (
         <div ref={main} className='h-[100vh] w-[100vw] bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#A0A0B2]  box-border pt-18  p-2 
         '>
@@ -155,7 +155,7 @@ const quiz = () => {
                     <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
                 </div>
                 <div className=' max-h-f-full h-full rounded-xl row-start-2 row-end-2 col-start-1 col-end-1 '>
-                    <Questions list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
+                    <Questions list={list} setlist={setlist} generateErr={generateErr} type={type} settype={settype} qno={qno} setqno={setqno} />
                 </div>
             </div >
         </div>
