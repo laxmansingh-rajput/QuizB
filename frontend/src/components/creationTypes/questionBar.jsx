@@ -119,7 +119,7 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
   return (
     <div className='h-full w-full flex gap-2 items center justify-center '>
       {
-        layout.map((element) => (
+        layout.map((element, i) => (
           boxes[element]
         ))
       }
