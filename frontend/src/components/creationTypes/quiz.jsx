@@ -24,7 +24,7 @@ const quiz = () => {
     const [err, seterr] = useState("")
     const [qno, setqno] = useState(list.length > 2 ? list.length : 1);
     const [type, settype] = useState(list[qno - 1].type);
-
+    const [drag, setdrag] = useState(false)
     const Arr = ['A', 'B', 'C', 'D']
     useEffect(() => {
         localStorage.setItem('list', JSON.stringify(list));
@@ -154,7 +154,7 @@ const quiz = () => {
                 <div className='border-2  row-start-1 row-end-3 rounded-xl p-1 '>
                     <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
                 </div>
-                <div className=' max-h-f-full h-full rounded-xl row-start-2 row-end-2 col-start-1 col-end-1 '>
+                <div draggable='true' className=' max-h-f-full h-full rounded-xl row-start-2 row-end-2 col-start-1 col-end-1 '>
                     <Questions list={list} setlist={setlist} generateErr={generateErr} type={type} settype={settype} qno={qno} setqno={setqno} />
                 </div>
             </div >

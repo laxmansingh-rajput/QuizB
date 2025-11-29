@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 
 const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno }) => {
   const Ref = useRef(null);
+  const [layout, setlayout] = useState(['box1', 'box2'])
+  const [draggedItem, setDraggedItem] = useState(null)
   useEffect(() => {
     if (Ref.current) {
       Ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -15,10 +17,45 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
     setcurr(qno)
   }, [qno])
 
-  return (
-    <div className='h-full w-full grid gap-2 grid-cols-[40fr_60fr]'>
-      <div className='border-2 rounded-xl flex items-center justify-center gap-4 px-4 py-2'>
+  const handleDragStart = (e, boxName) => {
+    setDraggedItem(boxName);
+    e.dataTransfer.effectAllowed = 'move';
+  }
 
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  }
+
+  const handleDrop = (e, dropTarget) => {
+    e.preventDefault();
+
+    if (draggedItem && draggedItem !== dropTarget) {
+      setlayout(() => {
+        const newLayout = [...layout];
+        const draggedIndex = newLayout.indexOf(draggedItem);
+        const dropIndex = newLayout.indexOf(dropTarget);
+
+        [newLayout[draggedIndex], newLayout[dropIndex]] =
+          [newLayout[dropIndex], newLayout[draggedIndex]];
+
+        return newLayout;
+      });
+    }
+    setDraggedItem(null);
+  }
+
+  const handleDragEnd = () => {
+    setDraggedItem(null);
+  }
+
+  const boxes = {
+    box1: (<div draggable='true' className='h-full w-4/10  ' onDragStart={(e) => handleDragStart(e, 'box1')}
+      onDragOver={handleDragOver}
+      onDrop={(e) => handleDrop(e, 'box1')}
+      onDragEnd={handleDragEnd}
+    >
+      <div className='h-full w-full border-2 rounded-xl flex items-center justify-center gap-4 px-4 py-2'>
         <button
           className='text-sm px-3 py-1 h-8 w-10 cursor-pointer rounded-md flex items-center justify-center text-white font-semibold  bg-[#4A90E2] border border-[#1A1A1A] transition-all duration-200 hover:scale-95'
           onClick={() => setqno(qno > 1 ? qno - 1 : 1)}>
@@ -57,6 +94,13 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
         </button>
 
       </div>
+    </div>),
+    box2: (<div draggable='true' className='h-full w-6/10' onDragStart={(e) => handleDragStart(e, 'box2')}
+      onDragOver={handleDragOver}
+      onDrop={(e) => handleDrop(e, 'box2')}
+      onDragEnd={handleDragEnd}
+    >
+
       <div className='border-2  rounded-xl h-full w-full  flex items-center px-30 justify-center gap-2 overflow-x-auto scrollbar-thin '>
         <div className='h-full w-60 flex  items-center justify-center gap-2 overflow-x-auto scrollbar-thin relative '>
           {
@@ -70,6 +114,15 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
           }
         </div>
       </div>
+    </div>)
+  }
+  return (
+    <div className='h-full w-full flex gap-2 items center justify-center '>
+      {
+        layout.map((element) => (
+          boxes[element]
+        ))
+      }
     </div>
   )
 }
