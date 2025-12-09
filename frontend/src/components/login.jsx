@@ -27,12 +27,12 @@ const Login = () => {
             <div className='text-3xl font-bold'>
               Login
             </div>
-            <div className='border rounded-xl h-10 w-8/10 p-2 flex items-center justify-center font-mono font-medium cursor-pointer gap-2 hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white'>
+            <div className='border rounded-md h-10 w-8/10 p-2 flex items-center justify-center font-mono font-medium cursor-pointer gap-2 hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white'>
               <img src={google} className='h-6' alt="" /> Login With Google
             </div>
-            <input {...register("firstName", { required: true, maxLength: 20 })} placeholder='Email' className='border rounded-xl h-10 w-8/10 p-2' />
+            <input {...register("firstName", { required: true, maxLength: 20 })} placeholder='Email' className='border rounded-md h-10 w-8/10 p-2' />
             <div className='h-full w-full relative'>
-              <input {...register("lastName", { pattern: /^[A-Za-z]+$/i })} placeholder='Password' type={!pass ? 'password' : 'text'} className='border rounded-xl h-10 w-8/10 p-2' />
+              <input {...register("lastName", { pattern: /^[A-Za-z]+$/i })} placeholder='Password' type={!pass ? 'password' : 'text'} className='border rounded-md h-10 w-8/10 p-2' />
               <img src={(pass ? ((mode == "dark") ? darkheye : heye) : ((mode == "dark") ? darkeye : eye))} className='absolute right-11 top-[11px] h-5 cursor-pointer'
                 onClick={() => setpass(!pass)} alt="" />
             </div>

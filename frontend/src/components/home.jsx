@@ -34,7 +34,7 @@ const Home = () => {
               Build quizzes your way — manually for full control or let our AI generate smart questions in seconds. Practice adaptively with personalized quizzes made just for you.
             </div>
             <div className='w-full flex justify-center  '>
-              <div className='border h-80 max-[700px]:h-50 w-1/2 max-[700px]:w-full rounded-xl p-5'>
+              <div className='border h-80 max-[700px]:h-50 w-1/2 max-[700px]:w-full rounded-md p-5'>
                 Video to be displayed
               </div>
             </div>

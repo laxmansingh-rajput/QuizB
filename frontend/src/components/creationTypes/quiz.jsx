@@ -23,16 +23,16 @@ const quiz = () => {
     });
     const [err, seterr] = useState("")
     const [qno, setqno] = useState(list.length > 2 ? list.length : 1);
+    const [adjustment, setadjustment] = useState(null)
     const [type, settype] = useState(list[qno - 1].type);
-    const [drag, setdrag] = useState(false)
-    const [leftLayout, setleftLayout] = useState(['box1', 'box2'])
-    const [rightLayout, setrightLayout] = useState(['box1', 'box2'])
+    const [verticalLayout, setVerticalLayout] = useState(['top', 'bottom'])
+    const [horizontalLayout, setHorizontalLayout] = useState(['left', 'right'])
+    const [draggedItem, setDraggedItem] = useState(null)
     const Arr = ['A', 'B', 'C', 'D']
+    const [height, setheight] = useState(null)
     useEffect(() => {
         localStorage.setItem('list', JSON.stringify(list));
-
     }, [list])
-
     const QuestionHandeler = (e) => {
         const updatedList = [...list];
         updatedList[qno - 1].question = e.target.value;
@@ -91,9 +91,82 @@ const quiz = () => {
         updatedList[qno - 1].correct = [...correct];
         setlist(updatedList)
     }
-    const left = {
-        'box1': (<div className="up h-9/10 w-full " >
-            <div className='border-2 max-h-full h-full  row-start-1 col-start-1 col-end-2  p-2 box-border rounded-xl relative flex flex-col gap-15'>
+    const handleDragStart = (e, boxName) => {
+        setDraggedItem(boxName);
+        console.log(boxName)
+        e.dataTransfer.effectAllowed = 'move';
+    }
+    const handleDragOver = (e, block) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        if (block == 'horizontal' && draggedItem == 'right') {
+            setadjustment('horizontal')
+        }
+        if (block == 'vertical' && draggedItem) {
+            setadjustment('vertical')
+        }
+    }
+    const handelDropHorizontal = (e, dropTarget) => {
+        e.preventDefault();
+        if (draggedItem == 'right') {
+            const copy = [...horizontalLayout]
+            console.log(copy)
+            let ind1 = copy.indexOf(dropTarget)
+            let ind2 = copy.indexOf(draggedItem)
+            console.log('drop = ' + draggedItem + ind2)
+            console.log('over = ' + dropTarget + ind1)
+            console.log(copy)
+            let temp = copy[ind1]
+            copy[ind1] = copy[ind2]
+            copy[ind2] = temp
+            console.log(copy)
+            setHorizontalLayout(copy)
+        }
+        setDraggedItem(null);
+        setadjustment(null)
+    }
+    const handelDropVertical = (e, dropTarget) => {
+        e.preventDefault();
+        if (draggedItem == 'top') {
+            const copy = [...verticalLayout]
+            console.log(copy)
+            let ind1 = copy.indexOf(dropTarget)
+            let ind2 = copy.indexOf(draggedItem)
+            console.log('drop = ' + draggedItem + ind2)
+            console.log('over = ' + dropTarget + ind1)
+            console.log(copy)
+            let temp = copy[ind1]
+            copy[ind1] = copy[ind2]
+            copy[ind2] = temp
+            console.log(copy)
+            setVerticalLayout(copy)
+        }
+        setDraggedItem(null);
+        setadjustment(null)
+    }
+    const handleDragEnd = () => {
+        setDraggedItem(null);
+        setadjustment(null)
+    }
+    const blockRef = useRef()
+    useEffect(() => {
+        const handleResize = () => {
+            if (blockRef.current) {
+                setheight(blockRef.current.offsetHeight);
+            }
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+
+    const vertical = {
+        'top': (<div ref={blockRef} className="up h-9/10 w-full">
+            <div draggable className='border-2 max-h-full h-full  row-start-1 col-start-1 col-end-2  p-2 box-border rounded-md relative flex flex-col gap-15'
+                onDragStart={(e) => handleDragStart(e, 'top')}
+                onDragEnd={handleDragEnd}
+            >
                 <textarea className="question h-20 max-h-25   w-full border-b-2  p-1 focus:outline-none resize-none" placeholder="Enter The Question"
                     value={`${list[qno - 1].question}`} maxLength={150} onChange={(e) => { QuestionHandeler(e) }} >
                 </textarea>
@@ -101,13 +174,13 @@ const quiz = () => {
                     <div className='flex flex-col gap-3 w-2/3  h-full  relative '>
                         {
                             list[qno - 1].options.map((opt, i) => (
-                                <div key={i} className='h-8 w-full text-sm rounded-xl border-1 p-1 flex items-center'>
+                                <div key={i} className='h-8 w-full text-sm rounded-md border-1 p-1 flex items-center'>
                                     <input type="text" className='h-full w-full focus:outline-none ' placeholder={`Enter option ${i + 1}`} maxLength={150} value={`${list[qno - 1].options[i]}`} onChange={(e) => optionHandeler(e, i)} />
                                     <img src={cross} className='h-5 cursor-pointer' onClick={() => { handelRemoveOption(i) }} alt="" />
                                 </div>
                             ))
                         }
-                        <div className=' w-full absolute bottom-25 border-1 rounded-xl text-sm h-8 flex items-center justify-around'>
+                        <div className=' w-full absolute bottom-25 border-1 rounded-md text-sm h-8 flex items-center justify-around'>
                             <div className='font-bold '>Correct answer{type ? "" : "s"}:</div>
                             {
                                 list[qno - 1].options.map((checked, i) => (
@@ -149,28 +222,54 @@ const quiz = () => {
             </div>
         </div>)
         ,
-        'box2': (
-            <div className='down h-1/10  w-full'>
-                <div draggable='true' className=' max-h-f-full h-full rounded-xl row-start-2 row-end-2 col-start-1 col-end-1 '>
+        'bottom': (
+            <div className='down h-1/10  w-full relative'
+                onDrop={(e) => handelDropVertical(e, 'bottom')}
+                onDragOver={(e) => handleDragOver(e, 'vertical')}
+            >
+                {
+                    <div style={{ height: height + "px" }}
+                        className={` w-full border-2 border-blue-950 transition-all ease-in duration-100 ${(verticalLayout[0] === 'top') ? 'bottom-0' : 'top-0'} rounded-md absolute ${(adjustment === 'vertical') ? ' opacity-100 scale-100' : " opacity-0 hidden scale-95"}`}>
+                        <div className={'h-full w-full bg-blue-400 opacity-10 '}>
+
+                        </div>
+                    </div>
+                }
+                < div className=' max-h-f-full h-full rounded-md row-start-2 row-end-2 col-start-1 col-end-1 ' >
                     <Questions list={list} setlist={setlist} generateErr={generateErr} type={type} settype={settype} qno={qno} setqno={setqno} />
-                </div>
-            </div>
+                </div >
+            </div >
         )
     }
 
-    const right = {
-        'box1': (
-        <div className='h-full w-9/10 flex flex-col gap-2 '>
-            {
-                leftLayout.map((box) => (
-                    left[box]
-                ))
-            }
-        </div>
+    const horizontal = {
+        'left': (
+            <div className={'h-full w-9/10 flex flex-col gap-2 relative '}
+                onDrop={(e) => handelDropHorizontal(e, 'left')}
+                onDragOver={(e) => handleDragOver(e, 'horizontal')}
+                onDragLeave={() => setadjustment(null)}
+            >
+                {
+                    <div className={`h-full w-1/10 border-2 border-blue-950 transition-all ease-in duration-100
+                     ${(horizontalLayout[0] === 'left') ? 'left-0' : 'right-0'} rounded-md absolute ${(adjustment === 'horizontal') ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
+                        <div className='h-full w-full bg-blue-400 opacity-10'>
+
+                        </div>
+                    </div>
+                }
+                {
+                    verticalLayout.map((box) => (
+                        vertical[box]
+                    ))
+                }
+            </div>
         ),
-        'box2': (
-            <div className='h-full w-1/10'>
-                <div className='border-2  h-full w-full rounded-xl p-1 '>
+        'right': (
+            <div draggable className='h-full w-1/10'
+                onDragStart={(e) => handleDragStart(e, 'right')}
+                onDragEnd={handleDragEnd}
+            >
+                <div className='border-2  h-full w-full rounded-md p-1 '>
                     <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
                 </div>
             </div>
@@ -179,12 +278,12 @@ const quiz = () => {
 
 
     return (
-        <div className='h-[100vh] w-[100vw] bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#A0A0B2]  box-border pt-18  p-2 
+        <div className='h-[100vh] relative w-[100vw] bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#A0A0B2]  box-border pt-18  p-2 
         '>
             <div className={`h-full w-full flex items-center justify-center gap-2  `}>
                 {
-                    rightLayout.map((box) => (
-                        right[box]
+                    horizontalLayout.map((box) => (
+                        horizontal[box]
                     ))
                 }
             </div >
