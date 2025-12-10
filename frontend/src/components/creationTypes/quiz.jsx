@@ -8,8 +8,6 @@ import ToolBar from './toolBar.jsx';
 import Questions from './questionBar.jsx'
 import { useEffectEvent } from 'react';
 const quiz = () => {
-    const { mode, setshow, show } = useContext(ModeContext);
-    const location = useLocation();
     const [list, setlist] = useState(() => {
         const lista = localStorage.getItem('list');
         if (lista) {
@@ -30,6 +28,25 @@ const quiz = () => {
     const [draggedItem, setDraggedItem] = useState(null)
     const Arr = ['A', 'B', 'C', 'D']
     const [height, setheight] = useState(null)
+    const [x, setx] = useState(null)
+    const [y, sety] = useState(null)
+    const [Visible, setVisible] = useState(false)
+    const blockRef = useRef()
+    useEffect(() => {
+        const handleResize = () => {
+            if (blockRef.current) {
+                setheight(blockRef.current.offsetHeight);
+            }
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        console.log(Visible)
+    }, [Visible])
+
     useEffect(() => {
         localStorage.setItem('list', JSON.stringify(list));
     }, [list])
@@ -93,8 +110,12 @@ const quiz = () => {
     }
     const handleDragStart = (e, boxName) => {
         setDraggedItem(boxName);
-        console.log(boxName)
         e.dataTransfer.effectAllowed = 'move';
+        const img = document.createElement("img");
+        img.src =
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==";
+        e.dataTransfer.setDragImage(img, 0, 0);
+        setVisible(true)
     }
     const handleDragOver = (e, block) => {
         e.preventDefault();
@@ -124,6 +145,7 @@ const quiz = () => {
         }
         setDraggedItem(null);
         setadjustment(null)
+        setVisible(false)
     }
     const handelDropVertical = (e, dropTarget) => {
         e.preventDefault();
@@ -143,23 +165,13 @@ const quiz = () => {
         }
         setDraggedItem(null);
         setadjustment(null)
+        setVisible(false)
     }
     const handleDragEnd = () => {
         setDraggedItem(null);
         setadjustment(null)
+        setVisible(false)
     }
-    const blockRef = useRef()
-    useEffect(() => {
-        const handleResize = () => {
-            if (blockRef.current) {
-                setheight(blockRef.current.offsetHeight);
-            }
-        };
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
 
     const vertical = {
         'top': (<div ref={blockRef} className="up h-9/10 w-full">
@@ -229,7 +241,7 @@ const quiz = () => {
             >
                 {
                     <div style={{ height: height + "px" }}
-                        className={` w-full border-2 border-blue-950 transition-all ease-in duration-100 ${(verticalLayout[0] === 'top') ? 'bottom-0' : 'top-0'} rounded-md absolute ${(adjustment === 'vertical') ? ' opacity-100 scale-100' : " opacity-0 hidden scale-95"}`}>
+                        className={` w-full border-2 pointer-events-none border-blue-950 transition-all ease-in duration-100 ${(verticalLayout[0] === 'top') ? 'bottom-0' : 'top-0'} rounded-md absolute ${(adjustment === 'vertical') ? ' opacity-100 scale-100' : " opacity-0 hidden scale-95"}`}>
                         <div className={'h-full w-full bg-blue-400 opacity-10 '}>
 
                         </div>
@@ -248,9 +260,13 @@ const quiz = () => {
                 onDrop={(e) => handelDropHorizontal(e, 'left')}
                 onDragOver={(e) => handleDragOver(e, 'horizontal')}
                 onDragLeave={() => setadjustment(null)}
+                onDrag={(e) => {
+                    setx(e.clientX)
+                    sety(e.clientY)
+                }}
             >
                 {
-                    <div className={`h-full w-1/10 border-2 border-blue-950 transition-all ease-in duration-100
+                    <div className={`h-full w-1/10 border-2 pointer-events-none border-blue-950 transition-all ease-in duration-100
                      ${(horizontalLayout[0] === 'left') ? 'left-0' : 'right-0'} rounded-md absolute ${(adjustment === 'horizontal') ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
                         <div className='h-full w-full bg-blue-400 opacity-10'>
 
@@ -265,9 +281,13 @@ const quiz = () => {
             </div>
         ),
         'right': (
-            <div draggable className='h-full w-1/10'
+            <div draggable className={'h-full w-1/10 ' + (Visible ? " cursor-pointer " : " ")}
                 onDragStart={(e) => handleDragStart(e, 'right')}
                 onDragEnd={handleDragEnd}
+                onDrag={(e) => {
+                    setx(e.clientX)
+                    sety(e.clientY)
+                }}
             >
                 <div className='border-2  h-full w-full rounded-md p-1 '>
                     <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
@@ -279,7 +299,7 @@ const quiz = () => {
 
     return (
         <div className='h-[100vh] relative w-[100vw] bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#A0A0B2]  box-border pt-18  p-2 
-        '>
+        overflow-hidden'>
             <div className={`h-full w-full flex items-center justify-center gap-2  `}>
                 {
                     horizontalLayout.map((box) => (
@@ -287,7 +307,40 @@ const quiz = () => {
                     ))
                 }
             </div >
-        </div>
+            <div className=' tools hidden'></div>
+            {
+                (Visible == true) ? (<div className='absolute h-full w-full top-0 left-0 pointer-events-none bg-white/40 pt-15'>
+                    <div className='h-2 top-15 w-full flex items-center absolute justify-center'>
+                        <div className=' h-full w-80 bg-blue-600 border-2  rounded-full '>
+
+                        </div>
+                    </div>
+                    <div className='h-2 bottom-0 w-full flex items-center absolute justify-center'>
+                        <div className=' h-full w-80 bg-blue-600 border-2  rounded-full '>
+
+                        </div>
+                    </div>
+                    <div className='h-full left-0 w-2 flex items-center absolute justify-center'>
+                        <div className=' h-80 w-full bg-blue-600 border-2  rounded-full '>
+
+                        </div>
+                    </div>
+                    <div className='h-full right-0 w-2 flex items-center absolute justify-center'>
+                        <div className=' h-80 w-full bg-blue-600 border-2  rounded-full '>
+
+                        </div>
+                    </div>
+                </div>
+                ) : (null)
+            }
+            {
+                (Visible == true) ? <div className='px-2 py-0.5 absolute opacity-100 border-1 rounded-md'
+                    style={{ left: x + "px", top: y + "px" }}
+                >
+                    Name
+                </div> : (null)
+            }
+        </div >
     );
 };
 

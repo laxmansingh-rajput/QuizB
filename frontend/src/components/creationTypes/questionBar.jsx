@@ -2,13 +2,31 @@ import React, { useEffect, useRef, useState } from 'react'
 
 const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno }) => {
   const Ref = useRef(null);
+  const blockRef = useRef(null);
   const [layout, setlayout] = useState(['box1', 'box2'])
   const [draggedItem, setDraggedItem] = useState(null)
+  const [adjustment, setadjustment] = useState(null)
+  const [width, setwidth] = useState(0)
   useEffect(() => {
     if (Ref.current) {
       Ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [qno])
+
+  useEffect(() => {
+    const measure = () => {
+      if (blockRef.current) {
+        setwidth(blockRef.current.offsetWidth)
+      }
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => {
+      window.removeEventListener('resize', measure)
+    }
+  }, [])
+
+
   const handelQuestionswitch = (i) => {
     setqno(i + 1)
   }
@@ -22,9 +40,11 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
     e.dataTransfer.effectAllowed = 'move';
   }
 
-  const handleDragOver = (e) => {
+  const handleDragOver = (e, box) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
+    if (draggedItem && draggedItem != box)
+      setadjustment(box)
   }
 
   const handleDrop = (e, dropTarget) => {
@@ -43,19 +63,36 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
       });
     }
     setDraggedItem(null);
+    setadjustment(null)
   }
 
   const handleDragEnd = () => {
     setDraggedItem(null);
+    setadjustment(null)
   }
-
+  function getwidth() {
+    return (6 * width / 10) + 'px'
+  }
+  function getwidth2() {
+    return (4 * width / 10) + 'px'
+  }
   const boxes = {
-    box1: (<div draggable='true' className='h-full w-4/10  '
+
+    box1: (<div draggable="true" className="h-full w-4/10 relative z-40"
       onDragStart={(e) => handleDragStart(e, 'box1')}
-      onDragOver={handleDragOver}
+      onDragOver={(e) => handleDragOver(e, 'box1')}
       onDrop={(e) => handleDrop(e, 'box1')}
       onDragEnd={handleDragEnd}
+      onDragLeave={() => setadjustment(null)}
+
     >
+      {
+        <div style={{ width: getwidth() }} className={`z-20 pointer-events-none h-full border-2 border-blue-950 transition-all ease-in duration-100
+                     ${(layout[0] === 'box1') ? 'left-0' : 'right-0'} rounded-md absolute ${(adjustment === 'box1') ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
+          <div className='h-full w-full bg-blue-400 opacity-10'>
+          </div>
+        </div>
+      }
       <div className='h-full w-full border-2 rounded-md flex items-center justify-center gap-4 px-4 py-2 z-50'>
         <button
           className='text-sm px-3 py-1 h-8 w-10 cursor-pointer rounded-md flex items-center justify-center text-white font-semibold  bg-[#4A90E2] border border-[#1A1A1A] transition-all duration-200 hover:scale-95'
@@ -96,14 +133,23 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
 
       </div>
     </div>),
-    box2: (<div draggable='true' className='h-full w-6/10' onDragStart={(e) => handleDragStart(e, 'box2')}
-      onDragOver={handleDragOver}
+    box2: (<div draggable='true' className='z-30 h-full w-6/10 relative' onDragStart={(e) => handleDragStart(e, 'box2')}
+      onDragOver={(e) => handleDragOver(e, 'box2')}
       onDrop={(e) => handleDrop(e, 'box2')}
       onDragEnd={handleDragEnd}
-    >
+      onDragLeave={() => setadjustment(null)}
 
+    >
+      {
+        <div style={{ width: getwidth2() }} className={`z-20 pointer-events-none h-full border-2 border-blue-950 transition-all ease-in duration-100
+                     ${(layout[0] === 'box2') ? 'left-0' : 'right-0'} rounded-md absolute ${(adjustment === 'box2') ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
+          <div className='h-full w-full bg-blue-400 opacity-10'>
+
+          </div>
+        </div>
+      }
       <div className='border-2  rounded-md h-full w-full  flex items-center px-30 justify-center gap-2 overflow-x-auto scrollbar-thin z-50 '>
-        <div className='h-full w-60 flex  items-center justify-center gap-2 overflow-x-auto scrollbar-thin relative '>
+        <div className='h-full w-60 flex  items-center justify-center gap-2 overflow-x-auto scrollbar-thin relative'>
           {
             list.map((_, i) => (
               <div ref={(i == qno - 1) ? Ref : null} key={i}
@@ -118,7 +164,7 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
     </div>)
   }
   return (
-    <div className='h-full w-full flex gap-2 items center justify-center '>
+    <div ref={blockRef} className='h-full w-full flex gap-2 items-center justify-center '>
       {
         layout.map((element, i) => (
           boxes[element]
