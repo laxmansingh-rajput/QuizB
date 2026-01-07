@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 2px;
+  height: 1px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #888;
+  /* Scroll thumb color */
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+}
+
+@theme {
+  --color-primary: #F4F9FF;
+  --color-primary-shadow: #1A2A43;
+  --color-primary-text: #1A1A1A;
+  --color-primary-button: #4A90E2;
+  --color-primary-card: #E0F0FF;
+  --color-primary-card-text: #5F6A7D;
+  --color-primary-tool-card: #d6edff;
+  --color-primary-tool-card-text: #5F6A7D;
+  --color-primary-dark: #161B22;
+  --color-primary-dark-text: #F1F1F1;
+  --color-primary-dark-button: #8957E5;
+  --color-primary-dark-card: #1F1F2F;
+  --color-primary-dark-card-text: #A0A0B2;
+  --color-primary-dark-tool-card: #30303d;
+  --color-primary-dark-tool-card-text: #A0A0B2;
+  --color-primary-dark-shadow: #485474;
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+}
