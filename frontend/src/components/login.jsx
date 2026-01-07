@@ -18,7 +18,7 @@ const Login = () => {
   const onSubmit = (data) => console.log(data)
   const navigte = useNavigate()
   return (
-    <div className='h-[100vh] w-[100vw] pt-11  bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#F1F1F1] flex items-center justify-center 
+    <div className='h-[100vh] w-[100vw] pt-11  bg-primary text-xl text-primary-text dark:bg-primary-dark text-primary-dark-text flex items-center justify-center 
     '>
       <img src={qb} className='fixed top-3 left-5 h-15 cursor-pointer' onClick={() => navigte('/')} alt="" />
       <div className='h-3/4 w-1/2  rounded-2xl flex items-center justify-center bg-white dark:bg-[#28283b] dark:shadow-[#69698d] p-3 shadow-lg gap-2'>
@@ -36,7 +36,7 @@ const Login = () => {
               <img src={(pass ? ((mode == "dark") ? darkheye : heye) : ((mode == "dark") ? darkeye : eye))} className='absolute right-11 top-[11px] h-5 cursor-pointer'
                 onClick={() => setpass(!pass)} alt="" />
             </div>
-            <input type="submit" className='h-10  rounded-full pl-7 pr-7 text-2xl cursor-pointer bg-[#4A90E2] dark:bg-primary-dark-button hover:bg-[#357ABD]
+            <input type="submit" className='h-10  rounded-full pl-7 pr-7 text-2xl cursor-pointer bg-primary-button dark:bg-primary-dark-button hover:bg-[#357ABD]
              dark:hover:bg-[#72B5FF]  ' />
           </form>
         </div>

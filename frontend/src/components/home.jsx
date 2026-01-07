@@ -21,16 +21,17 @@ const Home = () => {
 
   }
   return (
-    <div className='h-[100vh] w-[100vw] fixed left-0 bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#F1F1F1]'>
-      <div className={'h-full max-[750px]:w-full  w-8/10 pt-20  bg-[#F4F9FF] flex items-start justify-center text-xl text-[#1A1A1A]                                    overflow-auto dark:bg-primary-dark dark:text-[#F1F1F1] transition-all duration-500 ease-in-out fixed min-w-[700px]:left-0 right-0 ' +
+    <div className='h-[100vh] w-[100vw] fixed left-0 bg-primary text-xl text-primary-text dark:bg-primary-dark
+     dark:text-primary-dark-text'>
+      <div className={'h-full max-[750px]:w-full  w-8/10 pt-20  bg-primary flex items-start justify-center text-xl text-primary-text  overflow-auto dark:bg-primary-dark  transition-all duration-500 ease-in-out fixed min-w-[700px]:left-0 right-0 ' +
        (`${(show == "show") && "p-4"} `) + ((show != "show") ? 'w-full' : ' max-[950px]:w-3/4')
       }>
-        <div className={'flex flex-col gap-3 mb-10 dark:text-[#F1F1F1] max-[900px]:w-full p-2 ' + ((show != "show") ? "w-4/5" : "")}>
+        <div className={'flex flex-col gap-3 mb-10 dark:text-primary-dark-text max-[900px]:w-full p-2 ' + ((show != "show") ? "w-4/5" : "")}>
           <div className='flex flex-col gap-5 w-full'>
             <div className='text-3xl font-bold w-full text-start'>
               Create & Practice Quizzes — Your Way
             </div>
-            <div className='text-start dark:text-[#F1F1F1]'>
+            <div className='text-start dark:text-primary-dark-text'>
               Build quizzes your way — manually for full control or let our AI generate smart questions in seconds. Practice adaptively with personalized quizzes made just for you.
             </div>
             <div className='w-full flex justify-center  '>
@@ -52,7 +53,8 @@ const Home = () => {
             </div>
             <div className='cards flex items-center justify-center gap-8 flex-wrap'>
 
-              <div className='h-70 w-60  rounded-2xl flex flex-col bg-[#E0F0FF] p-5 text-[#5F6A7D] dark:bg-[#1F1F2F] dark:text-[#A0A0B2] justify-center gap-3 shadow-xl hover:shadow-[5px_5px_20px_#1A2A43]/40 dark:hover:shadow-[5px_5px_20px_#485474]  transition-all duration-500 ease-out cursor-pointer'>
+              <div className='h-70 w-60  rounded-2xl flex flex-col bg-primary-tool-card p-5 text-primary-tool-card-text dark:bg-primary-dark-card
+               dark:text-primary-dark-card-text justify-center gap-3 shadow-xl hover:shadow-[5px_5px_20px_#1A2A43]/40 dark:hover:shadow-[5px_5px_20px_#485474]  transition-all duration-500 ease-out cursor-pointer'>
                 <div className=' h-10 text-center font-medium'>
                   Create And Host
                 </div>
@@ -64,7 +66,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className='h-70 w-60  rounded-2xl flex flex-col bg-[#E0F0FF] p-5 text-[#5F6A7D] dark:bg-[#1F1F2F] dark:text-[#A0A0B2] justify-center gap-3 shadow-xl hover:shadow-[5px_5px_20px_#1A2A43]/40 dark:hover:shadow-[5px_5px_20px_#485474]  transition-all duration-500 ease-out cursor-pointer'>
+              <div className='h-70 w-60  rounded-2xl flex flex-col bg-primary-tool-card p-5 text-primary-tool-card-text dark:bg-primary-dark-card dark:text-primary-dark-card-text justify-center gap-3 shadow-xl hover:shadow-[5px_5px_20px_#1A2A43]/40 dark:hover:shadow-[5px_5px_20px_#485474]  transition-all duration-500 ease-out cursor-pointer'>
                 <div className=' h-10 text-center font-medium'>
                   Generate with AI
                 </div>
@@ -76,7 +78,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className='h-70 w-60  rounded-2xl flex flex-col bg-[#E0F0FF] p-5 text-[#5F6A7D] dark:bg-[#1F1F2F] dark:text-[#A0A0B2] justify-center gap-3 shadow-xl hover:shadow-[5px_5px_20px_#1A2A43]/40 dark:hover:shadow-[5px_5px_20px_#485474] t transition-all duration-300 ease-out cursor-pointer'>
+              <div className='h-70 w-60  rounded-2xl flex flex-col bg-primary-tool-card p-5 text-primary-tool-card-text dark:bg-primary-dark-card dark:text-primary-dark-card-text justify-center gap-3 shadow-xl hover:shadow-[5px_5px_20px_#1A2A43]/40 dark:hover:shadow-[5px_5px_20px_#485474] t transition-all duration-300 ease-out cursor-pointer'>
                 <div className=' h-10 text-center font-medium'>
                   Practice with AI
                 </div>
@@ -88,7 +90,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className='h-70 w-60  rounded-2xl flex flex-col bg-[#E0F0FF] p-5 text-[#5F6A7D] dark:bg-[#1F1F2F] dark:text-[#A0A0B2] justify-center gap-3 shadow-xl hover:shadow-[5px_5px_20px_#1A2A43]/40 dark:hover:shadow-[5px_5px_20px_#485474] t transition-all duration-300 ease-out cursor-pointer'>
+              <div className='h-70 w-60  rounded-2xl flex flex-col bg-primary-tool-card p-5 text-primary-tool-card-text dark:bg-primary-dark-card dark:text-primary-dark-card-text justify-center gap-3 shadow-xl hover:shadow-[5px_5px_20px_#1A2A43]/40 dark:hover:shadow-[5px_5px_20px_#485474] t transition-all duration-300 ease-out cursor-pointer'>
                 <div className=' h-10 text-center font-medium'>
                   Results
                 </div>

@@ -28,15 +28,15 @@ const Create = () => {
 
   return (
     <div className="min-h-screen w-screen relative overflow-y-auto box-border overflow-x-hidden">
-      <div className="min-h-[100vh] w-[100vw] absolute left-0 bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#F1F1F1] box-border">
+      <div className="min-h-[100vh] w-[100vw] absolute left-0 bg-primary text-xl text-primary-text dark:bg-primary-dark text-primary-dark-text box-border">
         <div
           className={
-            'min-h-full pt-20 bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#F1F1F1] transition-all duration-500 ease-in-out absolute max-[750px]:w-full min-w-[700px]:left-0 right-0 ' +
+            'min-h-full pt-20 bg-primary text-xl text-primary-text dark:bg-primary-dark text-primary-dark-text transition-all duration-500 ease-in-out absolute max-[750px]:w-full min-w-[700px]:left-0 right-0 ' +
             (show !== 'show' ? 'w-full' : 'max-[950px]:w-3/4 w-8/10')
           }
           ref={blockRef}
         >
-          <h1 className="text-4xl font-bold text-[#1A1A1A] dark:text-[#F1F1F1] p-5 mt-5 box-border">
+          <h1 className="text-4xl font-bold text-primary-text text-primary-dark-text p-5 mt-5 box-border">
             Select Your Preference
           </h1>
           <div

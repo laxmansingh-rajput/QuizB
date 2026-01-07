@@ -37,10 +37,19 @@ html, body, #root {
 
 @theme {
   --color-primary: #F4F9FF;
+  --color-primary-text: #1A1A1A;
   --color-primary-button: #4A90E2;
+  --color-primary-card: #E0F0FF;
+  --color-primary-card-text: #5F6A7D;
+  --color-primary-tool-card: #d6edff;
+  --color-primary-tool-card-text: #5F6A7D;
   --color-primary-dark: #161B22;
+  --color-primary-dark-text: #F1F1F1;
   --color-primary-dark-button: #8957E5;
   --color-primary-dark-card: #1F1F2F;
+  --color-primary-dark-card-text: #A0A0B2;
+  --color-primary-dark-tool-card: #30303d;
+  --color-primary-dark-tool-card-text: #A0A0B2;
 }
 
 #root {

@@ -174,8 +174,8 @@ const quiz = () => {
     }
 
     const vertical = {
-        'top': (<div ref={blockRef} className="up h-9/10 w-full">
-            <div draggable className='border-2 max-h-full h-full  row-start-1 col-start-1 col-end-2  p-2 box-border rounded-md relative flex flex-col gap-15'
+        'top': (<div ref={blockRef} className="up h-9/10 w-full text-primary-text dark:text-primary-dark-text/60 ">
+            <div draggable className='border-1 max-h-full h-full  row-start-1 col-start-1 col-end-2  p-2 box-border rounded-md relative flex flex-col gap-15'
                 onDragStart={(e) => handleDragStart(e, 'top')}
                 onDragEnd={handleDragEnd}
             >
@@ -235,13 +235,13 @@ const quiz = () => {
         </div>)
         ,
         'bottom': (
-            <div className='down h-1/10  w-full relative'
+            <div className='down h-1/10  w-full relative text-primary-text dark:text-primary-dark-text/60 '
                 onDrop={(e) => handelDropVertical(e, 'bottom')}
                 onDragOver={(e) => handleDragOver(e, 'vertical')}
             >
                 {
                     <div style={{ height: height + "px" }}
-                        className={` w-full border-2 pointer-events-none border-blue-950 transition-all ease-in duration-100 ${(verticalLayout[0] === 'top') ? 'bottom-0' : 'top-0'} rounded-md absolute ${(adjustment === 'vertical') ? ' opacity-100 scale-100' : " opacity-0 hidden scale-95"}`}>
+                        className={` w-full border-1 pointer-events-none border-blue-950 transition-all ease-in duration-100 ${(verticalLayout[0] === 'top') ? 'bottom-0' : 'top-0'} rounded-md absolute ${(adjustment === 'vertical') ? ' opacity-100 scale-100' : " opacity-0 hidden scale-95"}`}>
                         <div className={'h-full w-full bg-blue-400 opacity-10 '}>
 
                         </div>
@@ -256,7 +256,7 @@ const quiz = () => {
 
     const horizontal = {
         'left': (
-            <div className={'h-full w-9/10 flex flex-col gap-2 relative '}
+            <div className={'h-full w-9/10 flex flex-col gap-2 relative text-primary-text dark:text-primary-dark-text/60 '}
                 onDrop={(e) => handelDropHorizontal(e, 'left')}
                 onDragOver={(e) => handleDragOver(e, 'horizontal')}
                 onDragLeave={() => setadjustment(null)}
@@ -266,7 +266,7 @@ const quiz = () => {
                 }}
             >
                 {
-                    <div className={`h-full w-1/10 border-2 pointer-events-none border-blue-950 transition-all ease-in duration-100
+                    <div className={`h-full w-1/10 border-1 pointer-events-none border-blue-950 transition-all ease-in duration-100
                      ${(horizontalLayout[0] === 'left') ? 'left-0' : 'right-0'} rounded-md absolute ${(adjustment === 'horizontal') ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
                         <div className='h-full w-full bg-blue-400 opacity-10'>
 
@@ -281,7 +281,7 @@ const quiz = () => {
             </div>
         ),
         'right': (
-            <div draggable className={'h-full w-1/10 ' + (Visible ? " cursor-pointer " : " ")}
+            <div draggable className={'h-full w-1/10 text-primary-text dark:text-primary-dark-text/60 ' + (Visible ? " cursor-pointer " : " ")}
                 onDragStart={(e) => handleDragStart(e, 'right')}
                 onDragEnd={handleDragEnd}
                 onDrag={(e) => {
@@ -289,7 +289,7 @@ const quiz = () => {
                     sety(e.clientY)
                 }}
             >
-                <div className='border-2  h-full w-full rounded-md p-1 '>
+                <div className='border-1  h-full w-full rounded-md p-1 '>
                     <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
                 </div>
             </div>
@@ -298,7 +298,7 @@ const quiz = () => {
 
 
     return (
-        <div className='h-[100vh] relative w-[100vw] bg-[#F4F9FF] text-xl text-[#1A1A1A] dark:bg-primary-dark dark:text-[#A0A0B2]  box-border pt-18  p-2 
+        <div className='h-[100vh] relative w-[100vw] bg-primary text-xl text-primary-text dark:bg-primary-dark dark:text-dark-card-text  box-border pt-18  p-2 
         overflow-hidden'>
             <div className={`h-full w-full flex items-center justify-center gap-2  `}>
                 {
@@ -311,22 +311,22 @@ const quiz = () => {
             {
                 (Visible == true) ? (<div className='absolute h-full w-full top-0 left-0 pointer-events-none bg-white/40 pt-15'>
                     <div className='h-2 top-15 w-full flex items-center absolute justify-center'>
-                        <div className=' h-full w-80 bg-blue-600 border-2  rounded-full '>
+                        <div className=' h-full w-80 bg-blue-600 border-1  rounded-full '>
 
                         </div>
                     </div>
                     <div className='h-2 bottom-0 w-full flex items-center absolute justify-center'>
-                        <div className=' h-full w-80 bg-blue-600 border-2  rounded-full '>
+                        <div className=' h-full w-80 bg-blue-600 border-1  rounded-full '>
 
                         </div>
                     </div>
                     <div className='h-full left-0 w-2 flex items-center absolute justify-center'>
-                        <div className=' h-80 w-full bg-blue-600 border-2  rounded-full '>
+                        <div className=' h-80 w-full bg-blue-600 border-1  rounded-full '>
 
                         </div>
                     </div>
                     <div className='h-full right-0 w-2 flex items-center absolute justify-center'>
-                        <div className=' h-80 w-full bg-blue-600 border-2  rounded-full '>
+                        <div className=' h-80 w-full bg-blue-600 border-1  rounded-full '>
 
                         </div>
                     </div>
