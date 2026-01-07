@@ -18,7 +18,7 @@ const Login = () => {
   const onSubmit = (data) => console.log(data)
   const navigte = useNavigate()
   return (
-    <div className='h-[100vh] w-[100vw] pt-11  bg-primary text-xl text-primary-text dark:bg-primary-dark text-primary-dark-text flex items-center justify-center 
+    <div className='h-[100vh] w-[100vw] pt-11  bg-primary text-xl text-primary-text dark:bg-primary-dark dark:text-primary-dark-text flex items-center justify-center 
     '>
       <img src={qb} className='fixed top-3 left-5 h-15 cursor-pointer' onClick={() => navigte('/')} alt="" />
       <div className='h-3/4 w-1/2  rounded-2xl flex items-center justify-center bg-white dark:bg-[#28283b] dark:shadow-[#69698d] p-3 shadow-lg gap-2'>

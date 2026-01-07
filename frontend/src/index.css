@@ -37,6 +37,7 @@ html, body, #root {
 
 @theme {
   --color-primary: #F4F9FF;
+  --color-primary-shadow: #1A2A43;
   --color-primary-text: #1A1A1A;
   --color-primary-button: #4A90E2;
   --color-primary-card: #E0F0FF;
@@ -50,6 +51,7 @@ html, body, #root {
   --color-primary-dark-card-text: #A0A0B2;
   --color-primary-dark-tool-card: #30303d;
   --color-primary-dark-tool-card-text: #A0A0B2;
+  --color-primary-dark-shadow: #485474;
 }
 
 #root {
