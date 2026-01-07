@@ -37,7 +37,10 @@ html, body, #root {
 
 @theme {
   --color-primary: #F4F9FF;
-  --color-primary-dark: #181A1F;
+  --color-primary-button: #4A90E2;
+  --color-primary-dark: #161B22;
+  --color-primary-dark-button: #8957E5;
+  --color-primary-dark-card: #1F1F2F;
 }
 
 #root {

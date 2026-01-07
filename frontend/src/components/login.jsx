@@ -36,7 +36,7 @@ const Login = () => {
               <img src={(pass ? ((mode == "dark") ? darkheye : heye) : ((mode == "dark") ? darkeye : eye))} className='absolute right-11 top-[11px] h-5 cursor-pointer'
                 onClick={() => setpass(!pass)} alt="" />
             </div>
-            <input type="submit" className='h-10  rounded-full pl-7 pr-7 text-2xl cursor-pointer bg-[#4A90E2] dark:bg-[#4C9AFF] hover:bg-[#357ABD]
+            <input type="submit" className='h-10  rounded-full pl-7 pr-7 text-2xl cursor-pointer bg-[#4A90E2] dark:bg-primary-dark-button hover:bg-[#357ABD]
              dark:hover:bg-[#72B5FF]  ' />
           </form>
         </div>

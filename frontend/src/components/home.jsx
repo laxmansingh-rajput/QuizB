@@ -39,10 +39,10 @@ const Home = () => {
               </div>
             </div>
             <div class="flex  items-center justify-center flex-wrap gap-4 mt-2">
-              <button class="bg-[#4A90E2] dark:bg-[#4C9AFF] dark:hover:bg-[#72B5FF] text-white px-6 py-3 rounded-lg cursor-pointer
-               hover:bg-[#357ABD] transition"
+              <button class="bg-primary-buttom dark:bg-primary-dark-button hover:scale-95 transition-all ease-in duration-150 text-white px-6 py-1.5 font-semibold rounded-lg cursor-pointer
+                "
                onClick={handelHost}>Host</button>
-              <button class="bg-[#4A90E2] dark:bg-[#4C9AFF] dark:hover:bg-[#72B5FF] text-white px-6 py-3 rounded-lg cursor-pointer hover:bg-[#357ABD] transition" onClick={handelPractice}>Practice</button>
+              <button class="bg-primary-buttom dark:bg-primary-dark-button hover:scale-95 transition-all ease-in duration-150 text-white px-6 py-1.5 font-semibold rounded-lg cursor-pointer  " onClick={handelPractice}>Practice</button>
             </div>
           </div>
 
@@ -52,7 +52,7 @@ const Home = () => {
             </div>
             <div className='cards flex items-center justify-center gap-8 flex-wrap'>
 
-              <div className='h-70 w-60  rounded-2xl flex flex-col bg-[#E0F0FF] p-5 text-[#5F6A7D] dark:bg-[#1F1F2F] dark:text-[#A0A0B2] justify-center gap-3 shadow-xl hover:shadow-[#1A2A43] dark:hover:shadow-[#485474] transition-all duration-300 ease-out cursor-pointer'>
+              <div className='h-70 w-60  rounded-2xl flex flex-col bg-[#E0F0FF] p-5 text-[#5F6A7D] dark:bg-[#1F1F2F] dark:text-[#A0A0B2] justify-center gap-3 shadow-xl hover:shadow-[5px_5px_20px_#1A2A43]/40 dark:hover:shadow-[5px_5px_20px_#485474]  transition-all duration-500 ease-out cursor-pointer'>
                 <div className=' h-10 text-center font-medium'>
                   Create And Host
                 </div>
@@ -64,7 +64,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className='h-70 w-60  rounded-2xl flex flex-col bg-[#E0F0FF] p-5 text-[#5F6A7D] dark:bg-[#1F1F2F] dark:text-[#A0A0B2] justify-center gap-3 shadow-xl hover:shadow-[#1A2A43] dark:hover:shadow-[#485474] transition-all duration-300 ease-out cursor-pointer'>
+              <div className='h-70 w-60  rounded-2xl flex flex-col bg-[#E0F0FF] p-5 text-[#5F6A7D] dark:bg-[#1F1F2F] dark:text-[#A0A0B2] justify-center gap-3 shadow-xl hover:shadow-[5px_5px_20px_#1A2A43]/40 dark:hover:shadow-[5px_5px_20px_#485474]  transition-all duration-500 ease-out cursor-pointer'>
                 <div className=' h-10 text-center font-medium'>
                   Generate with AI
                 </div>
@@ -76,7 +76,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className='h-70 w-60  rounded-2xl flex flex-col bg-[#E0F0FF] p-5 text-[#5F6A7D] dark:bg-[#1F1F2F] dark:text-[#A0A0B2] justify-center gap-3 shadow-xl hover:shadow-[#1A2A43] dark:hover:shadow-[#485474] transition-all duration-300 ease-out cursor-pointer'>
+              <div className='h-70 w-60  rounded-2xl flex flex-col bg-[#E0F0FF] p-5 text-[#5F6A7D] dark:bg-[#1F1F2F] dark:text-[#A0A0B2] justify-center gap-3 shadow-xl hover:shadow-[5px_5px_20px_#1A2A43]/40 dark:hover:shadow-[5px_5px_20px_#485474] t transition-all duration-300 ease-out cursor-pointer'>
                 <div className=' h-10 text-center font-medium'>
                   Practice with AI
                 </div>
@@ -88,7 +88,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className='h-70 w-60  rounded-2xl flex flex-col bg-[#E0F0FF] p-5 text-[#5F6A7D] dark:bg-[#1F1F2F] dark:text-[#A0A0B2] justify-center gap-3 shadow-xl hover:shadow-[#1A2A43] dark:hover:shadow-[#485474] transition-all duration-300 ease-out cursor-pointer'>
+              <div className='h-70 w-60  rounded-2xl flex flex-col bg-[#E0F0FF] p-5 text-[#5F6A7D] dark:bg-[#1F1F2F] dark:text-[#A0A0B2] justify-center gap-3 shadow-xl hover:shadow-[5px_5px_20px_#1A2A43]/40 dark:hover:shadow-[5px_5px_20px_#485474] t transition-all duration-300 ease-out cursor-pointer'>
                 <div className=' h-10 text-center font-medium'>
                   Results
                 </div>

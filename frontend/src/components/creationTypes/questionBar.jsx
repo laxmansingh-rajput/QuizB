@@ -87,7 +87,7 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
 
     >
       {
-        <div style={{ width: getwidth() }} className={`z-20 pointer-events-none h-full border-2 border-blue-950 transition-all ease-in duration-100
+        <div style={{ width: getwidth() }} className={`z-20 pointer-events-none h-full border-2 border-blue-950  transition-all ease-in duration-100
                      ${(layout[0] === 'box1') ? 'left-0' : 'right-0'} rounded-md absolute ${(adjustment === 'box1') ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
           <div className='h-full w-full bg-blue-400 opacity-10'>
           </div>
@@ -95,7 +95,7 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
       }
       <div className='h-full w-full border-2 rounded-md flex items-center justify-center gap-4 px-4 py-2 z-50'>
         <button
-          className='text-sm px-3 py-1 h-8 w-10 cursor-pointer rounded-md flex items-center justify-center text-white font-semibold  bg-[#4A90E2] border border-[#1A1A1A] transition-all duration-200 hover:scale-95'
+          className='text-[12px] px-5 py-1 h-8 w-10 cursor-pointer rounded-md flex items-center justify-center text-white font-semibold  bg-[#4A90E2] dark:bg-primary-dark-button dark:hover:scale-95  border border-[#1A1A1A] transition-all duration-200 hover:scale-95'
           onClick={() => setqno(qno > 1 ? qno - 1 : 1)}>
           Prev
         </button>
@@ -123,10 +123,11 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
           onBlur={() => { setcurr(qno) }}
         />
 
-        <span className='text-sm font-medium'>of {list.length}</span>
+        <span className='text-[12px] font-medium'>of {list.length}</span>
 
         <button
-          className='text-sm px-3 py-1 h-8 w-10 cursor-pointer rounded-md flex items-center justify-center text-white font-semibold  bg-[#4A90E2] border border-[#1A1A1A] transition-all duration-200 hover:scale-95'
+          className='text-[12px] px-5 py-1 h-8 w-10 cursor-pointer rounded-md flex items-center justify-center text-white font-semibold  bg-[#4A90E2] dark:bg-primary-dark-button  border
+           border-[#1A1A1A] transition-all duration-200 hover:scale-95'
           onClick={() => setqno(qno < list.length ? qno + 1 : list.length)}>
           Next
         </button>
@@ -153,7 +154,7 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
           {
             list.map((_, i) => (
               <div ref={(i == qno - 1) ? Ref : null} key={i}
-                className={(qno == i + 1) ? ' border-1  h-8 w-10 cursor-pointer rounded-sm flex items-center  transition-all ease-in  p-3 justify-center text-white font-semibold  bg-[#4A90E2] hover:scale-95 border-[#1A1A1A]' : 'border-1 hover:scale-95 h-4 w-5 text-sm  rounded-sm flex items-center cursor-pointer transition-all ease-in  p-3 justify-center font-semibold border-[#1A1A1A]'}
+                className={(qno == i + 1) ? ' border-1  h-8 w-10 cursor-pointer rounded-sm flex items-center  transition-all ease-in  p-3 justify-center text-white font-semibold  bg-[#4A90E2] dark:bg-primary-dark-button dark:hover:scale-95  hover:scale-95 border-[#1A1A1A]' : 'border-1 hover:scale-95 h-4 w-5 text-sm  rounded-sm flex items-center cursor-pointer transition-all ease-in  p-3 justify-center font-semibold border-[#1A1A1A]'}
                 onClick={() => handelQuestionswitch(i)} >
                 {`${i + 1}`}
               </div>

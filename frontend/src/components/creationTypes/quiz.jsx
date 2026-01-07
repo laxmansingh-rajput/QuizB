@@ -211,7 +211,7 @@ const quiz = () => {
                     </div>
                 </div>
                 <div className='h-auto w-full absolute left-0 bottom-2'>
-                    <button type="button" className=' bg-[#4A90E2]  hover:bg-[#357ABD] text-white dark:bg-[#4C9AFF] dark:hover:bg-[#72B5FF] text-sm font-semibold transition-colors duration-500 ease-in-out cursor-pointer rounded-md px-3 py-1 relative ' onClick={() => { handelAddOption() }}>
+                    <button type="button" className=' bg-primary-button   text-white dark:bg-primary-dark-button hover:scale-95  text-sm font-semibold transition-all duration-500 ease-in-out cursor-pointer rounded-md px-3 py-1 relative ' onClick={() => { handelAddOption() }}>
                         Add Option
                     </button>
                 </div>
