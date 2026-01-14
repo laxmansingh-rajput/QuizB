@@ -57,7 +57,7 @@ const Nav = ({ hide }) => {
                         <img
                             src={mode === "dark" ? moon : sun}
                             alt=""
-                            className={`h-[20px] p-[1px] rounded-full absolute transition-all duration-500 ${mode === "dark" ? 'translate-x-[24px]' : 'translate-x-[2px]'
+                            className={`h-[20px] p-[1px] rounded-full absolute transition-all duration-1000 ${mode === "dark" ? 'translate-x-[24px] rotate-360' : 'translate-x-[2px] -rotate-360'
                                 }`}
                         />
                     </div>

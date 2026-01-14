@@ -12,8 +12,8 @@ const quiz = () => {
             </div>
         ),
         'box2': (
-            <div className='h-full w-8/10  '>
-
+            <div className='h-full w-8/10 px-4 py-2  shadow-primary-shadow dark:shadow-[#ffff] '>
+                question
             </div>)
     }
     return (

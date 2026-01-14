@@ -13,7 +13,7 @@ const Nav = () => {
                 onClick={() => {
                     setmode(mode == 'light' ? 'dark' : 'light')
                 }}>
-                <img src={mode == 'dark' ? moon : sun} className={'h-3.5 transition-all ease-in-out duration-300 ' + (mode == 'dark' ? " translate-x-4" : " translate-x-0")} alt="" />
+                <img src={mode == 'dark' ? moon : sun} className={'select-none h-3.5 transition-all ease-in-out duration-800 ' + (mode == 'dark' ? " translate-x-4 rotate-360" : " translate-x-0 -rotate-360")} alt="" />
             </div>
         </div>
     );
