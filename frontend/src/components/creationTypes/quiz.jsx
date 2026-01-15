@@ -7,7 +7,11 @@ import cross from '../../assets/cross.svg'
 import ToolBar from './toolBar.jsx';
 import Questions from './questionBar.jsx'
 import useQuizState from './quizFunction/useQuizState.js';
-
+import {
+    QuestionHandeler1, optionHandeler1,
+    generateErr1, handelRemoveOption1,
+    handelAddOption1, handelCorrect1
+} from './quizFunction/quizHandler.js';
 const quiz = () => {
     const { list, setlist,
         err, seterr,
@@ -37,67 +41,14 @@ const quiz = () => {
     }, []);
 
 
-    const QuestionHandeler = (e) => {
-        const updatedList = [...list];
-        updatedList[qno - 1].question = e.target.value;
-        setlist(updatedList)
-    }
+    const QuestionHandeler = (e) => QuestionHandeler1(e, list, setlist, qno)
+    const optionHandeler = (e, index) => optionHandeler1(e, index, list, setlist, qno)
+    const generateErr = (txt) => generateErr1(txt, seterr)
+    const handelRemoveOption = (i) => handelRemoveOption1(i, list, generateErr, setlist, qno)
+    const handelAddOption = (i) => handelAddOption1(i, list, setlist, generateErr, qno)
+    const handelCorrect = (e) => handelCorrect1(e, list, qno, setlist,type)
 
-    const optionHandeler = (e, index) => {
-        const updatedList = [...list];
-        updatedList[qno - 1].options[index] = e.target.value;
-        setlist(updatedList);
-    }
 
-    const generateErr = (txt) => {
-        seterr(txt);
-        setTimeout(() => {
-            seterr("")
-        }, 3000);
-    }
-
-    const handelRemoveOption = (i) => {
-        const updatedList = [...list];
-        if (updatedList[qno - 1].options.length <= 2) {
-            generateErr('Question should have minimum two options')
-        } else {
-            updatedList[qno - 1].options.splice(i, 1)
-            updatedList[qno - 1].correct.splice(i, 1)
-            setlist(updatedList)
-        }
-    }
-    const handelAddOption = (i) => {
-        const updatedList = [...list];
-        if (updatedList[qno - 1].options.length == 4) {
-            generateErr('Max options created')
-        } else {
-            updatedList[qno - 1].options.push("")
-            updatedList[qno - 1].correct.push(false)
-            setlist(updatedList)
-        }
-    }
-    const handelCorrect = (e) => {
-        console.log(e.target.value)
-        const correct = list[qno - 1].correct;
-        if (type) {
-            correct.forEach((value, index) => {
-                if (index == e.target.value) {
-                    correct[index] = !value;
-                    console.log(!value)
-                } else { correct[index] = false; }
-            });
-        } else {
-            correct.forEach((value, index) => {
-                if (index == e.target.value) {
-                    correct[index] = !value;
-                    console.log(!value)
-                }
-            });
-        }
-        const updatedList = [...list]
-        updatedList[qno - 1].correct = [...correct];
-        setlist(updatedList)
-    }
     const handleDragStart = (e, boxName) => {
         setDraggedItem(boxName);
         e.dataTransfer.effectAllowed = 'move';
