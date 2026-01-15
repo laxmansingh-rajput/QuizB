@@ -1,30 +1,30 @@
 import React from 'react'
-import Icons from './icons'
-import lightMultiple from '../../assets/lightMultiple.svg'
-import darkMultiple from '../../assets/darkMultiple.svg'
-import lightSingle from '../../assets/lightSingle.svg'
-import darkSingle from '../../assets/darkSingle.svg'
-import lightEye from '../../assets/lightEye.svg'
-import darkEye from '../../assets/darkEye.svg'
-import lightUpload from '../../assets/lightUpload.svg'
-import darkUpload from '../../assets/darkUpload.svg'
-import Delete from '../../assets/Delete.svg'
-import darkDelete from '../../assets/darkDelete.svg'
+import Icons from '../icons'
+import lightMultiple from '../../../assets/lightMultiple.svg'
+import darkMultiple from '../../../assets/darkMultiple.svg'
+import lightSingle from '../../../assets/lightSingle.svg'
+import darkSingle from '../../../assets/darkSingle.svg'
+import lightEye from '../../../assets/lightEye.svg'
+import darkEye from '../../../assets/darkEye.svg'
+import lightUpload from '../../../assets/lightUpload.svg'
+import darkUpload from '../../../assets/darkUpload.svg'
+import Delete from '../../../assets/Delete.svg'
+import darkDelete from '../../../assets/darkDelete.svg'
 const toolBar = ({ list, setlist, type, qno, settype, setqno }) => {
     const handelAddSingle = () => {
         const updatedList = [...list]
         updatedList.push({ question: "", options: ["", "", ""], correct: [false, false, false], type: true })
         settype(true)
         setlist(updatedList)
-            setqno(list.length+1)
-        
+        setqno(list.length + 1)
+
     }
     const handelAddMultipe = () => {
         const updatedList = [...list]
         updatedList.push({ question: "", options: ["", "", ""], correct: [false, false, false], type: false })
         settype(false)
         setlist(updatedList)
-        setqno(list.length+1)
+        setqno(list.length + 1)
     }
     const handelDelete = () => {
         if (qno > 1) {

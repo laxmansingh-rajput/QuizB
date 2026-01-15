@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-import useRenderQuestion from './quizFunction/useRenderQuestion';
+import useRenderQuestion from './useRenderQuestion';
+
+
 const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno }) => {
   const Ref = useRef(null);
   const blockRef = useRef(null);

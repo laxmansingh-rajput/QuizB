@@ -4,13 +4,14 @@ import ModeContext from '../../context/context.js';
 import single from '../../assets/s.svg'
 import multiple from '../../assets/m.svg'
 import cross from '../../assets/cross.svg'
-import ToolBar from './toolBar.jsx';
-import Questions from './questionBar.jsx'
+import ToolBar from './quizComponent/toolBar.jsx';
+import Questions from './quizComponent/questionBar.jsx'
 import useQuizState from './quizFunction/useQuizState.js';
 import {
     QuestionHandeler1, optionHandeler1,
     generateErr1, handelRemoveOption1,
-    handelAddOption1, handelCorrect1
+    handelAddOption1, handelCorrect1,
+    animation3, animation4
 } from './quizFunction/quizHandler.js';
 const quiz = () => {
     const { list, setlist,
@@ -46,7 +47,9 @@ const quiz = () => {
     const generateErr = (txt) => generateErr1(txt, seterr)
     const handelRemoveOption = (i) => handelRemoveOption1(i, list, generateErr, setlist, qno)
     const handelAddOption = (i) => handelAddOption1(i, list, setlist, generateErr, qno)
-    const handelCorrect = (e) => handelCorrect1(e, list, qno, setlist,type)
+    const handelCorrect = (e) => handelCorrect1(e, list, qno, setlist, type)
+    const animation = () => animation3(animate)
+    const animation2 = () => animation4(animate)
 
 
     const handleDragStart = (e, boxName) => {
@@ -114,12 +117,6 @@ const quiz = () => {
         setadjustment(null)
         setVisible(false)
         setanimate(false)
-    }
-    const animation = () => {
-        return animate ? 'translate-y-0 scale-x-100' : "-translate-y-3  scale-x-0 ";
-    }
-    const animation2 = () => {
-        return animate ? 'translate-y-0 scale-x-100' : "translate-y-3  scale-x-0 ";
     }
     const vertical = {
         'top': (<div ref={blockRef} className="up h-9/10 w-full  text-primary-text dark:text-primary-dark-text/60 ">

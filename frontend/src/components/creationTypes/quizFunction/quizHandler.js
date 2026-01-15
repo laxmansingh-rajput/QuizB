@@ -34,7 +34,7 @@ export const handelAddOption1 = (i, list, setlist, generateErr, qno) => {
         setlist(updatedList)
     }
 }
-export const handelCorrect1 = (e, list, qno, setlist,type) => {
+export const handelCorrect1 = (e, list, qno, setlist, type) => {
     console.log(e.target.value)
     const correct = list[qno - 1].correct;
     if (type) {
@@ -55,4 +55,11 @@ export const handelCorrect1 = (e, list, qno, setlist,type) => {
     const updatedList = [...list]
     updatedList[qno - 1].correct = [...correct];
     setlist(updatedList)
+}
+
+export const animation3 = (animate) => {
+    return animate ? 'translate-y-0 scale-x-100' : "-translate-y-3  scale-x-0 ";
+}
+export const animation4 = (animate) => {
+    return animate ? 'translate-y-0 scale-x-100' : "translate-y-3  scale-x-0 ";
 }
