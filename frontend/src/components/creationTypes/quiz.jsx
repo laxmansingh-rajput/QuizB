@@ -6,32 +6,25 @@ import multiple from '../../assets/m.svg'
 import cross from '../../assets/cross.svg'
 import ToolBar from './toolBar.jsx';
 import Questions from './questionBar.jsx'
-import { useEffectEvent } from 'react';
+import useQuizState from './quizFunction/useQuizState.js';
+
 const quiz = () => {
-    const [list, setlist] = useState(() => {
-        const lista = localStorage.getItem('list');
-        if (lista) {
-            try {
-                return JSON.parse(lista);
-            } catch (err) {
-                console.error("Error parsing list from localStorage", err);
-            }
-        }
-        return [{ question: "", options: ["", "", ""], correct: [false, false, false], type: true }]
-    });
-    const [err, seterr] = useState("")
-    const [qno, setqno] = useState(list.length > 2 ? list.length : 1);
-    const [adjustment, setadjustment] = useState(null)
-    const [type, settype] = useState(list[qno - 1].type);
-    const [verticalLayout, setVerticalLayout] = useState(['top', 'bottom'])
-    const [horizontalLayout, setHorizontalLayout] = useState(['left', 'right'])
-    const [draggedItem, setDraggedItem] = useState(null)
-    const Arr = ['A', 'B', 'C', 'D']
-    const [height, setheight] = useState(null)
-    const [x, setx] = useState(null)
-    const [y, sety] = useState(null)
-    const [Visible, setVisible] = useState(false)
+    const { list, setlist,
+        err, seterr,
+        qno, setqno,
+        adjustment, setadjustment,
+        type, settype,
+        verticalLayout, setVerticalLayout,
+        horizontalLayout, setHorizontalLayout,
+        draggedItem, setDraggedItem,
+        Arr,
+        height, setheight,
+        x, setx,
+        y, sety,
+        Visible, setVisible,
+        animate, setanimate } = useQuizState();
     const blockRef = useRef()
+
     useEffect(() => {
         const handleResize = () => {
             if (blockRef.current) {
@@ -43,29 +36,26 @@ const quiz = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        console.log(Visible)
-    }, [Visible])
 
-    useEffect(() => {
-        localStorage.setItem('list', JSON.stringify(list));
-    }, [list])
     const QuestionHandeler = (e) => {
         const updatedList = [...list];
         updatedList[qno - 1].question = e.target.value;
         setlist(updatedList)
     }
+
     const optionHandeler = (e, index) => {
         const updatedList = [...list];
         updatedList[qno - 1].options[index] = e.target.value;
         setlist(updatedList);
     }
+
     const generateErr = (txt) => {
         seterr(txt);
         setTimeout(() => {
             seterr("")
         }, 3000);
     }
+
     const handelRemoveOption = (i) => {
         const updatedList = [...list];
         if (updatedList[qno - 1].options.length <= 2) {
@@ -126,6 +116,7 @@ const quiz = () => {
         if (block == 'vertical' && draggedItem) {
             setadjustment('vertical')
         }
+
     }
     const handelDropHorizontal = (e, dropTarget) => {
         e.preventDefault();
@@ -171,13 +162,21 @@ const quiz = () => {
         setDraggedItem(null);
         setadjustment(null)
         setVisible(false)
+        setanimate(false)
     }
-
+    const animation = () => {
+        return animate ? 'translate-y-0 scale-x-100' : "-translate-y-3  scale-x-0 ";
+    }
+    const animation2 = () => {
+        return animate ? 'translate-y-0 scale-x-100' : "translate-y-3  scale-x-0 ";
+    }
     const vertical = {
-        'top': (<div ref={blockRef} className="up h-9/10 w-full text-primary-text dark:text-primary-dark-text/60 ">
+        'top': (<div ref={blockRef} className="up h-9/10 w-full  text-primary-text dark:text-primary-dark-text/60 ">
             <div draggable className='border-1 max-h-full h-full  row-start-1 col-start-1 col-end-2  p-2 box-border rounded-md relative flex flex-col gap-15'
                 onDragStart={(e) => handleDragStart(e, 'top')}
                 onDragEnd={handleDragEnd}
+                onDragEnter={console.log("Enter")}
+                onDragOver={() => setanimate(false)}
             >
                 <textarea className="question h-20 max-h-25   w-full border-b-2  p-1 focus:outline-none resize-none" placeholder="Enter The Question"
                     value={`${list[qno - 1].question}`} maxLength={150} onChange={(e) => { QuestionHandeler(e) }} >
@@ -211,7 +210,10 @@ const quiz = () => {
                     </div>
                 </div>
                 <div className='h-auto w-full absolute left-0 bottom-2'>
-                    <button type="button" className=' bg-primary-button   text-white dark:bg-primary-dark-button hover:scale-95  text-sm font-semibold transition-all duration-500 ease-in-out cursor-pointer rounded-md px-3 py-1 relative ' onClick={() => { handelAddOption() }}>
+                    <button type="button" className=' bg-primary-button
+                     text-white dark:bg-primary-dark-button hover:scale-95  
+                     text-sm font-semibold transition-all duration-500 ease-in-out cursor-pointer rounded-md px-3
+                      py-1 relative ' onClick={() => { handelAddOption() }}>
                         Add Option
                     </button>
                 </div>
@@ -228,7 +230,7 @@ const quiz = () => {
                             setlist(updatedList)
                             settype(updatedList[qno - 1].type ? true : false)
                         }}>
-                        <img src={type == true ? single : multiple} className={`select-none h-full transition-transform duration-300 ease-in-out transform ${type == true ? "translate-x-0" : "translate-x-[20px]"} `} alt="" />
+                        <img src={type == true ? single : multiple} className={`select-none h-full transition-transform duration-100 ease-in-out transform ${type == true ? "translate-x-0" : "translate-x-[20px]"} `} alt="" />
                     </div>
                 </div>
             </div>
@@ -237,12 +239,25 @@ const quiz = () => {
         'bottom': (
             <div className='down h-1/10  w-full relative text-primary-text dark:text-primary-dark-text/60 '
                 onDrop={(e) => handelDropVertical(e, 'bottom')}
-                onDragOver={(e) => handleDragOver(e, 'vertical')}
+                onDragOver={(e) => {
+                    handleDragOver(e, 'vertical')
+                }}
+                onDragEnter={
+                    () => {
+                        if (animate == false)
+                            setTimeout(() => {
+                                setanimate(true);
+                            }, 100);
+                    }
+                }
+                onDragLeave={
+                    () => setanimate(false)
+                }
             >
                 {
                     <div style={{ height: height + "px" }}
-                        className={` w-full border-1 pointer-events-none border-blue-950 transition-all ease-in duration-100 ${(verticalLayout[0] === 'top') ? 'bottom-0' : 'top-0'} rounded-md absolute ${(adjustment === 'vertical') ? ' opacity-100 scale-100' : " opacity-0 hidden scale-95"}`}>
-                        <div className={'h-full w-full bg-blue-400 opacity-10 '}>
+                        className={` w-full border-2 pointer-events-none border-blue-950   transition-all ease-in-out duration-100 ${(verticalLayout[0] === 'top') ? `bottom-0  ${animation()}` : `top-0 ${animation2()}`} rounded-md absolute ${(adjustment === 'vertical') ? ' opacity-100 scale-100' : " opacity-0 hidden scale-95"}`}>
+                        <div className={'h-full w-full bg-blue-400 opacity-10 text-black transition-all ease-in-out duration-100'}>
 
                         </div>
                     </div>
@@ -259,15 +274,16 @@ const quiz = () => {
             <div className={'h-full w-9/10 flex flex-col gap-2 relative text-primary-text dark:text-primary-dark-text/60 '}
                 onDrop={(e) => handelDropHorizontal(e, 'left')}
                 onDragOver={(e) => handleDragOver(e, 'horizontal')}
-                onDragLeave={() => setadjustment(null)}
+                onDragLeave={() => { setadjustment(null) }}
                 onDrag={(e) => {
                     setx(e.clientX)
                     sety(e.clientY)
                 }}
             >
                 {
-                    <div className={`h-full w-1/10 border-1 pointer-events-none border-blue-950 transition-all ease-in duration-100
-                     ${(horizontalLayout[0] === 'left') ? 'left-0' : 'right-0'} rounded-md absolute ${(adjustment === 'horizontal') ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
+                    <div className={`h-full w-1/10 border-2 pointer-events-none border-blue-950 transition-all ease-in duration-100
+                     ${(horizontalLayout[0] === 'left') ? 'left-0' : 'right-0'} rounded-md absolute ${(adjustment === 'horizontal')
+                            ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
                         <div className='h-full w-full bg-blue-400 opacity-10'>
 
                         </div>
@@ -288,6 +304,7 @@ const quiz = () => {
                     setx(e.clientX)
                     sety(e.clientY)
                 }}
+
             >
                 <div className='border-1  h-full w-full rounded-md p-1 '>
                     <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
@@ -298,7 +315,8 @@ const quiz = () => {
 
 
     return (
-        <div className='h-[100vh] relative w-[100vw] bg-primary text-xl text-primary-text dark:bg-primary-dark dark:text-dark-card-text  box-border pt-18  p-2 
+        <div className='h-[100vh] relative w-[100vw] bg-primary text-xl text-primary-text dark:bg-primary-dark 
+        dark:text-dark-card-text  box-border pt-18  p-2 
         overflow-hidden'>
             <div className={`h-full w-full flex items-center justify-center gap-2  `}>
                 {
@@ -309,24 +327,24 @@ const quiz = () => {
             </div >
             <div className=' tools hidden'></div>
             {
-                (Visible == true) ? (<div className='absolute h-full w-full top-0 left-0 pointer-events-none bg-white/40 pt-15'>
+                (Visible == true) ? (<div className='absolute h-full w-full top-0 left-0 pointer-events-none bg-primary/20 dark:bg-primary-dark/20 pt-15'>
                     <div className='h-2 top-15 w-full flex items-center absolute justify-center'>
-                        <div className=' h-full w-80 bg-blue-600 border-1  rounded-full '>
+                        <div className=' h-full w-50 bg-primary-button dark:bg-primary-dark-button border-1  rounded-b-full '>
 
                         </div>
                     </div>
                     <div className='h-2 bottom-0 w-full flex items-center absolute justify-center'>
-                        <div className=' h-full w-80 bg-blue-600 border-1  rounded-full '>
+                        <div className=' h-full w-50 bg-primary-button dark:bg-primary-dark-button border-1  rounded-t-full '>
 
                         </div>
                     </div>
                     <div className='h-full left-0 w-2 flex items-center absolute justify-center'>
-                        <div className=' h-80 w-full bg-blue-600 border-1  rounded-full '>
+                        <div className=' h-50 w-full bg-primary-button dark:bg-primary-dark-button border-1  rounded-r-full '>
 
                         </div>
                     </div>
                     <div className='h-full right-0 w-2 flex items-center absolute justify-center'>
-                        <div className=' h-80 w-full bg-blue-600 border-1  rounded-full '>
+                        <div className=' h-50 w-full bg-primary-button dark:bg-primary-dark-button border-1  rounded-l-full '>
 
                         </div>
                     </div>
@@ -334,7 +352,7 @@ const quiz = () => {
                 ) : (null)
             }
             {
-                (Visible == true) ? <div className='px-2 py-0.5 absolute opacity-100 border-1 rounded-md'
+                (Visible == true) ? <div className='px-2 py-0.5 absolute opacity-100 border-1 rounded-md text-primary-text dark:text-primary-dark-text '
                     style={{ left: x + "px", top: y + "px" }}
                 >
                     Name

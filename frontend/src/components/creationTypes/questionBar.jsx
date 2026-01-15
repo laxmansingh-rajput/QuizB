@@ -8,12 +8,6 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
   const [adjustment, setadjustment] = useState(null)
   const [width, setwidth] = useState(0)
   useEffect(() => {
-    if (Ref.current) {
-      Ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, [qno])
-
-  useEffect(() => {
     const measure = () => {
       if (blockRef.current) {
         setwidth(blockRef.current.offsetWidth)
@@ -26,11 +20,11 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
     }
   }, [])
 
-
   const handelQuestionswitch = (i) => {
-    setqno(i + 1)
+    setqno(i)
   }
   const [curr, setcurr] = useState(qno)
+  
   useEffect(() => {
     setcurr(qno)
   }, [qno])
@@ -70,6 +64,7 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
     setDraggedItem(null);
     setadjustment(null)
   }
+
   function getwidth() {
     return (6 * width / 10) + 'px'
   }
@@ -102,7 +97,8 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
 
         <input
           type="text"
-          className='h-8 w-10 border rounded-md flex items-center justify-center text-center font-semibold bg-gray-50 focus:outline-none'
+          className='h-8 w-10 border rounded-md flex items-center justify-center text-center font-semibold
+            dark:bg-primary-dark-card focus:outline-none'
           value={curr}
           onChange={(e) => {
             setcurr(e.target.value)
@@ -112,7 +108,6 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
             if (e.key === "Enter") {
               let value = Number(curr);
               if (0 < value && value <= list.length) {
-                console.log('aagya')
                 setqno(curr)
               } else {
                 generateErr('Question doesnt exist')
@@ -149,16 +144,18 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
           </div>
         </div>
       }
-      <div className='border-1  rounded-md h-full w-full  flex items-center px-30 justify-center gap-2 overflow-x-auto scrollbar-thin z-50 '>
-        <div className='h-full w-60 flex  items-center justify-center gap-2 overflow-x-auto scrollbar-thin relative'>
+      <div className='border-1  rounded-md h-full w-full  flex items-center px-30 justify-center gap-2 overflow-x-auto
+       scrollbar-thin z-50 '>
+        <div className='h-full  w-60 flex  items-center justify-center gap-2 overflow-x-auto relative'>
           {
-            list.map((_, i) => (
-              <div ref={(i == qno - 1) ? Ref : null} key={i}
-                className={(qno == i + 1) ? ' border-1  h-8 w-10 cursor-pointer rounded-sm flex items-center  transition-all ease-in  p-3 justify-center text-white font-semibold  bg-primary-button dark:bg-primary-dark-button dark:hover:scale-95  hover:scale-95 border-[#1A1A1A]' : 'border-1 hover:scale-95 h-4 w-5 text-sm  rounded-sm flex items-center cursor-pointer transition-all ease-in  p-3 justify-center font-semibold border-[#1A1A1A]'}
-                onClick={() => handelQuestionswitch(i)} >
-                {`${i + 1}`}
-              </div>
-            ))
+            [qno - 2, qno - 1, qno, qno + 1, qno + 2].map((i, _) => (
+                (i > 0 && i < list.length+1) && (
+                <div key={i}
+                  className={(qno == i) ? ' border-1  h-8 w-10 cursor-pointer rounded-sm flex items-center transition-all ease-in p-3 justify-center text-white font-semibold  bg-primary-button dark:bg-primary-dark-button dark:hover:scale-95  hover:scale-95 border-[#1A1A1A]' : 'border-1 hover:scale-95 h-4 w-5 text-sm  rounded-sm flex items-center cursor-pointer transition-all ease-in  p-3 justify-center font-semibold border-primary-text dark:border-primary-dark-text '}
+                  onClick={() => handelQuestionswitch(i)} >
+                  {`${i}`}
+                </div>) 
+          ))
           }
         </div>
       </div>

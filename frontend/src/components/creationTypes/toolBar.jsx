@@ -41,7 +41,6 @@ const toolBar = ({ list, setlist, type, qno, settype, setqno }) => {
         }
     }
 
-
     return (
         <div className='  h-full w-full  text-primary-text dark:text-primary-dark-text flex flex-col gap-5 items-center '>
             <div className='font-bold underline'>Tools</div>
