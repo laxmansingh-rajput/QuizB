@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-
+import useRenderQuestion from './quizFunction/useRenderQuestion';
 const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno }) => {
   const Ref = useRef(null);
   const blockRef = useRef(null);
@@ -7,6 +7,7 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
   const [draggedItem, setDraggedItem] = useState(null)
   const [adjustment, setadjustment] = useState(null)
   const [width, setwidth] = useState(0)
+  const RenderQuestion= useRenderQuestion(qno, list)
   useEffect(() => {
     const measure = () => {
       if (blockRef.current) {
@@ -24,7 +25,6 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
     setqno(i)
   }
   const [curr, setcurr] = useState(qno)
-  
   useEffect(() => {
     setcurr(qno)
   }, [qno])
@@ -79,7 +79,6 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
       onDrop={(e) => handleDrop(e, 'box1')}
       onDragEnd={handleDragEnd}
       onDragLeave={() => setadjustment(null)}
-
     >
       {
         <div style={{ width: getwidth() }} className={`z-20 pointer-events-none h-full border-1 border-blue-950  transition-all ease-in duration-100
@@ -103,12 +102,11 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
           onChange={(e) => {
             setcurr(e.target.value)
           }}
-
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               let value = Number(curr);
               if (0 < value && value <= list.length) {
-                setqno(curr)
+                setqno(value)
               } else {
                 generateErr('Question doesnt exist')
                 setcurr(qno)
@@ -148,14 +146,14 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
        scrollbar-thin z-50 '>
         <div className='h-full  w-60 flex  items-center justify-center gap-2 overflow-x-auto relative'>
           {
-            [qno - 2, qno - 1, qno, qno + 1, qno + 2].map((i, _) => (
-                (i > 0 && i < list.length+1) && (
-                <div key={i}
-                  className={(qno == i) ? ' border-1  h-8 w-10 cursor-pointer rounded-sm flex items-center transition-all ease-in p-3 justify-center text-white font-semibold  bg-primary-button dark:bg-primary-dark-button dark:hover:scale-95  hover:scale-95 border-[#1A1A1A]' : 'border-1 hover:scale-95 h-4 w-5 text-sm  rounded-sm flex items-center cursor-pointer transition-all ease-in  p-3 justify-center font-semibold border-primary-text dark:border-primary-dark-text '}
-                  onClick={() => handelQuestionswitch(i)} >
-                  {`${i}`}
-                </div>) 
-          ))
+            RenderQuestion.map((i, _) => (
+              <div key={i}
+                className={(qno == i) ? ' border-1  h-8 w-10 cursor-pointer rounded-sm flex items-center transition-all ease-in p-3 justify-center text-white font-semibold  bg-primary-button dark:bg-primary-dark-button dark:hover:scale-95  hover:scale-95 border-[#1A1A1A]' : 'border-1 hover:scale-95 h-4 w-5 text-sm  rounded-sm flex items-center cursor-pointer transition-all ease-in  p-3 justify-center font-semibold border-primary-text dark:border-primary-dark-text '}
+                onClick={() => handelQuestionswitch(i)} >
+                {`${i}`}
+              </div>
+            )
+            )
           }
         </div>
       </div>
