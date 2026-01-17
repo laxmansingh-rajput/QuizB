@@ -35,20 +35,17 @@ export const handelAddOption1 = (i, list, setlist, generateErr, qno) => {
     }
 }
 export const handelCorrect1 = (e, list, qno, setlist, type) => {
-    console.log(e.target.value)
     const correct = list[qno - 1].correct;
     if (type) {
         correct.forEach((value, index) => {
             if (index == e.target.value) {
                 correct[index] = !value;
-                console.log(!value)
             } else { correct[index] = false; }
         });
     } else {
         correct.forEach((value, index) => {
             if (index == e.target.value) {
                 correct[index] = !value;
-                console.log(!value)
             }
         });
     }
@@ -57,9 +54,15 @@ export const handelCorrect1 = (e, list, qno, setlist, type) => {
     setlist(updatedList)
 }
 
+export const animation = (animate) => {
+    return (animate==1) ? 'translate-y-0 scale-x-100' : "-translate-y-3  scale-x-0 ";
+}
+export const animation2 = (animate) => {
+    return (animate==1) ? 'translate-y-0 scale-x-100' : "translate-y-3  scale-x-0 ";
+}
 export const animation3 = (animate) => {
-    return animate ? 'translate-y-0 scale-x-100' : "-translate-y-3  scale-x-0 ";
+    return (animate==2) ? 'translate-x-0 scale-100' : "translate-x-3  scale-0 ";
 }
 export const animation4 = (animate) => {
-    return animate ? 'translate-y-0 scale-x-100' : "translate-y-3  scale-x-0 ";
+    return (animate==2) ? 'translate-x-0 scale-100' : "-translate-x-3  scale-0 ";
 }

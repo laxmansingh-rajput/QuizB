@@ -36,7 +36,6 @@ const Nav = ({ hide }) => {
         } else {
             navigate("/create")
         }
-        console.log(show)
     }
     return (
 

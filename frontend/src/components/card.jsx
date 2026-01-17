@@ -6,7 +6,6 @@ const Card = ({ w, name, svg, darksvg }) => {
     const { mode } = useContext(ModeContext);
 
     const handelCreate = () => {
-        console.log(name)
         navigate(`/workspace?type=${name}`)
     }
 

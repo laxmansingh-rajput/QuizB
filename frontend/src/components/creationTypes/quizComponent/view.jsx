@@ -17,7 +17,6 @@ const View = ({ List, setview, setcurr, setList }) => {
     };
     const handelDelete = (ind) => {
         let a = confirm("do you want to delet question No" + ind + 1)
-        console.log(a)
         if (a) {
             let updatedList = [...List];
             updatedList = updatedList.filter((_, index) => index !== ind);

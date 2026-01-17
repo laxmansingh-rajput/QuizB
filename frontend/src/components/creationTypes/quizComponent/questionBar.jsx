@@ -4,8 +4,8 @@ import { handleDragStart1, handleDragOver1, handleDrop1, handleDragEnd1 } from '
 import useDrag from '../dragAndDrop/useDrag';
 import useQuizBar from '../quizFunction/useQuizBar';
 
-const questionBar = ({ list, generateErr, qno, setqno }) => {
-  const { layout, setlayout, adjustment, setadjustment, draggedItem, setDraggedItem, Visible, setVisible } = useDrag()
+const questionBar = ({ list, generateErr, qno, setqno, Visible, setVisible }) => {
+  const { layout, setlayout, adjustment, setadjustment, draggedItem, setDraggedItem, animate, setanimate } = useDrag()
   const RenderQuestion = useRenderQuestion(qno, list)
   const { blockRef, getwidth, getwidth2 } = useQuizBar()
 
@@ -17,8 +17,8 @@ const questionBar = ({ list, generateErr, qno, setqno }) => {
     setcurr(qno)
   }, [qno])
 
-  const handleDragStart = (e, boxName) => handleDragStart1(e, boxName, setDraggedItem, setVisible)
-  const handleDragOver = (e, box) => handleDragOver1(e, box, setadjustment, draggedItem, 'questionBar')
+  const handleDragStart = (e, boxName) => handleDragStart1(e, boxName, setDraggedItem, setVisible,setanimate)
+  const handleDragOver = (e, box) => handleDragOver1(e, box, setadjustment, draggedItem, 'questionBar',animate,setanimate)
   const handleDrop = (e, dropTarget) => handleDrop1(e, dropTarget, draggedItem, draggedItem, layout, setlayout, setDraggedItem, setadjustment, setVisible)
   const handleDragEnd = () => handleDragEnd1 = (setDraggedItem, setadjustment, setVisible, setanimate)
 
@@ -83,7 +83,6 @@ const questionBar = ({ list, generateErr, qno, setqno }) => {
       onDrop={(e) => handleDrop(e, 'box2')}
       onDragEnd={handleDragEnd}
       onDragLeave={() => setadjustment(null)}
-
     >
       {
         <div style={{ width: getwidth2() }} className={`z-20 pointer-events-none h-full border-1 border-blue-950 transition-all ease-in duration-100

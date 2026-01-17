@@ -9,7 +9,7 @@ import {
     QuestionHandeler1, optionHandeler1,
     generateErr1, handelRemoveOption1,
     handelAddOption1, handelCorrect1,
-    animation3, animation4
+    animation, animation2, animation3, animation4
 } from './quizFunction/quizHandler.js';
 
 
@@ -27,20 +27,24 @@ const quiz = () => {
     const handelRemoveOption = (i) => handelRemoveOption1(i, list, generateErr, setlist, qno)
     const handelAddOption = (i) => handelAddOption1(i, list, setlist, generateErr, qno)
     const handelCorrect = (e) => handelCorrect1(e, list, qno, setlist, type)
-    const animation = () => animation3(animate)
-    const animation2 = () => animation4(animate)
 
-    const handleDragStart = (e, boxName) => handleDragStart1(e, boxName, setDraggedItem, setVisible)
-    const handleDragOver = (e, block) => handleDragOver1(e, block, setadjustment, draggedItem, 'quiz')
+
+    const handleDragStart = (e, boxName) => handleDragStart1(e, boxName, setDraggedItem, setVisible, setanimate)
+    const handleDragOver = (e, block) => handleDragOver1(e, block, setadjustment, draggedItem, 'quiz', animate, setanimate)
     const handleDrop = (e, dropTarget, dI, state, setstate) => handleDrop1(e, dropTarget, draggedItem, dI, state, setstate, setDraggedItem, setadjustment, setVisible)
-    const handleDragEnd = () => handleDragEnd1 = (setDraggedItem, setadjustment, setVisible, setanimate)
+    const handleDragEnd = () => handleDragEnd1(setDraggedItem, setadjustment, setVisible, setanimate)
+
+    const draggedDragOver = (curr) => {
+        if (curr == draggedItem) {
+            setanimate(2)
+        }
+    }
 
     const vertical = {
         'top': (<div draggable ref={blockRef} className="up h-9/10 w-full  text-primary-text dark:text-primary-dark-text/60 "
             onDragStart={(e) => handleDragStart(e, 'top')}
             onDragEnd={handleDragEnd}
-            onDragEnter={console.log("Enter")}
-            onDragOver={() => setanimate(false)}>
+        >
             <Question
                 list={list}
                 qno={qno}
@@ -62,22 +66,16 @@ const quiz = () => {
                 onDrop={(e) => handleDrop(e, 'bottom', 'top', verticalLayout, setVerticalLayout)}
                 onDragOver={(e) => {
                     handleDragOver(e, 'vertical')
+                    console.log(animate)
                 }}
-                onDragEnter={
-                    () => {
-                        if (animate == false)
-                            setTimeout(() => {
-                                setanimate(true);
-                            }, 100);
-                    }
-                }
-                onDragLeave={
-                    () => setanimate(false)
-                }
+                onDragLeave={(e) => {
+                    if (animate == 1)
+                        setanimate(0)
+                }}
             >
                 {
                     <div style={{ height: height + "px" }}
-                        className={` w-full border-2 pointer-events-none border-blue-950   transition-all ease-in-out duration-100 ${(verticalLayout[0] === 'top') ? `bottom-0  ${animation()}` : `top-0 ${animation2()}`} rounded-md absolute
+                        className={` w-full border-2 pointer-events-none border-blue-950   transition-all ease-in-out duration-100 ${(verticalLayout[0] === 'top') ? `bottom-0  ${animation(animate)}` : `top-0 ${animation2(animate)}`} rounded-md absolute
                         ${(adjustment == 'vertical') ? " " : " hidden"} `}>
                         <div className={'h-full w-full bg-blue-400 opacity-10 text-black transition-all ease-in-out duration-100'}>
 
@@ -85,7 +83,7 @@ const quiz = () => {
                     </div>
                 }
                 < div className=' max-h-f-full h-full rounded-md row-start-2 row-end-2 col-start-1 col-end-1 ' >
-                    <Questions list={list} setlist={setlist} generateErr={generateErr} type={type} settype={settype} qno={qno} setqno={setqno} />
+                    <Questions list={list} setlist={setlist} generateErr={generateErr} type={type} settype={settype} qno={qno} setqno={setqno} Visible={Visible} setVisible={setVisible} />
                 </div >
             </div >
         )
@@ -93,18 +91,22 @@ const quiz = () => {
 
     const horizontal = {
         'left': (
-            <div className={'h-full w-9/10 flex flex-col gap-2 relative text-primary-text dark:text-primary-dark-text/60 '}
+            <div className={'h-full w-9/10  flex flex-col gap-2 relative text-primary-text dark:text-primary-dark-text/60 '}
                 onDrop={(e) => handleDrop(e, 'left', 'right', horizontalLayout, setHorizontalLayout)}
                 onDragOver={(e) => handleDragOver(e, 'horizontal')}
-                onDragLeave={() => { setadjustment(null) }}
+                onDragLeave={() => {
+                    setadjustment(null)
+                    if (animate == 2) { setanimate(0) }
+                }}
                 onDrag={(e) => {
                     setx(e.clientX)
                     sety(e.clientY)
                 }}
+
             >
                 {
                     <div className={`h-full w-1/10 border-2 pointer-events-none border-blue-950 transition-all ease-in duration-100
-                     ${(horizontalLayout[0] === 'left') ? 'left-0' : 'right-0'} rounded-md absolute
+                     ${(horizontalLayout[0] === 'left') ? `left-0  ${animation3(animate)} ` : `right-0  ${animation4(animate)}`} rounded-md absolute
                      ${(adjustment == 'horizontal') ? " " : " hidden"}  `}>
                         <div className='h-full w-full bg-blue-400 opacity-10'>
 
@@ -126,6 +128,7 @@ const quiz = () => {
                 onDrag={(e) => {
                     setx(e.clientX)
                     sety(e.clientY)
+                    console.log(animate)
                 }}
             >
                 <div className='border-1  h-full w-full rounded-md p-1 '>

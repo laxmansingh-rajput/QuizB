@@ -1,5 +1,5 @@
 
-export const handleDragStart1 = (e, boxName, setDraggedItem, setVisible) => {
+export const handleDragStart1 = (e, boxName, setDraggedItem, setVisible, setanimate) => {
     setDraggedItem(boxName);
     e.dataTransfer.effectAllowed = 'move';
     const img = document.createElement("img");
@@ -7,17 +7,26 @@ export const handleDragStart1 = (e, boxName, setDraggedItem, setVisible) => {
         "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==";
     e.dataTransfer.setDragImage(img, 0, 0);
     setVisible(true)
+    setanimate(0)
 }
 
-export const handleDragOver1 = (e, block, setadjustment, draggedItem, file) => {
+export const handleDragOver1 = (e, block, setadjustment, draggedItem, file, animate, setanimate) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
     if (file == 'quiz') {
         if (block == 'horizontal' && draggedItem == 'right') {
             setadjustment('horizontal')
+            if (animate ==0)
+                setTimeout(() => {
+                    setanimate(2)
+                }, 100);
         }
         if (block == 'vertical' && draggedItem) {
             setadjustment('vertical')
+            if (animate ==0)
+                setTimeout(() => {
+                    setanimate(1)
+                }, 100);
         }
     } else {
         if (draggedItem && draggedItem != block)
@@ -44,5 +53,4 @@ export const handleDragEnd1 = (setDraggedItem, setadjustment, setVisible, setani
     setDraggedItem(null);
     setadjustment(null)
     setVisible(false)
-    setanimate(false)
 }

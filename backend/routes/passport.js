@@ -29,7 +29,6 @@ router.get('/auth/google/callback',
     function (req, res) {
         res.redirect('/');
     }, (req, res) => {
-        console.log('User profile:', req.user);
         res.json({
             message: 'Google Auth Success',
             user: req.user

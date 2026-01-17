@@ -28,7 +28,6 @@ const useQuizState = () => {
     useEffect(() => {
         const handleResize = () => {
             if (blockRef.current) {
-                console.log('hi')
                 setheight(blockRef.current.offsetHeight);
             }
         };

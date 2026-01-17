@@ -7,7 +7,7 @@ const useDrag = () => {
     const [x, setx] = useState(null)
     const [y, sety] = useState(null)
     const [Visible, setVisible] = useState(false)
-    const [animate, setanimate] = useState(false)
+    const [animate, setanimate] = useState(0)
     const [adjustment, setadjustment] = useState(null)
     return {
         verticalLayout, setVerticalLayout,

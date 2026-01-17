@@ -30,7 +30,6 @@ const useRenderQuestion = (qno, list) => {
     useEffect(() => {
         setRenderQuestion(arrChange(qno, list));
         setTimeout(() => {
-            console.log(RenderQuestion)
         }, 200);
     }, [qno, list]);
     return RenderQuestion;
