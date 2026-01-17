@@ -24,9 +24,11 @@ const useQuizState = () => {
     useEffect(() => {
         localStorage.setItem('list', JSON.stringify(list))
     }, [list])
+
     useEffect(() => {
         const handleResize = () => {
             if (blockRef.current) {
+                console.log('hi')
                 setheight(blockRef.current.offsetHeight);
             }
         };
@@ -34,6 +36,7 @@ const useQuizState = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
 
     return {
         list, setlist,

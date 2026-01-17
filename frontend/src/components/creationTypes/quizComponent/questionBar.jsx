@@ -7,7 +7,7 @@ import useQuizBar from '../quizFunction/useQuizBar';
 const questionBar = ({ list, generateErr, qno, setqno }) => {
   const { layout, setlayout, adjustment, setadjustment, draggedItem, setDraggedItem, Visible, setVisible } = useDrag()
   const RenderQuestion = useRenderQuestion(qno, list)
-  const { blockRef, width, getwidth, getwidth2 } = useQuizBar()
+  const { blockRef, getwidth, getwidth2 } = useQuizBar()
 
   const handelQuestionswitch = (i) => {
     setqno(i)

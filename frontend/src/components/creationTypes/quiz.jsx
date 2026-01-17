@@ -14,12 +14,12 @@ import {
 
 
 const quiz = () => {
-    const { list, setlist, err, seterr, qno, setqno,
-        type, settype, Arr, height} = useQuizState();
-
     const { verticalLayout, setVerticalLayout, adjustment, setadjustment, horizontalLayout, setHorizontalLayout,
         draggedItem, setDraggedItem, x, setx, y, sety, Visible, setVisible,
-        animate, setanimate ,blockRef} = useDrag()
+        animate, setanimate } = useDrag()
+
+    const { list, setlist, err, seterr, qno, setqno,
+        type, settype, Arr, height, setheight, blockRef } = useQuizState();
 
     const QuestionHandeler = (e) => QuestionHandeler1(e, list, setlist, qno)
     const optionHandeler = (e, index) => optionHandeler1(e, index, list, setlist, qno)
@@ -34,7 +34,6 @@ const quiz = () => {
     const handleDragOver = (e, block) => handleDragOver1(e, block, setadjustment, draggedItem, 'quiz')
     const handleDrop = (e, dropTarget, dI, state, setstate) => handleDrop1(e, dropTarget, draggedItem, dI, state, setstate, setDraggedItem, setadjustment, setVisible)
     const handleDragEnd = () => handleDragEnd1 = (setDraggedItem, setadjustment, setVisible, setanimate)
-        
 
     const vertical = {
         'top': (<div draggable ref={blockRef} className="up h-9/10 w-full  text-primary-text dark:text-primary-dark-text/60 "
@@ -128,7 +127,6 @@ const quiz = () => {
                     setx(e.clientX)
                     sety(e.clientY)
                 }}
-
             >
                 <div className='border-1  h-full w-full rounded-md p-1 '>
                     <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
