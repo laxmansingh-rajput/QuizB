@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import {
+    useEffect, useState, useRef
+} from "react";
 
 const useQuizState = () => {
     const [list, setlist] = useState(() => {
@@ -14,24 +16,28 @@ const useQuizState = () => {
     });
     const [err, seterr] = useState("")
     const [qno, setqno] = useState(list.length > 2 ? list.length : 1);
-    const [adjustment, setadjustment] = useState(null)
     const [type, settype] = useState(list[qno - 1].type);
-    const [verticalLayout, setVerticalLayout] = useState(['top', 'bottom'])
-    const [horizontalLayout, setHorizontalLayout] = useState(['left', 'right'])
-    const [draggedItem, setDraggedItem] = useState(null)
     const Arr = ['A', 'B', 'C', 'D']
     const [height, setheight] = useState(null)
-    const [x, setx] = useState(null)
-    const [y, sety] = useState(null)
-    const [Visible, setVisible] = useState(false)
-    const [animate, setanimate] = useState(false)
+    const blockRef = useRef(null);
+
     useEffect(() => {
-     localStorage.setItem('list',JSON.stringify(list))
+        localStorage.setItem('list', JSON.stringify(list))
     }, [list])
-    
+    useEffect(() => {
+        const handleResize = () => {
+            if (blockRef.current) {
+                setheight(blockRef.current.offsetHeight);
+            }
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return {
         list, setlist,
-        err, seterr, qno, setqno, adjustment, setadjustment, type, settype, verticalLayout, setVerticalLayout, horizontalLayout, setHorizontalLayout, draggedItem, setDraggedItem, Arr, height, setheight, x, setx, y, sety, Visible, setVisible, animate, setanimate
+        err, seterr, qno, setqno, type, settype, Arr, height, setheight, blockRef
     }
 }
 

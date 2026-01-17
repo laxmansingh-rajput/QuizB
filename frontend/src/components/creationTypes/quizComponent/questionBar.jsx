@@ -1,27 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
-import useRenderQuestion from './useRenderQuestion';
+import useRenderQuestion from '../quizFunction/useRenderQuestion';
+import { handleDragStart1, handleDragOver1, handleDrop1, handleDragEnd1 } from '../dragAndDrop/dragFunctions';
+import useDrag from '../dragAndDrop/useDrag';
+import useQuizBar from '../quizFunction/useQuizBar';
 
-
-const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno }) => {
-  const Ref = useRef(null);
-  const blockRef = useRef(null);
-  const [layout, setlayout] = useState(['box1', 'box2'])
-  const [draggedItem, setDraggedItem] = useState(null)
-  const [adjustment, setadjustment] = useState(null)
-  const [width, setwidth] = useState(0)
-  const RenderQuestion= useRenderQuestion(qno, list)
-  useEffect(() => {
-    const measure = () => {
-      if (blockRef.current) {
-        setwidth(blockRef.current.offsetWidth)
-      }
-    }
-    measure()
-    window.addEventListener('resize', measure)
-    return () => {
-      window.removeEventListener('resize', measure)
-    }
-  }, [])
+const questionBar = ({ list, generateErr, qno, setqno }) => {
+  const { layout, setlayout, adjustment, setadjustment, draggedItem, setDraggedItem, Visible, setVisible } = useDrag()
+  const RenderQuestion = useRenderQuestion(qno, list)
+  const { blockRef, width, getwidth, getwidth2 } = useQuizBar()
 
   const handelQuestionswitch = (i) => {
     setqno(i)
@@ -31,48 +17,11 @@ const questionBar = ({ list, generateErr, setlist, type, settype, qno, setqno })
     setcurr(qno)
   }, [qno])
 
-  const handleDragStart = (e, boxName) => {
-    setDraggedItem(boxName);
-    e.dataTransfer.effectAllowed = 'move';
-  }
+  const handleDragStart = (e, boxName) => handleDragStart1(e, boxName, setDraggedItem, setVisible)
+  const handleDragOver = (e, box) => handleDragOver1(e, box, setadjustment, draggedItem, 'questionBar')
+  const handleDrop = (e, dropTarget) => handleDrop1(e, dropTarget, draggedItem, draggedItem, layout, setlayout, setDraggedItem, setadjustment, setVisible)
+  const handleDragEnd = () => handleDragEnd1 = (setDraggedItem, setadjustment, setVisible, setanimate)
 
-  const handleDragOver = (e, box) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-    if (draggedItem && draggedItem != box)
-      setadjustment(box)
-  }
-
-  const handleDrop = (e, dropTarget) => {
-    e.preventDefault();
-
-    if (draggedItem && draggedItem !== dropTarget) {
-      setlayout(() => {
-        const newLayout = [...layout];
-        const draggedIndex = newLayout.indexOf(draggedItem);
-        const dropIndex = newLayout.indexOf(dropTarget);
-
-        [newLayout[draggedIndex], newLayout[dropIndex]] =
-          [newLayout[dropIndex], newLayout[draggedIndex]];
-
-        return newLayout;
-      });
-    }
-    setDraggedItem(null);
-    setadjustment(null)
-  }
-
-  const handleDragEnd = () => {
-    setDraggedItem(null);
-    setadjustment(null)
-  }
-
-  function getwidth() {
-    return (6 * width / 10) + 'px'
-  }
-  function getwidth2() {
-    return (4 * width / 10) + 'px'
-  }
   const boxes = {
 
     box1: (<div draggable="true" className="h-full w-4/10 relative z-40"

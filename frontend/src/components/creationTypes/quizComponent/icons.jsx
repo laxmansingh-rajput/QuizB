@@ -1,6 +1,6 @@
 import React from 'react'
 import { useContext } from 'react';
-import ModeContext from '../../context/context.js';
+import ModeContext from '../../../context/context.js';
 const Icons = ({ name, svg, dark, onClick }) => {
     const { mode } = useContext(ModeContext);
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import Icons from '../icons'
+import Icons from './icons'
 import lightMultiple from '../../../assets/lightMultiple.svg'
 import darkMultiple from '../../../assets/darkMultiple.svg'
 import lightSingle from '../../../assets/lightSingle.svg'

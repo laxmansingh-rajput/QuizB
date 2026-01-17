@@ -1,7 +1,7 @@
 import React from 'react';
 import edit from '../../assets/lightedit.svg';
 import darkedit from '../../assets/darkedit.svg';
-import ModeContext from '../../context/context.js';
+import ModeContext from '../../../context/context.js';
 import { useContext } from 'react';
 import cancel from '../../assets/cancel.svg';
 import darkcancel from '../../assets/darkcancel.svg';
