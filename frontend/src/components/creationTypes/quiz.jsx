@@ -28,17 +28,10 @@ const quiz = () => {
     const handelAddOption = (i) => handelAddOption1(i, list, setlist, generateErr, qno)
     const handelCorrect = (e) => handelCorrect1(e, list, qno, setlist, type)
 
-
     const handleDragStart = (e, boxName) => handleDragStart1(e, boxName, setDraggedItem, setVisible, setanimate)
     const handleDragOver = (e, block) => handleDragOver1(e, block, setadjustment, draggedItem, 'quiz', animate, setanimate)
     const handleDrop = (e, dropTarget, dI, state, setstate) => handleDrop1(e, dropTarget, draggedItem, dI, state, setstate, setDraggedItem, setadjustment, setVisible)
     const handleDragEnd = () => handleDragEnd1(setDraggedItem, setadjustment, setVisible, setanimate)
-
-    const draggedDragOver = (curr) => {
-        if (curr == draggedItem) {
-            setanimate(2)
-        }
-    }
 
     const vertical = {
         'top': (<div draggable ref={blockRef} className="up h-9/10 w-full  text-primary-text dark:text-primary-dark-text/60 "
@@ -66,14 +59,8 @@ const quiz = () => {
                 onDrop={(e) => handleDrop(e, 'bottom', 'top', verticalLayout, setVerticalLayout)}
                 onDragOver={(e) => {
                     handleDragOver(e, 'vertical')
-                    console.log(animate)
                 }}
-                onDragLeave={(e) => {
-                    if (!e.currentTarget.contains(e.relatedTarget)) {
-                        if (animate == 1)
-                            setanimate(0)
-                    }
-                }}
+                
             >
                 {
                     <div style={{ height: height + "px" }}
@@ -97,10 +84,7 @@ const quiz = () => {
                 onDrop={(e) => handleDrop(e, 'left', 'right', horizontalLayout, setHorizontalLayout)}
                 onDragOver={(e) => handleDragOver(e, 'horizontal')}
                 onDragLeave={(e) => {
-                    if (!e.currentTarget.contains(e.relatedTarget)) {
-                        setadjustment(null)
-                        if (animate == 2) { setanimate(0) }
-                    }
+                        setadjustment(null) 
                 }}
                 onDrag={(e) => {
                     setx(e.clientX)

@@ -16,17 +16,9 @@ export const handleDragOver1 = (e, block, setadjustment, draggedItem, file, anim
     if (file == 'quiz') {
         if (block == 'horizontal' && draggedItem == 'right') {
             setadjustment('horizontal')
-            if (animate == 0)
-                setTimeout(() => {
-                    setanimate(2)
-                }, 100);
         }
         if (block == 'vertical' && draggedItem) {
             setadjustment('vertical')
-            if (animate == 0)
-                setTimeout(() => {
-                    setanimate(1)
-                }, 100);
         }
     }
     if (file == 'questionBar') {
