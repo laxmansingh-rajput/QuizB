@@ -69,13 +69,15 @@ const quiz = () => {
                     console.log(animate)
                 }}
                 onDragLeave={(e) => {
-                    if (animate == 1)
-                        setanimate(0)
+                    if (!e.currentTarget.contains(e.relatedTarget)) {
+                        if (animate == 1)
+                            setanimate(0)
+                    }
                 }}
             >
                 {
                     <div style={{ height: height + "px" }}
-                        className={` w-full border-2 pointer-events-none border-blue-950   transition-all ease-in-out duration-100 ${(verticalLayout[0] === 'top') ? `bottom-0  ${animation(animate)}` : `top-0 ${animation2(animate)}`} rounded-md absolute
+                        className={` w-full border-2 pointer-events-auto border-blue-950   transition-all ease-in-out duration-100 ${(verticalLayout[0] === 'top') ? `bottom-0  ${animation(animate)}` : `top-0 ${animation2(animate)}`} rounded-md absolute
                         ${(adjustment == 'vertical') ? " " : " hidden"} `}>
                         <div className={'h-full w-full bg-blue-400 opacity-10 text-black transition-all ease-in-out duration-100'}>
 
@@ -94,9 +96,11 @@ const quiz = () => {
             <div className={'h-full w-9/10  flex flex-col gap-2 relative text-primary-text dark:text-primary-dark-text/60 '}
                 onDrop={(e) => handleDrop(e, 'left', 'right', horizontalLayout, setHorizontalLayout)}
                 onDragOver={(e) => handleDragOver(e, 'horizontal')}
-                onDragLeave={() => {
-                    setadjustment(null)
-                    if (animate == 2) { setanimate(0) }
+                onDragLeave={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget)) {
+                        setadjustment(null)
+                        if (animate == 2) { setanimate(0) }
+                    }
                 }}
                 onDrag={(e) => {
                     setx(e.clientX)
@@ -105,7 +109,7 @@ const quiz = () => {
 
             >
                 {
-                    <div className={`h-full w-1/10 border-2 pointer-events-none border-blue-950 transition-all ease-in duration-100
+                    <div className={`h-full w-1/10 border-2 pointer-events-auto border-blue-950 transition-all ease-in duration-100
                      ${(horizontalLayout[0] === 'left') ? `left-0  ${animation3(animate)} ` : `right-0  ${animation4(animate)}`} rounded-md absolute
                      ${(adjustment == 'horizontal') ? " " : " hidden"}  `}>
                         <div className='h-full w-full bg-blue-400 opacity-10'>
@@ -152,7 +156,7 @@ const quiz = () => {
             </div >
             <div className=' tools hidden'></div>
             {
-                (Visible == true) ? (<div className='absolute h-full w-full top-0 left-0 pointer-events-none bg-primary/20 dark:bg-primary-dark/20 pt-15'>
+                (Visible == true) ? (<div className='absolute h-full w-full top-0 left-0 pointer-events-auto bg-primary/20 dark:bg-primary-dark/20 pt-15'>
                     <div className='h-2 top-15 w-full flex items-center absolute justify-center'>
                         <div className=' h-full w-50 bg-primary-button dark:bg-primary-dark-button border-1  rounded-b-full '>
 
@@ -177,11 +181,11 @@ const quiz = () => {
                 ) : (null)
             }
             {
-                (Visible == true) ? <div className='px-2 py-0.5 absolute opacity-100 border-1 rounded-md text-primary-text dark:text-primary-dark-text '
+                (Visible != null) && <div className={`px-2 py-0.5 absolute opacity-100 border-1 rounded-md text-primary-text dark:text-primary-dark-text ${Visible == null ? ' hidden' : 'dra'}`}
                     style={{ left: x + "px", top: y + "px" }}
                 >
-                    Name
-                </div> : (null)
+                    {Visible}
+                </div>
             }
         </div >
     );

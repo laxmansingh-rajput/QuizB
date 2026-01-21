@@ -3,8 +3,9 @@ import useRenderQuestion from '../quizFunction/useRenderQuestion';
 import { handleDragStart1, handleDragOver1, handleDrop1, handleDragEnd1 } from '../dragAndDrop/dragFunctions';
 import useDrag from '../dragAndDrop/useDrag';
 import useQuizBar from '../quizFunction/useQuizBar';
+import { animationBar, animationBar2 } from '../quizFunction/quizHandler';
 
-const questionBar = ({ list, generateErr, qno, setqno, Visible, setVisible }) => {
+const questionBar = ({ list, generateErr, qno, setqno, setVisible }) => {
   const { layout, setlayout, adjustment, setadjustment, draggedItem, setDraggedItem, animate, setanimate } = useDrag()
   const RenderQuestion = useRenderQuestion(qno, list)
   const { blockRef, getwidth, getwidth2 } = useQuizBar()
@@ -17,10 +18,10 @@ const questionBar = ({ list, generateErr, qno, setqno, Visible, setVisible }) =>
     setcurr(qno)
   }, [qno])
 
-  const handleDragStart = (e, boxName) => handleDragStart1(e, boxName, setDraggedItem, setVisible,setanimate)
-  const handleDragOver = (e, box) => handleDragOver1(e, box, setadjustment, draggedItem, 'questionBar',animate,setanimate)
+  const handleDragStart = (e, boxName) => handleDragStart1(e, boxName, setDraggedItem, setVisible, setanimate)
+  const handleDragOver = (e, box) => handleDragOver1(e, box, setadjustment, draggedItem, 'questionBar', animate, setanimate)
   const handleDrop = (e, dropTarget) => handleDrop1(e, dropTarget, draggedItem, draggedItem, layout, setlayout, setDraggedItem, setadjustment, setVisible)
-  const handleDragEnd = () => handleDragEnd1 = (setDraggedItem, setadjustment, setVisible, setanimate)
+  const handleDragEnd = () => handleDragEnd1(setDraggedItem, setadjustment, setVisible, setanimate)
 
   const boxes = {
 
@@ -30,10 +31,14 @@ const questionBar = ({ list, generateErr, qno, setqno, Visible, setVisible }) =>
       onDrop={(e) => handleDrop(e, 'box1')}
       onDragEnd={handleDragEnd}
       onDragLeave={() => setadjustment(null)}
+      onDrag={console.log(animate)}
+      onDragEnter={()=>{
+        console.log('triggered')
+      }}
     >
       {
         <div style={{ width: getwidth() }} className={`z-20 pointer-events-none h-full border-1 border-blue-950  transition-all ease-in duration-100
-                     ${(layout[0] === 'box1') ? 'left-0' : 'right-0'} rounded-md absolute ${(adjustment === 'box1') ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
+                     ${(layout[0] === 'box1') ? ` left-0 ${animationBar(animate)}` : `right-0  ${animationBar2(animate)}`} rounded-md absolute ${(adjustment === 'box1') ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
           <div className='h-full w-full bg-blue-400 opacity-10'>
           </div>
         </div>
