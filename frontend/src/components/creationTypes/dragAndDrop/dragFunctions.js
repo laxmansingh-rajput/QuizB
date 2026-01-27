@@ -7,13 +7,15 @@ export const handleDragStart1 = (e, boxName, setDraggedItem, setVisible, setanim
         "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==";
     e.dataTransfer.setDragImage(img, 0, 0);
     setVisible(boxName)
-    setanimate(0)
 }
 
 export const handleDragOver1 = (e, block, setadjustment, draggedItem, file, animate, setanimate) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
     if (file == 'quiz') {
+        if(draggedItem=='box1'||draggedItem=='box2'){
+            setanimate(0)
+        }
         if (draggedItem == 'top' && (block == 'top' || block == 'right')) {
             setanimate(0)
         }

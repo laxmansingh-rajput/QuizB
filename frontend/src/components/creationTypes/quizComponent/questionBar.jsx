@@ -31,7 +31,6 @@ const questionBar = ({ list, generateErr, qno, setqno, setVisible, animate, seta
       onDragOver={(e) => handleDragOver(e, 'box1')}
       onDrop={(e) => handleDrop(e, 'box1')}
       onDragEnd={handleDragEnd}
-      onDragLeave={() => setadjustment(null)}
       onDrag={() => {
         console.log(adjustment)
         console.log(animate)
@@ -88,7 +87,6 @@ const questionBar = ({ list, generateErr, qno, setqno, setVisible, animate, seta
       onDragOver={(e) => handleDragOver(e, 'box2')}
       onDrop={(e) => handleDrop(e, 'box2')}
       onDragEnd={handleDragEnd}
-      onDragLeave={() => setadjustment(null)}
     >
       {
         <div style={{ width: getwidth2() }} className={`z-20 pointer-events-none  h-full border-1 border-blue-950 transition-all ease-in duration-100

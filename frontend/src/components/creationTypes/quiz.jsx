@@ -99,10 +99,7 @@ const quiz = () => {
         'left': (
             <div className={'h-full w-9/10  flex flex-col gap-2 relative text-primary-text dark:text-primary-dark-text/60 '}
                 onDrop={(e) => handleDrop(e, 'left', 'right', horizontalLayout, setHorizontalLayout)}
-                onDragOver={(e) => handleDragOver(e, 'horizontal')}
-                onDragLeave={(e) => {
-                    setadjustment(null)
-                }}
+                
                 onDrag={(e) => {
                     setx(e.clientX)
                     sety(e.clientY)
