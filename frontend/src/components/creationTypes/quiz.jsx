@@ -66,14 +66,7 @@ const quiz = () => {
             <div className='down h-1/10  w-full relative text-primary-text dark:text-primary-dark-text/60 '
                 onDrop={(e) => handleDrop(e, 'bottom', 'top', verticalLayout, setVerticalLayout)}
             >
-                {
-                    <div style={{ height: height + "px" }}
-                        className={` w-full border-2 pointer-events-auto border-blue-950   transition-all ease-in-out duration-100 ${(verticalLayout[0] === 'top') ? `bottom-0  ${animation(animate)}` : `top-0 ${animation2(animate)}`} rounded-md absolute
-                        ${(adjustment == 'vertical') ? " " : " hidden"} `}>
-                        <div className={'h-full w-full bg-blue-400 opacity-10 text-black transition-all ease-in-out duration-100'}>
-                        </div>
-                    </div>
-                }
+               
                 < div className=' max-h-f-full h-full rounded-md row-start-2 row-end-2 col-start-1 col-end-1 ' >
                     <Questions list={list}
                         setlist={setlist}
@@ -97,7 +90,7 @@ const quiz = () => {
 
     const horizontal = {
         'left': (
-            <div className={'h-full w-9/10  flex flex-col gap-2 relative text-primary-text dark:text-primary-dark-text/60 '}
+            <div className={'h-full  w-9/10  flex flex-col gap-2 relative text-primary-text dark:text-primary-dark-text/60 '}
                 onDrop={(e) => handleDrop(e, 'left', 'right', horizontalLayout, setHorizontalLayout)}
                 
                 onDrag={(e) => {
@@ -106,6 +99,15 @@ const quiz = () => {
                 }}
 
             >
+                 {
+                    <div style={{ height: height + "px" }}
+                        className={` w-full border-2 pointer-events-auto border-blue-950   transition-all ease-in-out duration-100 ${(verticalLayout[0] === 'top') ? `bottom-0  ${animation(animate)}` : `top-0 ${animation2(animate)}`} rounded-md absolute
+                        ${(adjustment == 'vertical') ? " " : " hidden"} `}>
+                        <div className={'h-full w-full bg-blue-400 opacity-10 text-black transition-all ease-in-out duration-100'}>
+                        </div>
+                    </div>
+                }
+                
                 {
                     <div className={`h-full w-1/10 border-2 pointer-events-auto border-blue-950 transition-all ease-in duration-100
                      ${(horizontalLayout[0] === 'left') ? `left-0  ${animation3(animate)} ` : `right-0  ${animation4(animate)}`} rounded-md absolute
