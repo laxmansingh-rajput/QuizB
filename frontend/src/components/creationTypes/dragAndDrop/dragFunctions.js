@@ -14,16 +14,41 @@ export const handleDragOver1 = (e, block, setadjustment, draggedItem, file, anim
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
     if (file == 'quiz') {
-        if (block == 'horizontal' && draggedItem == 'right') {
-            setadjustment('horizontal')
+        if (draggedItem == 'top' && (block == 'top' || block == 'right')) {
+            setanimate(0)
         }
-        if (block == 'vertical' && draggedItem) {
-            setadjustment('vertical')
+        if (draggedItem == 'right' && block == 'right') {
+            setanimate(0)
+        }
+        if (draggedItem == 'right' && block == 'top') {
+            setadjustment('horizontal')
+            setTimeout(() => {
+                setanimate(2)
+            }, 100);
         }
     }
     if (file == 'questionBar') {
-        if (draggedItem && draggedItem != block) {
-
+        if (draggedItem == 'top' || draggedItem == 'right') {
+            if (draggedItem == 'top') {
+                setadjustment('vertical')
+                setTimeout(() => {
+                    setanimate(1)
+                }, 100);
+            }
+            if (draggedItem == 'right') {
+                setadjustment('horizontal')
+                setTimeout(() => {
+                    setanimate(2)
+                }, 100);
+            }
+        }
+        else if ((draggedItem == 'box1' || draggedItem == 'box2') && draggedItem != block) {
+            setTimeout(() => {
+                setanimate(3)
+            }, 100);
+            setadjustment(block)
+        } else {
+            setanimate(0)
         }
     }
 }

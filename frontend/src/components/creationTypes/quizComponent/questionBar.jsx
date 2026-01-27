@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import useRenderQuestion from '../quizFunction/useRenderQuestion';
 import { handleDragStart1, handleDragOver1, handleDrop1, handleDragEnd1 } from '../dragAndDrop/dragFunctions';
-import useDrag from '../dragAndDrop/useDrag';
+import useDrag2 from '../dragAndDrop/useDrag2';
 import useQuizBar from '../quizFunction/useQuizBar';
 import { animationBar, animationBar2 } from '../quizFunction/quizHandler';
 
-const questionBar = ({ list, generateErr, qno, setqno, setVisible }) => {
-  const { layout, setlayout, adjustment, setadjustment, draggedItem, setDraggedItem, animate, setanimate } = useDrag()
+const questionBar = ({ list, generateErr, qno, setqno, setVisible, animate, setanimate, adjustment, setadjustment, draggedItem, setDraggedItem }) => {
+
+  const { layout, setlayout, } = useDrag2()
   const RenderQuestion = useRenderQuestion(qno, list)
   const { blockRef, getwidth, getwidth2 } = useQuizBar()
 
@@ -31,9 +32,13 @@ const questionBar = ({ list, generateErr, qno, setqno, setVisible }) => {
       onDrop={(e) => handleDrop(e, 'box1')}
       onDragEnd={handleDragEnd}
       onDragLeave={() => setadjustment(null)}
+      onDrag={() => {
+        console.log(adjustment)
+        console.log(animate)
+      }}
     >
       {
-        <div style={{ width: getwidth() }} className={`z-20 pointer-events-none h-full border-1 border-blue-950  transition-all ease-in duration-100
+        <div style={{ width: getwidth() }} className={`z-20 pointer-events-none  h-full border-1 border-blue-950  transition-all ease-in duration-100
                      ${(layout[0] === 'box1') ? ` left-0 ${animationBar(animate)}` : `right-0  ${animationBar2(animate)}`} rounded-md absolute ${(adjustment === 'box1') ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
           <div className='h-full w-full bg-blue-400 opacity-10'>
           </div>
@@ -86,8 +91,8 @@ const questionBar = ({ list, generateErr, qno, setqno, setVisible }) => {
       onDragLeave={() => setadjustment(null)}
     >
       {
-        <div style={{ width: getwidth2() }} className={`z-20 pointer-events-none h-full border-1 border-blue-950 transition-all ease-in duration-100
-                     ${(layout[0] === 'box2') ? 'left-0' : 'right-0'} rounded-md absolute ${(adjustment === 'box2') ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
+        <div style={{ width: getwidth2() }} className={`z-20 pointer-events-none  h-full border-1 border-blue-950 transition-all ease-in duration-100
+                     ${(layout[0] === 'box2') ? `left-0 ${animationBar(animate)} ` : ` right-0 ${animationBar2(animate)}`} rounded-md absolute ${(adjustment === 'box2') ? ' opacity-100 scale-100' : "opacity-0 hidden scale-95"}`}>
           <div className='h-full w-full bg-blue-400 opacity-10'>
 
           </div>

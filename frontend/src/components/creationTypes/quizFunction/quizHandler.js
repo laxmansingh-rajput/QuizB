@@ -70,5 +70,5 @@ export const animationBar = (animate) => {
     return (animate == 3) ? 'translate-y-0 scale-x-100' : "-translate-y-3  scale-x-0 ";
 }
 export const animationBar2 = (animate) => {
-    return (animate == 3) ? 'translate-y-0 scale-x-100' : "translate-y-3  scale-x-0 ";
+    return (animate == 3) ? ' translate-y-0 scale-x-100' : " translate-y-3  scale-x-0 ";
 }

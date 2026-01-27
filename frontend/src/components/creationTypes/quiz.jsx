@@ -37,6 +37,13 @@ const quiz = () => {
         'top': (<div draggable ref={blockRef} className="up h-9/10 w-full  text-primary-text dark:text-primary-dark-text/60 "
             onDragStart={(e) => handleDragStart(e, 'top')}
             onDragEnd={handleDragEnd}
+            onDragOver={(e) => {
+                handleDragOver(e, 'top')
+            }}
+            onDrag={() => {
+                console.log(animate)
+                console.log(draggedItem)
+            }}
         >
             <Question
                 list={list}
@@ -51,28 +58,38 @@ const quiz = () => {
                 handelRemoveOption={handelRemoveOption}
                 handelAddOption={handelAddOption}
                 handelCorrect={handelCorrect}
+
             />
         </div>)
         ,
         'bottom': (
             <div className='down h-1/10  w-full relative text-primary-text dark:text-primary-dark-text/60 '
                 onDrop={(e) => handleDrop(e, 'bottom', 'top', verticalLayout, setVerticalLayout)}
-                onDragOver={(e) => {
-                    handleDragOver(e, 'vertical')
-                }}
-                
             >
                 {
                     <div style={{ height: height + "px" }}
                         className={` w-full border-2 pointer-events-auto border-blue-950   transition-all ease-in-out duration-100 ${(verticalLayout[0] === 'top') ? `bottom-0  ${animation(animate)}` : `top-0 ${animation2(animate)}`} rounded-md absolute
                         ${(adjustment == 'vertical') ? " " : " hidden"} `}>
                         <div className={'h-full w-full bg-blue-400 opacity-10 text-black transition-all ease-in-out duration-100'}>
-
                         </div>
                     </div>
                 }
                 < div className=' max-h-f-full h-full rounded-md row-start-2 row-end-2 col-start-1 col-end-1 ' >
-                    <Questions list={list} setlist={setlist} generateErr={generateErr} type={type} settype={settype} qno={qno} setqno={setqno} Visible={Visible} setVisible={setVisible} />
+                    <Questions list={list}
+                        setlist={setlist}
+                        generateErr={generateErr}
+                        type={type}
+                        settype={settype}
+                        qno={qno} setqno={setqno}
+                        Visible={Visible}
+                        setVisible={setVisible}
+                        animate={animate}
+                        setanimate={setanimate}
+                        adjustment={adjustment}
+                        setadjustment={setadjustment}
+                        draggedItem={draggedItem}
+                        setDraggedItem={setDraggedItem}
+                    />
                 </div >
             </div >
         )
@@ -84,7 +101,7 @@ const quiz = () => {
                 onDrop={(e) => handleDrop(e, 'left', 'right', horizontalLayout, setHorizontalLayout)}
                 onDragOver={(e) => handleDragOver(e, 'horizontal')}
                 onDragLeave={(e) => {
-                        setadjustment(null) 
+                    setadjustment(null)
                 }}
                 onDrag={(e) => {
                     setx(e.clientX)
@@ -117,6 +134,9 @@ const quiz = () => {
                     setx(e.clientX)
                     sety(e.clientY)
                     console.log(animate)
+                }}
+                onDragOver={(e) => {
+                    handleDragOver(e, 'right')
                 }}
             >
                 <div className='border-1  h-full w-full rounded-md p-1 '>
