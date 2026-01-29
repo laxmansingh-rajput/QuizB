@@ -1,4 +1,9 @@
-
+const helper = {
+    'top': 'Questions',
+    'right': 'Tools',
+    'box1': 'Navigation',
+    'box2': 'Indexer',
+}
 export const handleDragStart1 = (e, boxName, setDraggedItem, setVisible, setanimate) => {
     setDraggedItem(boxName);
     e.dataTransfer.effectAllowed = 'move';
@@ -6,14 +11,14 @@ export const handleDragStart1 = (e, boxName, setDraggedItem, setVisible, setanim
     img.src =
         "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==";
     e.dataTransfer.setDragImage(img, 0, 0);
-    setVisible(boxName)
+    setVisible(helper[boxName])
 }
 
 export const handleDragOver1 = (e, block, setadjustment, draggedItem, file, animate, setanimate) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
     if (file == 'quiz') {
-        if(draggedItem=='box1'||draggedItem=='box2'){
+        if (draggedItem == 'box1' || draggedItem == 'box2') {
             setanimate(0)
         }
         if (draggedItem == 'top' && (block == 'top' || block == 'right')) {

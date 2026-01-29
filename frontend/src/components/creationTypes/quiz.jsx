@@ -66,7 +66,7 @@ const quiz = () => {
             <div className='down h-1/10  w-full relative text-primary-text dark:text-primary-dark-text/60 '
                 onDrop={(e) => handleDrop(e, 'bottom', 'top', verticalLayout, setVerticalLayout)}
             >
-               
+
                 < div className=' max-h-f-full h-full rounded-md row-start-2 row-end-2 col-start-1 col-end-1 ' >
                     <Questions list={list}
                         setlist={setlist}
@@ -92,14 +92,14 @@ const quiz = () => {
         'left': (
             <div className={'h-full  w-9/10  flex flex-col gap-2 relative text-primary-text dark:text-primary-dark-text/60 '}
                 onDrop={(e) => handleDrop(e, 'left', 'right', horizontalLayout, setHorizontalLayout)}
-                
+
                 onDrag={(e) => {
                     setx(e.clientX)
                     sety(e.clientY)
                 }}
 
             >
-                 {
+                {
                     <div style={{ height: height + "px" }}
                         className={` w-full border-2 pointer-events-auto border-blue-950   transition-all ease-in-out duration-100 ${(verticalLayout[0] === 'top') ? `bottom-0  ${animation(animate)}` : `top-0 ${animation2(animate)}`} rounded-md absolute
                         ${(adjustment == 'vertical') ? " " : " hidden"} `}>
@@ -107,7 +107,7 @@ const quiz = () => {
                         </div>
                     </div>
                 }
-                
+
                 {
                     <div className={`h-full w-1/10 border-2 pointer-events-auto border-blue-950 transition-all ease-in duration-100
                      ${(horizontalLayout[0] === 'left') ? `left-0  ${animation3(animate)} ` : `right-0  ${animation4(animate)}`} rounded-md absolute
@@ -159,7 +159,9 @@ const quiz = () => {
             </div >
             <div className=' tools hidden'></div>
             {
-                (Visible == true) ? (<div className='absolute h-full w-full top-0 left-0 pointer-events-auto bg-primary/20 dark:bg-primary-dark/20 pt-15'>
+                <div className={`absolute h-full w-full top-0 left-0 pointer-events-none bg-primary/20 dark:bg-primary-dark/20 pt-1.5
+                ${(!Visible ? " hidden":' ')}
+                `}>
                     <div className='h-2 top-15 w-full flex items-center absolute justify-center'>
                         <div className=' h-full w-50 bg-primary-button dark:bg-primary-dark-button border-1  rounded-b-full '>
 
@@ -181,7 +183,7 @@ const quiz = () => {
                         </div>
                     </div>
                 </div>
-                ) : (null)
+               
             }
             {
                 (Visible != null) && <div className={`px-2 py-0.5 absolute opacity-100 border-1 rounded-md text-primary-text dark:text-primary-dark-text ${Visible == null ? ' hidden' : 'dra'}`}

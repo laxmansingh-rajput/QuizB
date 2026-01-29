@@ -6,7 +6,7 @@ const useDrag = () => {
     const [draggedItem, setDraggedItem] = useState(null)
     const [x, setx] = useState(null)
     const [y, sety] = useState(null)
-    const [Visible, setVisible] = useState(false)
+    const [Visible, setVisible] = useState(null)
     const [animate, setanimate] = useState(0)
     const [adjustment, setadjustment] = useState(null)
     return {
