@@ -34,7 +34,7 @@ const quiz = () => {
     const handleDragEnd = () => handleDragEnd1(setDraggedItem, setadjustment, setVisible, setanimate)
 
     const vertical = {
-        'top': (<div draggable ref={blockRef} className="up h-9/10 w-full  text-primary-text dark:text-primary-dark-text/60 "
+        'top': (<div draggable ref={blockRef} className="up h-9/10 w-full   text-primary-text dark:text-primary-dark-text/60 "
             onDragStart={(e) => handleDragStart(e, 'top')}
             onDragEnd={handleDragEnd}
             onDragOver={(e) => {
@@ -185,13 +185,7 @@ const quiz = () => {
                 </div>
                
             }
-            {
-                (Visible != null) && <div className={`px-2 py-0.5 absolute opacity-100 border-1 rounded-md text-primary-text dark:text-primary-dark-text ${Visible == null ? ' hidden' : 'dra'}`}
-                    style={{ left: x + "px", top: y + "px" }}
-                >
-                    {Visible}
-                </div>
-            }
+           
         </div >
     );
 };
