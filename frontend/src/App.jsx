@@ -13,6 +13,8 @@ import Practice from './components/practice.jsx';
 import Faq from './components/faq.jsx';
 import Creation from './components/creations.jsx';
 import WorkSpace from './components/workSpace.jsx';
+import Quiz from './components/quiz/quiz.jsx';
+import QuizNav from './components/quiz/Nav.jsx';
 
 function App() {
   const [mode, setmode] = useState(() => {
@@ -25,6 +27,11 @@ function App() {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", mode);
+    if (mode === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
     localStorage.setItem("mode", mode);
   }, [mode]);
   
@@ -63,6 +70,10 @@ function App() {
     {
       path: "/workspace",
       element: (<><Nav hide={true} /><WorkSpace /></>),
+    },
+    {
+      path: "/quiz",
+      element: (<><QuizNav /><Quiz /></>),
     }
   ]);
 

@@ -18,8 +18,7 @@ const WorkSpace = () => {
     }
 
     return (
-        <div className='h-[100vh] w-[100vw] bg-primary text-xl text-primary-text dark:bg-primary-dark dark:text-dark-card-text 
-        flex items-center justify-center   '>
+        <div className='h-[100vh] w-[100vw] bg-background text-xl text-foreground transition-colors duration-280 flex items-center justify-center'>
             <ComponentToRender />
         </div>
     );

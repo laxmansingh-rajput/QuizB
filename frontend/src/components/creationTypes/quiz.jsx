@@ -34,7 +34,7 @@ const quiz = () => {
     const handleDragEnd = () => handleDragEnd1(setDraggedItem, setadjustment, setVisible, setanimate)
 
     const vertical = {
-        'top': (<div draggable ref={blockRef} className="up h-9/10 w-full   text-primary-text dark:text-primary-dark-text/60 "
+        'top': (<div draggable ref={blockRef} className="up h-9/10 w-full text-foreground"
             onDragStart={(e) => handleDragStart(e, 'top')}
             onDragEnd={handleDragEnd}
             onDragOver={(e) => {
@@ -63,7 +63,7 @@ const quiz = () => {
         </div>)
         ,
         'bottom': (
-            <div className='down h-1/10  w-full relative text-primary-text dark:text-primary-dark-text/60 '
+            <div className='down h-1/10 w-full relative text-foreground'
                 onDrop={(e) => handleDrop(e, 'bottom', 'top', verticalLayout, setVerticalLayout)}
             >
 
@@ -90,7 +90,7 @@ const quiz = () => {
 
     const horizontal = {
         'left': (
-            <div className={'h-full  w-9/10  flex flex-col gap-2 relative text-primary-text dark:text-primary-dark-text/60 '}
+            <div className={'h-full w-9/10 flex flex-col gap-2 relative text-foreground'}
                 onDrop={(e) => handleDrop(e, 'left', 'right', horizontalLayout, setHorizontalLayout)}
 
                 onDrag={(e) => {
@@ -125,7 +125,7 @@ const quiz = () => {
             </div>
         ),
         'right': (
-            <div draggable className={'h-full w-1/10 text-primary-text dark:text-primary-dark-text/60 '
+            <div draggable className={'h-full w-1/10 text-foreground '
                 + (Visible ? " cursor-pointer " : " ")}
                 onDragStart={(e) => handleDragStart(e, 'right')}
                 onDragEnd={handleDragEnd}
@@ -147,9 +147,7 @@ const quiz = () => {
 
 
     return (
-        <div className='h-[100vh] relative w-[100vw] bg-primary text-xl text-primary-text dark:bg-primary-dark 
-        dark:text-dark-card-text  box-border pt-18  p-2 
-        overflow-hidden'>
+        <div className='h-[100vh] relative w-[100vw] bg-background text-xl text-foreground transition-colors duration-280 box-border pt-18 p-2 overflow-hidden'>
             <div className={`h-full w-full flex items-center justify-center gap-2  `}>
                 {
                     horizontalLayout.map((box) => (
@@ -159,26 +157,26 @@ const quiz = () => {
             </div >
             <div className=' tools hidden'></div>
             {
-                <div className={`absolute h-full w-full top-0 left-0 pointer-events-none bg-primary/20 dark:bg-primary-dark/20 pt-1.5
+                <div className={`absolute h-full w-full top-0 left-0 pointer-events-none bg-primary/10 pt-1.5
                 ${(!Visible ? " hidden":' ')}
                 `}>
                     <div className='h-2 top-15 w-full flex items-center absolute justify-center'>
-                        <div className=' h-full w-50 bg-primary-button dark:bg-primary-dark-button border-1  rounded-b-full '>
+                        <div className=' h-full w-50 bg-primary border-1  rounded-b-full '>
 
                         </div>
                     </div>
                     <div className='h-2 bottom-0 w-full flex items-center absolute justify-center'>
-                        <div className=' h-full w-50 bg-primary-button dark:bg-primary-dark-button border-1  rounded-t-full '>
+                        <div className=' h-full w-50 bg-primary border-1  rounded-t-full '>
 
                         </div>
                     </div>
                     <div className='h-full left-0 w-2 flex items-center absolute justify-center'>
-                        <div className=' h-50 w-full bg-primary-button dark:bg-primary-dark-button border-1  rounded-r-full '>
+                        <div className=' h-50 w-full bg-primary border-1  rounded-r-full '>
 
                         </div>
                     </div>
                     <div className='h-full right-0 w-2 flex items-center absolute justify-center'>
-                        <div className=' h-50 w-full bg-primary-button dark:bg-primary-dark-button border-1  rounded-l-full '>
+                        <div className=' h-50 w-full bg-primary border-1  rounded-l-full '>
 
                         </div>
                     </div>

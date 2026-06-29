@@ -28,15 +28,15 @@ const View = ({ List, setview, setcurr, setList }) => {
     };
 
     return (
-        <div className={'h-auto w-full bg-[#FFFF] text-primary-card-text dark:bg-primary-dark-card dark:text-[#F5F5F5] rounded-lg shadow-lg p-6 box-border pt-0 gap-6 text-start relative '
+        <div className={'h-auto w-full bg-card text-foreground rounded-2xl shadow-soft p-6 box-border pt-0 gap-6 text-start relative '
             +(List.length<=2 &&("h-full"))
         }>
-            <div className='sticky top-0  left-0 text-2xl font-semibold w-full flex items-center justify-center h-10 bg-[#FFFF] dark:bg-primary-dark-card z-48'>
-                <div className='h-10 w-full text-center flex items-center justify-center relative mt-2'>
+            <div className='sticky top-0 left-0 text-2xl font-semibold w-full flex items-center justify-center h-10 bg-card z-48'>
+                <div className='h-10 w-full text-center flex items-center justify-center relative mt-2 text-foreground'>
                     View
                     <img
                         src={mode === 'dark' ? darkcancel : cancel}
-                        className='h-8 rounded hover:bg-black/20 absolute  cursor-pointer  right-0 top-[2px]'
+                        className='h-8 rounded hover:bg-black/20 absolute cursor-pointer right-0 top-[2px]'
                         onClick={() => setview(false)}
                         alt="cancel"
                     />
