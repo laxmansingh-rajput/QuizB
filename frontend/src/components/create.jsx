@@ -27,16 +27,16 @@ const Create = () => {
   const shouldStack = show === "show" && width < 750;
 
   return (
-    <div className="min-h-screen w-screen relative overflow-y-auto box-border overflow-x-hidden">
-      <div className="min-h-[100vh] w-[100vw] absolute left-0 bg-primary text-xl text-primary-text dark:bg-primary-dark text-primary-dark-text box-border">
+    <div className="min-h-screen w-screen relative overflow-y-auto box-border overflow-x-hidden bg-background text-foreground transition-colors duration-280">
+      <div className="min-h-[100vh] w-[100vw] absolute left-0 bg-background text-xl text-foreground box-border transition-colors duration-280">
         <div
           className={
-            'min-h-full pt-20 bg-primary text-xl text-primary-text dark:bg-primary-dark text-primary-dark-text transition-all duration-500 ease-in-out absolute max-[750px]:w-full min-w-[700px]:left-0 right-0 ' +
+            'min-h-full pt-20 bg-background text-xl text-foreground transition-all duration-280 ease-in-out absolute max-[750px]:w-full min-w-[700px]:left-0 right-0 ' +
             (show !== 'show' ? 'w-full' : 'max-[950px]:w-3/4 w-8/10')
           }
           ref={blockRef}
         >
-          <h1 className="text-4xl font-bold text-primary-text text-primary-dark-text p-5 mt-5 box-border">
+          <h1 className="text-4xl font-bold text-foreground p-5 mt-5 box-border">
             Select Your Preference
           </h1>
           <div

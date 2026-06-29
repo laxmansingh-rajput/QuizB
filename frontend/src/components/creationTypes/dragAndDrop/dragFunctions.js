@@ -4,15 +4,33 @@ const helper = {
     'box1': 'Navigation',
     'box2': 'Indexer',
 }
-export const handleDragStart1 = (e, boxName, setDraggedItem, setVisible, setanimate) => {
-    setDraggedItem(boxName);
-    e.dataTransfer.effectAllowed = 'move';
-    const img = document.createElement("img");
-    img.src =
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==";
-    e.dataTransfer.setDragImage(img, 0, 0);
-    setVisible(helper[boxName])
-}
+
+export const handleDragStart1 = (
+  e,
+  boxName,
+  setDraggedItem,
+  setVisible
+) => {
+  setDraggedItem(boxName);
+  e.dataTransfer.effectAllowed = 'move';
+
+  const dragImage = document.createElement('div');
+  dragImage.innerText = helper[boxName];
+  dragImage.style.position = 'absolute';
+  dragImage.style.top = '-1000px';
+  dragImage.style.left = '-1000px';
+  dragImage.style.padding = '4px 8px';
+  dragImage.style.border = '1px solid #888';
+  dragImage.style.borderRadius = '6px';
+  dragImage.style.background = '#111';
+  dragImage.style.color = '#fff';
+  dragImage.style.fontSize = '12px';
+  dragImage.style.pointerEvents = 'none';
+  document.body.appendChild(dragImage);
+  e.dataTransfer.setDragImage(dragImage, 0, 0)
+  setVisible(helper[boxName]);
+};
+
 
 export const handleDragOver1 = (e, block, setadjustment, draggedItem, file, animate, setanimate) => {
     e.preventDefault();

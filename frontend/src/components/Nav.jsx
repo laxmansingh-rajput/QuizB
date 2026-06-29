@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router';
 import sun from '../assets/sun.svg';
 import moon from '../assets/moon.svg';
-import qb from '../assets/quizB.svg'
+import Logo from './Logo';
 import ham from '../assets/ham.svg'
 import darkham from '../assets/darkham.svg'
 import ModeContext from '../context/context.js'
@@ -39,18 +39,18 @@ const Nav = ({ hide }) => {
     }
     return (
 
-            <div className=' w-[100vw] h-15  bg-primary  dark:bg-primary-dark  text-primary-dark-text  fixed top-0 left-0 
-        z-50 flex items-center justify-between gap-0 p-3 box-border transition-colors duration-500 ease-in-out shadow dark:shadow-amber-50'>
+            <div className=' w-[100vw] h-15 bg-card border-b border-border text-foreground fixed top-0 left-0 
+        z-50 flex items-center justify-between gap-0 p-3 box-border transition-colors duration-280 shadow-soft'>
                 <div className=' flex items-center justify-center gap-2 shrink-0 '>
-                    <div className='text-primary-text rounded-full h-10 w-10  flex items-center justify-center transition-colors duration-100 ease-in hover:bg-[#E0F0FF] dark:hover:bg-[#29293e]' onClick={handleShow}>
+                    <div className='text-foreground rounded-full h-10 w-10  flex items-center justify-center transition-colors duration-100 ease-in hover:bg-secondary cursor-pointer' onClick={handleShow}>
                         <img src={(hide) ? ((mode === "dark") ? darkleftA : leftA) : ((mode === "dark") ? darkham : ham)} className='h-8' alt="" />
                     </div>
-                    <img src={qb} className='h-10' alt="" onClick={handleHome} />
+                    <Logo className='h-10 cursor-pointer' onClick={handleHome} />
                 </div>
 
                 <div className='flex items-center justify-center gap-2 shrink-0'>
                     <div
-                        className="h-5 w-12 rounded-full flex items-center  bg-white shadow dark:bg-gray-200 relative cursor-pointer"
+                        className="h-5 w-12 rounded-full flex items-center bg-secondary shadow relative cursor-pointer"
                         onClick={handleMode}
                     >
                         <img
@@ -60,7 +60,7 @@ const Nav = ({ hide }) => {
                                 }`}
                         />
                     </div>
-                    <button className=' h-8 w-25 rounded-md bg-primary-button  hover:scale-95  text-white dark:bg-primary-dark-button text-sm font-semibold  duration-200 ease-in-out  cursor-pointer' onClick={handleLogin}>
+                    <button className=' h-8 w-25 rounded-md bg-primary hover:scale-95 text-primary-foreground text-sm font-semibold duration-200 ease-in-out cursor-pointer' onClick={handleLogin}>
                         Login
                     </button>
                 </div>

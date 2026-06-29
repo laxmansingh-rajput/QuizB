@@ -1,8 +1,43 @@
 import { useState, useEffect } from "react";
 const useDrag = () => {
-    const [verticalLayout, setVerticalLayout] = useState(['top', 'bottom'])
-    const [horizontalLayout, setHorizontalLayout] = useState(['left', 'right'])
-    const [layout, setlayout] = useState(['box1', 'box2'])
+    // const [verticalLayout, setVerticalLayout] = useState(['top', 'bottom'])
+    const [verticalLayout, setVerticalLayout] = useState(() => {
+        let a = localStorage.getItem('verticalLayout')
+        if (a) {
+            return a.split(',')
+        } else {
+            return ['top', 'bottom']
+        }
+    })
+    const [horizontalLayout, setHorizontalLayout] = useState(() => {
+        let a = localStorage.getItem('horizontalLayout')
+        if (a) {
+            return a.split(',')
+        } else {
+            return ['left', 'right']
+        }
+    })
+    const [layout, setlayout] = useState(() => {
+        let a = localStorage.getItem('layout')
+        if (a) {
+            return a.split(',')
+        } else {
+            return ['box1', 'box2']
+        }
+    })
+
+    useEffect(() => {
+        localStorage.setItem('horizontalLayout', horizontalLayout)
+    }, [horizontalLayout])
+
+    useEffect(() => {
+        localStorage.setItem('verticalLayout', verticalLayout)
+    }, [verticalLayout])
+
+    useEffect(() => {
+        localStorage.setItem('layout', layout)
+    }, [layout])
+
     const [draggedItem, setDraggedItem] = useState(null)
     const [x, setx] = useState(null)
     const [y, sety] = useState(null)
