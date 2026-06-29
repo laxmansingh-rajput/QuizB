@@ -90,7 +90,7 @@ const quiz = () => {
 
     const horizontal = {
         'left': (
-            <div className={'h-full w-9/10 flex flex-col gap-2 relative text-foreground'}
+            <div className={'h-[calc(100%-80px)] md:h-full w-full md:w-9/10 flex flex-col gap-2 relative text-foreground'}
                 onDrop={(e) => handleDrop(e, 'left', 'right', horizontalLayout, setHorizontalLayout)}
 
                 onDrag={(e) => {
@@ -125,7 +125,7 @@ const quiz = () => {
             </div>
         ),
         'right': (
-            <div draggable className={'h-full w-1/10 text-foreground '
+            <div draggable className={'h-20 md:h-full w-full md:w-1/10 text-foreground '
                 + (Visible ? " cursor-pointer " : " ")}
                 onDragStart={(e) => handleDragStart(e, 'right')}
                 onDragEnd={handleDragEnd}
@@ -138,7 +138,7 @@ const quiz = () => {
                     handleDragOver(e, 'right')
                 }}
             >
-                <div className='border-1  h-full w-full rounded-md p-1 '>
+                <div className='h-full w-full rounded-md p-1 '>
                     <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
                 </div>
             </div>
@@ -148,7 +148,7 @@ const quiz = () => {
 
     return (
         <div className='h-[100vh] relative w-[100vw] bg-background text-xl text-foreground transition-colors duration-280 box-border pt-18 p-2 overflow-hidden'>
-            <div className={`h-full w-full flex items-center justify-center gap-2  `}>
+            <div className={`h-full w-full flex flex-col md:flex-row items-center justify-center gap-4 `}>
                 {
                     horizontalLayout.map((box) => (
                         horizontal[box]

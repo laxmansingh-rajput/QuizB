@@ -26,7 +26,7 @@ const Question = ({
                     value={`${list[qno - 1].question}`} maxLength={150} onChange={(e) => { QuestionHandeler(e) }} >
                 </textarea>
                 <div className="options flex flex-col h-3/4 gap-2 w-full items-center">
-                    <div className='flex flex-col gap-3 w-2/3 h-full relative'>
+                    <div className='flex flex-col gap-3 w-11/12 md:w-2/3 h-full relative'>
                         {
                             list[qno - 1].options.map((opt, i) => (
                                 <div key={i} className='h-10 w-full text-sm rounded-xl border border-border bg-input p-2 flex items-center text-foreground shadow-soft'>

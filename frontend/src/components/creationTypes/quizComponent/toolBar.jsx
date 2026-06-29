@@ -42,8 +42,8 @@ const toolBar = ({ list, setlist, type, qno, settype, setqno }) => {
     }
 
     return (
-        <div className='  h-full w-full  text-primary-text dark:text-primary-dark-text flex flex-col gap-5 items-center '>
-            <div className='font-bold underline'>Tools</div>
+        <div className='h-full w-full text-foreground flex flex-row md:flex-col gap-3 md:gap-5 items-center justify-center md:justify-start overflow-x-auto md:overflow-x-visible py-2 md:py-0'>
+            <div className='font-bold underline hidden md:block'>Tools</div>
             <Icons name="Add Single" svg={lightSingle} dark={darkSingle} onClick={() => { handelAddSingle() }} />
             <Icons name="Add Multiple" svg={lightMultiple} dark={darkMultiple} onClick={() => { handelAddMultipe() }} />
             <Icons name="View" svg={lightEye} dark={darkEye} />
