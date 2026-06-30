@@ -47,7 +47,7 @@ const SideBar = ({ curr }) => {
                     " w-0 hidden " : "")}>
 
                 <div className='relative p-2 rounded-md overflow-hidden'>
-                    <div className='flex items-center justify-start gap-3 cursor-pointer relative z-10' onClick={handelHome}>
+                    <div className='flex items-center px-3 justify-start gap-3 cursor-pointer relative z-10' onClick={handelHome}>
                         <div className={'rounded-md transition-all duration-300 h-10 w-full absolute left-0 top-1/2 -translate-y-1/2 -z-10 ' + ((curr === "home") ? "bg-accent border border-primary/30" : "hover:bg-secondary/50")}></div>
                         <img src={(mode === "dark") ? darkhome : home} className="h-7 transition-all duration-300 ease-in-out z-20" alt="" />
                         <span className="z-20 font-medium">Home</span>
@@ -55,7 +55,7 @@ const SideBar = ({ curr }) => {
                 </div>
 
                 <div className='relative p-2 rounded-md overflow-hidden'>
-                    <div className='flex items-center justify-start gap-3 cursor-pointer relative z-10' onClick={handelCreate}>
+                    <div className='flex items-center px-3 justify-start gap-3 cursor-pointer relative z-10' onClick={handelCreate}>
                         <div className={'rounded-md transition-all duration-300 h-10 w-full absolute left-0 top-1/2 -translate-y-1/2 -z-10 ' + ((curr === "create") ? "bg-accent border border-primary/30" : "hover:bg-secondary/50")}></div>
                         <img src={(mode === "dark") ? darkcreate : create} className="h-7 transition-all duration-300 ease-in-out z-20" alt="" />
                         <span className="z-20 font-medium">Create</span>
@@ -63,7 +63,7 @@ const SideBar = ({ curr }) => {
                 </div>
 
                 <div className='relative p-2 rounded-md overflow-hidden'>
-                    <div className='flex items-center justify-start gap-3 cursor-pointer relative z-10' onClick={handelJoin}>
+                    <div className='flex items-center px-3 justify-start gap-3 cursor-pointer relative z-10' onClick={handelJoin}>
                         <div className={'rounded-md transition-all duration-300 h-10 w-full absolute left-0 top-1/2 -translate-y-1/2 -z-10 ' + ((curr === "join") ? "bg-accent border border-primary/30" : "hover:bg-secondary/50")}></div>
                         <img src={(mode === "dark") ? darkjoin : join} className="h-7 transition-all duration-300 ease-in-out z-20" alt="" />
                         <span className="z-20 font-medium">Join</span>
@@ -71,7 +71,7 @@ const SideBar = ({ curr }) => {
                 </div>
 
                 <div className='relative p-2 rounded-md overflow-hidden'>
-                    <div className='flex items-center justify-start gap-3 cursor-pointer relative z-10' onClick={handelpractice}>
+                    <div className='flex items-center px-3 justify-start gap-3 cursor-pointer relative z-10' onClick={handelpractice}>
                         <div className={'rounded-md transition-all duration-300 h-10 w-full absolute left-0 top-1/2 -translate-y-1/2 -z-10 ' + ((curr === "practice") ? "bg-accent border border-primary/30" : "hover:bg-secondary/50")}></div>
                         <img src={(mode === "dark") ? darkpractice : Practice} className="h-7 transition-all duration-300 ease-in-out z-20" alt="" />
                         <span className="z-20 font-medium">Practice</span>
@@ -79,7 +79,7 @@ const SideBar = ({ curr }) => {
                 </div>
 
                 <div className='relative p-2 rounded-md overflow-hidden'>
-                    <div className='flex items-center justify-start gap-3 cursor-pointer relative z-10' onClick={handelCreation}>
+                    <div className='flex items-center px-3 justify-start gap-3 cursor-pointer relative z-10' onClick={handelCreation}>
                         <div className={'rounded-md transition-all duration-300 h-10 w-full absolute left-0 top-1/2 -translate-y-1/2 -z-10 ' + ((curr === "creation") ? "bg-accent border border-primary/30" : "hover:bg-secondary/50")}></div>
                         <img src={(mode === "dark") ? darkcreation : creation} className="h-7 transition-all duration-300 ease-in-out z-20" alt="" />
                         <span className="z-20 font-medium">My Creation</span>
@@ -87,7 +87,7 @@ const SideBar = ({ curr }) => {
                 </div>
 
                 <div className='relative p-2 rounded-md overflow-hidden'>
-                    <div className='flex items-center justify-start gap-3 cursor-pointer relative z-10' onClick={handelPremium}>
+                    <div className='flex items-center px-3 justify-start gap-3 cursor-pointer relative z-10' onClick={handelPremium}>
                         <div className={'rounded-md transition-all duration-300 h-10 w-full absolute left-0 top-1/2 -translate-y-1/2 -z-10 ' + ((curr === "premium") ? "bg-accent border border-primary/30" : "hover:bg-secondary/50")}></div>
                         <img src={(mode === "dark") ? darkprem : prem} className="h-7 transition-all duration-300 ease-in-out z-20" alt="" />
                         <span className="z-20 font-medium">Premium</span>
@@ -95,7 +95,7 @@ const SideBar = ({ curr }) => {
                 </div>
 
                 <div className='relative p-2 rounded-md overflow-hidden'>
-                    <div className='flex items-center justify-start gap-3 cursor-pointer relative z-10' onClick={handelFaq}>
+                    <div className='flex items-center px-3 justify-start gap-3 cursor-pointer relative z-10' onClick={handelFaq}>
                         <div className={'rounded-md transition-all duration-300 h-10 w-full absolute left-0 top-1/2 -translate-y-1/2 -z-10 ' + ((curr === "faq") ? "bg-accent border border-primary/30" : "hover:bg-secondary/50")}></div>
                         <img src={(mode === "dark") ? darkfaq : faq} className="h-7 transition-all duration-300 ease-in-out z-20" alt="" />
                         <span className="z-20 font-medium">FAQ</span>
