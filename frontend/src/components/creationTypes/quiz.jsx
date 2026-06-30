@@ -125,7 +125,7 @@ const quiz = () => {
             </div>
         ),
         'right': (
-            <div draggable className={'h-20 md:h-full w-full md:w-1/10 text-foreground '
+            <div draggable className={'h-20 md:h-full w-full md:w-1/10  text-foreground '
                 + (Visible ? " cursor-pointer " : " ")}
                 onDragStart={(e) => handleDragStart(e, 'right')}
                 onDragEnd={handleDragEnd}
@@ -138,7 +138,7 @@ const quiz = () => {
                     handleDragOver(e, 'right')
                 }}
             >
-                <div className='h-full w-full rounded-md p-1 '>
+                <div className='h-full w-full rounded-md p-1 bg-card'>
                     <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
                 </div>
             </div>

@@ -20,9 +20,8 @@ const Question = ({
     return (
         <div className='h-full w-full'>
             <div draggable className='bg-card text-card-foreground shadow-soft max-h-full h-full p-6 box-border rounded-2xl relative flex flex-col gap-6'
-                
             >
-                <textarea className="question h-20 max-h-25 w-full border-b border-border bg-transparent text-foreground p-2 focus:border-primary focus:outline-none resize-none" placeholder="Enter The Question"
+                <textarea className="question h-20 max-h-25 max-[770px]:h-15 w-full border-b border-border bg-transparent text-foreground p-2 focus:border-primary focus:outline-none resize-none" placeholder="Enter The Question"
                     value={`${list[qno - 1].question}`} maxLength={150} onChange={(e) => { QuestionHandeler(e) }} >
                 </textarea>
                 <div className="options flex flex-col h-3/4 gap-2 w-full items-center">
@@ -35,7 +34,7 @@ const Question = ({
                                 </div>
                             ))
                         }
-                        <div className='w-full absolute bottom-25 border border-border rounded-xl text-sm h-10 flex items-center justify-around bg-secondary/80 text-foreground'>
+                        <div className='w-full min-[770px]:absolute min-[770px]:bottom-25 border border-border rounded-xl text-sm h-10 flex items-center justify-around bg-secondary/80 text-foreground'>
                             <div className='font-bold'>Correct answer{type ? "" : "s"}:</div>
                             {
                                 list[qno - 1].options.map((checked, i) => (
@@ -48,21 +47,21 @@ const Question = ({
                                 ))
                             }
                         </div>
-                        <div className='text-red-600 dark:text-destructive w-full text-sm font-bold absolute bottom-10'>
+                        <div className='text-red-600 dark:text-destructive w-full text-sm font-bold absolute bottom-12 max-[770px]:bottom-4'>
                             {`${err}`}
                         </div>
                     </div>
                 </div>
-                <div className='h-auto w-full absolute left-6 bottom-4'>
-                    <button type="button" className='bg-primary text-primary-foreground hover:scale-95 text-sm font-semibold transition-all duration-300 ease-in-out cursor-pointer rounded-xl px-4 py-2 relative shadow-soft' onClick={() => { handelAddOption() }}>
+                <div className='h-auto w-full absolute left-0 bottom-8 max-[770px]:bottom-2'>
+                    <button type="button" className='bg-primary text-primary-foreground hover:scale-95 text-sm font-semibold transition-all duration-300 ease-in-out cursor-pointer rounded-xl px-4 py-2  shadow-soft' onClick={() => { handelAddOption() }}>
                         Add Option
                     </button>
                 </div>
                 <div className='absolute bottom-2 left-2 font-bold'>
                     {`Q${qno}.`}
                 </div>
-                <div className='absolute bottom-2 right-2 w-45 flex items-center justify-around'>
-                    <span className='text-sm font-bold'>{(type) ? "Single Choice" : "Multiple Choice"}</span>
+                <div className='absolute bottom-2 right-2 w-45 flex items-center justify-around max-[600px]:justify-end'>
+                    <span className='text-sm font-bold max-[600px]:hidden'>{(type) ? "Single Choice" : "Multiple Choice"}</span>
                     <div className=' h-[20px] w-[40px] border-[1px] rounded-full flex items-center
                  ' onClick={() => {
                             settype(!type)

@@ -43,16 +43,21 @@ const questionBar = ({ list, generateErr, qno, setqno, setVisible, animate, seta
           </div>
         </div>
       }
-      <div className='h-full w-full bg-card border border-border text-foreground rounded-xl flex items-center justify-center gap-4 px-4 py-2 z-50 shadow-soft'>
+      <div className='h-full w-full bg-card border border-border text-foreground rounded-xl flex items-center justify-center gap-4 max-[600px]:gap-3 px-4 py-2 z-50 shadow-soft'>
         <button
-          className='text-[12px] px-5 py-1 h-8 w-10 cursor-pointer rounded-lg flex items-center justify-center text-primary-foreground font-semibold bg-primary hover:scale-95 transition-all duration-200 shadow-soft'
+          className='text-[12px] max-[600px]:text-[9px] px-5 py-1 max-[600px]:px-2 max-[550px]:hidden  h-8 w-10 cursor-pointer rounded-lg flex items-center justify-center text-primary-foreground font-semibold bg-primary hover:scale-95 transition-all duration-200 shadow-soft'
           onClick={() => setqno(qno > 1 ? qno - 1 : 1)}>
           Prev
+        </button>
+         <button
+          className='text-[12px] max-[600px]:text-[9px] px-5 py-1 max-[600px]:px-2 min-[550px]:hidden h-8 w-10 max-[550px]:w-auto cursor-pointer rounded-lg flex items-center justify-center text-primary-foreground font-semibold bg-primary hover:scale-95 transition-all duration-200 shadow-soft'
+          onClick={() => setqno(qno > 1 ? qno - 1 : 1)}>
+          {'<'}
         </button>
 
         <input
           type="text"
-          className='h-8 w-10 bg-input border border-border text-foreground rounded-lg flex items-center justify-center text-center font-semibold focus:outline-none focus:ring-1 focus:ring-ring'
+          className='h-8 w-10 max-[500px]:w-8 bg-input border border-border max-[600px]:text-[9px] text-foreground rounded-lg flex items-center justify-center text-center font-semibold focus:outline-none focus:ring-1 focus:ring-ring'
           value={curr}
           onChange={(e) => {
             setcurr(e.target.value)
@@ -71,12 +76,17 @@ const questionBar = ({ list, generateErr, qno, setqno, setVisible, animate, seta
           onBlur={() => { setcurr(qno) }}
         />
 
-        <span className='text-[12px] font-medium'>of {list.length}</span>
+        <span className='text-[12px] max-[600px]:text-[9px] font-medium'>of {list.length}</span>
 
         <button
-          className='text-[12px] px-5 py-1 h-8 w-10 cursor-pointer rounded-lg flex items-center justify-center text-primary-foreground font-semibold bg-primary hover:scale-95 transition-all duration-200 shadow-soft'
+          className='text-[12px] max-[600px]:text-[9px] px-5 py-1 max-[600px]:px-2 max-[550px]:hidden  h-8 w-10 cursor-pointer rounded-lg flex items-center justify-center text-primary-foreground font-semibold bg-primary hover:scale-95 transition-all duration-200 shadow-soft'
           onClick={() => setqno(qno < list.length ? qno + 1 : list.length)}>
           Next
+        </button>
+          <button
+          className='text-[12px] max-[600px]:text-[9px] px-5 py-1 max-[600px]:px-2 min-[550px]:hidden h-8 w-10 max-[550px]:w-auto cursor-pointer rounded-lg flex items-center justify-center text-primary-foreground font-semibold bg-primary hover:scale-95 transition-all duration-200 shadow-soft'
+          onClick={() => setqno(qno < list.length ? qno + 1 : list.length)}>
+          {">"}
         </button>
 
       </div>
@@ -94,12 +104,12 @@ const questionBar = ({ list, generateErr, qno, setqno, setVisible, animate, seta
           </div>
         </div>
       }
-      <div className='bg-card border border-border text-foreground rounded-xl h-full w-full flex items-center px-30 justify-center gap-2 overflow-x-auto scrollbar-thin z-50 shadow-soft'>
-        <div className='h-full w-60 flex items-center justify-center gap-2 overflow-x-auto relative'>
+      <div className='bg-card border border-border text-foreground rounded-xl h-full w-full flex items-center px-30 max-[930px]:px-5 max-[450px]:px-2 justify-center gap-2 overflow-x-auto scrollbar-thin z-50 shadow-soft'>
+        <div className='h-full w-60 p-5 flex items-center justify-center gap-2 overflow-hidden '>
           {
             RenderQuestion.map((i, _) => (
               <div key={i}
-                className={(qno == i) ? 'h-8 w-10 cursor-pointer rounded-lg flex items-center transition-all ease-in p-3 justify-center text-primary-foreground font-semibold bg-primary shadow-soft hover:scale-95' : 'hover:scale-95 h-8 w-10 text-sm rounded-lg flex items-center cursor-pointer transition-all ease-in p-3 justify-center font-semibold bg-secondary text-foreground hover:bg-muted border border-border shadow-soft'}
+                className={(qno == i) ? 'h-8 w-10 max-[500px]:text-sm  max-[500px]:w-8 cursor-pointer rounded-lg flex items-center transition-all ease-in p-3 justify-center text-primary-foreground font-semibold bg-primary shadow-soft hover:scale-95' : 'hover:scale-95 h-8 w-10 text-sm rounded-lg flex items-center cursor-pointer transition-all ease-in p-3 justify-center font-semibold bg-secondary text-foreground hover:bg-muted border border-border shadow-soft'}
                 onClick={() => handelQuestionswitch(i)} >
                 {`${i}`}
               </div>
