@@ -3,6 +3,7 @@ import ToolBar from './quizComponent/toolBar.jsx';
 import Questions from './quizComponent/questionBar.jsx'
 import useQuizState from './quizFunction/useQuizState.js';
 import Question from './quizComponent/Question.jsx';
+import View from './quizComponent/view.jsx';
 import useDrag from './dragAndDrop/useDrag.js';
 import { handleDragStart1, handleDragOver1, handleDrop1, handleDragEnd1 } from './dragAndDrop/dragFunctions.js'
 import {
@@ -20,6 +21,8 @@ const quiz = () => {
 
     const { list, setlist, err, seterr, qno, setqno,
         type, settype, Arr, height, setheight, blockRef } = useQuizState();
+
+    const [view, setview] = useState(false);
 
     const QuestionHandeler = (e) => QuestionHandeler1(e, list, setlist, qno)
     const optionHandeler = (e, index) => optionHandeler1(e, index, list, setlist, qno)
@@ -118,9 +121,13 @@ const quiz = () => {
                     </div>
                 }
                 {
-                    verticalLayout.map((box) => (
-                        vertical[box]
-                    ))
+                    view ? (
+                        <View List={list} setview={setview} setcurr={setqno} setList={setlist} />
+                    ) : (
+                        verticalLayout.map((box) => (
+                            vertical[box]
+                        ))
+                    )
                 }
             </div>
         ),
@@ -139,7 +146,7 @@ const quiz = () => {
                 }}
             >
                 <div className='h-full w-full rounded-md p-1 bg-card'>
-                    <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} />
+                    <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} setview={setview} />
                 </div>
             </div>
         )

@@ -10,14 +10,14 @@ import lightUpload from '../../../assets/lightUpload.svg'
 import darkUpload from '../../../assets/darkUpload.svg'
 import Delete from '../../../assets/Delete.svg'
 import darkDelete from '../../../assets/darkDelete.svg'
-const toolBar = ({ list, setlist, type, qno, settype, setqno }) => {
+const toolBar = ({ list, setlist, type, qno, settype, setqno, setview }) => {
     const handelAddSingle = () => {
         const updatedList = [...list]
         updatedList.push({ question: "", options: ["", "", ""], correct: [false, false, false], type: true })
         settype(true)
         setlist(updatedList)
         setqno(list.length + 1)
-
+        setview(false)
     }
     const handelAddMultipe = () => {
         const updatedList = [...list]
@@ -25,6 +25,7 @@ const toolBar = ({ list, setlist, type, qno, settype, setqno }) => {
         settype(false)
         setlist(updatedList)
         setqno(list.length + 1)
+        setview(false)
     }
     const handelDelete = () => {
         if (qno > 1) {
@@ -46,7 +47,7 @@ const toolBar = ({ list, setlist, type, qno, settype, setqno }) => {
             <div className='font-bold underline hidden md:block'>Tools</div>
             <Icons name="Add Single" svg={lightSingle} dark={darkSingle} onClick={() => { handelAddSingle() }} />
             <Icons name="Add Multiple" svg={lightMultiple} dark={darkMultiple} onClick={() => { handelAddMultipe() }} />
-            <Icons name="View" svg={lightEye} dark={darkEye} />
+            <Icons name="View" svg={lightEye} dark={darkEye} onClick={() => { setview(true) }} />
             <Icons name="Delete" svg={Delete} dark={darkDelete} onClick={() => { handelDelete() }} />
             <Icons name="Share" svg={lightUpload} dark={darkUpload} />
         </div>
