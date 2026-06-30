@@ -1,15 +1,14 @@
 import React from 'react';
 import edit from '../../assets/lightedit.svg';
 import darkedit from '../../assets/darkedit.svg';
-import ModeContext from '../../../context/context.js';
-import { useContext } from 'react';
+import { useAppearance } from '../../../context/AppearanceContext.jsx';
 import cancel from '../../assets/cancel.svg';
 import darkcancel from '../../assets/darkcancel.svg';
 import del from '../../assets/delete.svg';
 import darkdel from '../../assets/darkdelete.svg';
 
 const View = ({ List, setview, setcurr, setList }) => {
-    const { mode } = useContext(ModeContext);
+    const { theme } = useAppearance();
 
     const handelEdit = (index) => {
         setcurr(index);
@@ -35,7 +34,7 @@ const View = ({ List, setview, setcurr, setList }) => {
                 <div className='h-10 w-full text-center flex items-center justify-center relative mt-2 text-foreground'>
                     View
                     <img
-                        src={mode === 'dark' ? darkcancel : cancel}
+                        src={theme === 'dark' ? darkcancel : cancel}
                         className='h-8 rounded hover:bg-black/20 absolute cursor-pointer right-0 top-[2px]'
                         onClick={() => setview(false)}
                         alt="cancel"
@@ -53,13 +52,13 @@ const View = ({ List, setview, setcurr, setList }) => {
                     <div key={index} className='border-b pb-4 relative pt-3'>
                         <div className='flex absolute top-2 right-2 h-10 items-center justify-center gap-2'>
                             <img
-                                src={mode === 'dark' ? darkedit : edit}
+                                src={theme === 'dark' ? darkedit : edit}
                                 className='h-full  rounded hover:bg-black/20 cursor-pointer'
                                 alt="edit"
                                 onClick={() => handelEdit(index + 1)}
                             />
                             <img
-                                src={mode === 'dark' ? darkdel : del}
+                                src={theme === 'dark' ? darkdel : del}
                                 className='h-full  rounded hover:bg-black/20 cursor-pointer'
                                 alt="edit"
                                 onClick={() => handelDelete(index)}

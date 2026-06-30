@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider, } from "react-router";
 import './App.css'
 import Nav from './components/Nav'
 import SideBar from './components/sideBar'
-import Modecontext from './context/context.js'
 import Home from './components/home.jsx'
 import Premium from './components/premium.jsx';
 import Join from './components/join.jsx'
@@ -15,25 +14,9 @@ import Creation from './components/creations.jsx';
 import WorkSpace from './components/workSpace.jsx';
 import Quiz from './components/quiz/quiz.jsx';
 import QuizNav from './components/quiz/Nav.jsx';
+import AppearanceContext from './context/AppearanceContext.jsx';
 
 function App() {
-  const [mode, setmode] = useState(() => {
-    return localStorage.getItem("mode") || "light";
-  });
-
-  const [show, setshow] = useState(()=>{
-        return localStorage.getItem("side") || "show";
-  });
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", mode);
-    if (mode === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-    localStorage.setItem("mode", mode);
-  }, [mode]);
   
   const router = createBrowserRouter([
     {
@@ -79,9 +62,9 @@ function App() {
 
   return (
     <>
-      <Modecontext.Provider value={{ mode, setmode, show, setshow }}>
+      <AppearanceContext>
         <RouterProvider router={router} />
-      </Modecontext.Provider>
+      </AppearanceContext>
     </>
   )
 }

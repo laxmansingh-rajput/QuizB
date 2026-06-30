@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -42,60 +43,60 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-display: "Plus Jakarta Sans", "Inter", sans-serif;
+  --font-sans: "Outfit", "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Outfit", sans-serif;
 }
 
 /* LIGHT THEME */
 :root {
-  --background: #FFF2E1;
-  --foreground: #222222;
+  --background: #FAFAF9;
+  --foreground: #1C1917;
 
-  --card: rgba(255, 255, 255, 0.65);
-  --card-foreground: #222222;
+  --card: #FFFFFF;
+  --card-foreground: #1C1917;
 
-  --popover: #ffffff;
-  --popover-foreground: #222222;
+  --popover: #FFFFFF;
+  --popover-foreground: #1C1917;
 
-  --primary: #5c4d3c;
-  --primary-foreground: #ffffff;
+  --primary: #e86b55;
+  --primary-foreground: #FFFFFF;
 
-  --secondary: rgba(0, 0, 0, 0.04);
-  --secondary-foreground: #222222;
+  --secondary: rgba(28, 25, 23, 0.04);
+  --secondary-foreground: #1C1917;
 
-  --muted: rgba(0, 0, 0, 0.04);
-  --muted-foreground: #666666;
+  --muted: rgba(28, 25, 23, 0.04);
+  --muted-foreground: #78716C;
 
-  --accent: rgba(92, 77, 60, 0.12);
-  --accent-foreground: #222222;
+  --accent: rgba(255, 82, 51, 0.12);
+  --accent-foreground: #FF5233;
 
-  --destructive: #c0392b;
-  --destructive-foreground: #ffffff;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
 
-  --border: rgba(0, 0, 0, 0.06);
-  --input: rgba(0, 0, 0, 0.08);
-  --ring: #5c4d3c;
+  --border: rgba(28, 25, 23, 0.08);
+  --input: rgba(28, 25, 23, 0.06);
+  --ring: #FF5233;
 
-  --sidebar: rgba(255, 255, 255, 0.5);
-  --sidebar-foreground: #222222;
-  --sidebar-border: rgba(0, 0, 0, 0.06);
-  --sidebar-accent: rgba(0, 0, 0, 0.04);
-  --sidebar-accent-foreground: #222222;
-  --sidebar-primary: #5c4d3c;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-ring: #5c4d3c;
+  --sidebar: rgba(255, 255, 255, 0.7);
+  --sidebar-foreground: #1C1917;
+  --sidebar-border: rgba(28, 25, 23, 0.08);
+  --sidebar-accent: rgba(28, 25, 23, 0.04);
+  --sidebar-accent-foreground: #1C1917;
+  --sidebar-primary: #FF5233;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-ring: #FF5233;
 
-  --chart-1: #5c4d3c;
-  --chart-2: #6b5b47;
-  --chart-3: #d1b89a;
-  --chart-4: #8a7a63;
-  --chart-5: #c4a987;
+  --chart-1: #FF5233;
+  --chart-2: #FF8F7B;
+  --chart-3: #D9442C;
+  --chart-4: #FFAFA0;
+  --chart-5: #B2321E;
 
   --radius: 16px;
 
-  --shadow-soft: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04);
-  --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 12px 32px rgba(0,0,0,0.06);
-  --shadow-lift: 0 2px 4px rgba(0,0,0,0.06), 0 20px 40px rgba(0,0,0,0.08);
+  --shadow-soft: 0 1px 3px rgba(28, 25, 23, 0.02), 0 8px 24px rgba(28, 25, 23, 0.03);
+  --shadow-card: 0 1px 3px rgba(28, 25, 23, 0.02), 0 12px 32px rgba(28, 25, 23, 0.04);
+  --shadow-lift: 0 4px 12px rgba(28, 25, 23, 0.03), 0 24px 48px rgba(28, 25, 23, 0.06);
 }
 
 /* DARK THEME */
@@ -103,7 +104,7 @@
   --background: #121313;
   --foreground: #F5F5F5;
 
-  --card: rgba(255, 255, 255, 0.04);
+  --card: #1a1b1b;
   --card-foreground: #F5F5F5;
 
   --popover: #1a1b1b;
@@ -174,3 +175,21 @@
   background: color-mix(in oklab, var(--foreground) 20%, transparent);
 }
 ::-webkit-scrollbar-track { background: transparent; }
+
+:root {
+  --clerk-color-primary: light-dark(#E86B59, #FF6044);
+  --clerk-color-primary-foreground: light-dark(#1C1917, #F5F5F5);
+  --clerk-color-danger: #EF4444;
+  --clerk-color-success: #22C543;
+  --clerk-color-warning: #F36B16;
+  --clerk-color-neutral: light-dark(#000000, white);
+  --clerk-color-foreground: light-dark(#000000, white);
+  --clerk-color-background: light-dark(#FAFAF9, #121313);
+  --clerk-color-input: light-dark(#FFFFFF, #26262B);
+  --clerk-color-input-foreground: light-dark(#000000, white);
+  --clerk-color-ring: light-dark(color-mix(in srgb, #000000 15.000000000000002%, transparent), color-mix(in srgb, #ffffff 15.000000000000002%, transparent));
+  --clerk-color-shimmer: #FFFFFF;
+  --clerk-color-modal-backdrop: #000000;
+  --clerk-border-radius: 0.375rem;
+  --clerk-spacing: 1.125rem;
+}

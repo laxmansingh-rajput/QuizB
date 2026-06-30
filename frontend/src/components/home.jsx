@@ -8,10 +8,10 @@ import bow from '../assets/bow.svg'
 import darkbow from '../assets/darkbow.svg'
 import darkresult from '../assets/result.svg'
 import result from '../assets/darkresult.svg'
-import ModeContext from '../context/context.js'
+import { useAppearance } from '../context/AppearanceContext';
 import { useNavigate } from 'react-router';
 const Home = () => {
-  const { mode, show } = useContext(ModeContext);
+  const { theme, show } = useAppearance()
   const navigate = useNavigate();
   const handelHost = () => {
     navigate('/create');
@@ -25,7 +25,7 @@ const Home = () => {
       <div className={'h-full max-[750px]:w-full w-8/10 pt-20 bg-background flex items-start justify-center text-xl text-foreground overflow-auto transition-all duration-280 ease-in-out fixed min-w-[700px]:left-0 right-0 ' +
        (`${(show == "show") && "p-4"} `) + ((show != "show") ? 'w-full' : ' max-[950px]:w-3/4')
       }>
-        <div className={'flex flex-col gap-3 mb-10 text-foreground max-[900px]:w-full p-2 ' + ((show != "show") ? "w-4/5" : "")}>
+        <div className={'flex flex-col gap-3 mb-10 text-foreground max-[900px]:w-full p-5 ' + ((show != "show") ? "w-4/5" : "")}>
           <div className='flex flex-col gap-5 w-full'>
             <div className='text-3xl font-bold w-full text-start text-foreground'>
               Create & Practice Quizzes — Your Way
@@ -56,7 +56,7 @@ const Home = () => {
                   Create And Host
                 </div>
                 <div className='h-20 flex items-center justify-center'>
-                  <img src={(mode == "dark" ? darkCardCreate : cardCreate)} className='h-full' alt="" />
+                  <img src={(theme == "dark" ? darkCardCreate : cardCreate)} className='h-full' alt="" />
                 </div>
                 <div className='text-base text-muted-foreground h-30 mt-2'>
                   Add your own questions and host live quizzes with full control.
@@ -68,7 +68,7 @@ const Home = () => {
                   Generate with AI
                 </div>
                 <div className='h-20 flex items-center justify-center'>
-                  <img src={(mode == "dark" ? darkai : ai)} className='h-full' alt="" />
+                  <img src={(theme == "dark" ? darkai : ai)} className='h-full' alt="" />
                 </div>
                 <div className='text-base text-muted-foreground h-30 mt-2'>
                   Enter a topic or text — let AI create a quiz for you in seconds.
@@ -80,7 +80,7 @@ const Home = () => {
                   Practice with AI
                 </div>
                 <div className='h-20 flex items-center justify-center'>
-                  <img src={(mode == "dark" ? darkbow : bow)} className='h-full' alt="" />
+                  <img src={(theme == "dark" ? darkbow : bow)} className='h-full' alt="" />
                 </div>
                 <div className='text-base text-muted-foreground h-30 mt-2'>
                   Get smart, personalized quizzes based on your performance.
@@ -92,7 +92,7 @@ const Home = () => {
                   Results
                 </div>
                 <div className='h-20 flex items-center justify-center'>
-                  <img src={(mode == "dark" ? result : darkresult)} className='h-full' alt="" />
+                  <img src={(theme == "dark" ? result : darkresult)} className='h-full' alt="" />
                 </div>
                 <div className='text-base text-muted-foreground h-30 mt-2'>
                   Track scores instantly and see where you rank among others.

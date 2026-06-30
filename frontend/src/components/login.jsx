@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import Logo from './Logo'
 import light from '../assets/light.png'
-import { useContext } from 'react'
 import dark from '../assets/dark.png'
-import Modecontext from '../context/context.js'
+import { useAppearance } from '../context/AppearanceContext.jsx'
 import google from '../assets/google.svg'
 import eye from '../assets/lightPshow.svg'
 import heye from '../assets/lightPhide.svg'
@@ -12,7 +11,7 @@ import darkeye from '../assets/darkPshow.svg'
 import { useForm } from "react-hook-form"
 import { Navigate, useNavigate } from 'react-router'
 const Login = () => {
-  const { mode } = useContext(Modecontext)
+  const { theme } = useAppearance()
   const { register, handleSubmit } = useForm()
   const [pass, setpass] = useState(false)
   const onSubmit = (data) => console.log(data)
@@ -32,7 +31,7 @@ const Login = () => {
             <input {...register("firstName", { required: true, maxLength: 20 })} placeholder='Email' className='w-8/10 p-2 h-10 bg-input border border-border text-foreground rounded-md focus:ring-ring focus:outline-none focus:ring-2' />
             <div className='h-full w-full relative flex justify-center'>
               <input {...register("lastName", { pattern: /^[A-Za-z]+$/i })} placeholder='Password' type={!pass ? 'password' : 'text'} className='w-8/10 p-2 h-10 bg-input border border-border text-foreground rounded-md focus:ring-ring focus:outline-none focus:ring-2' />
-              <img src={(pass ? ((mode == "dark") ? darkheye : heye) : ((mode == "dark") ? darkeye : eye))} className='absolute right-[15%] top-[11px] h-5 cursor-pointer z-10'
+              <img src={(pass ? ((theme == "dark") ? darkheye : heye) : ((theme == "dark") ? darkeye : eye))} className='absolute right-[15%] top-[11px] h-5 cursor-pointer z-10'
                 onClick={() => setpass(!pass)} alt="" />
             </div>
             <input type="submit" className='h-10 rounded-full px-8 text-xl cursor-pointer bg-primary text-primary-foreground font-semibold hover:bg-primary/95 transition-colors duration-200' />
@@ -42,7 +41,7 @@ const Login = () => {
 
         </div>
         <div className={`h-full w-1/2 flex items-center justify-start`}>
-          <img src={mode == "dark" ? dark : light} className='' alt="" />
+          <img src={theme == "dark" ? dark : light} className='' alt="" />
         </div>
       </div>
     </div>

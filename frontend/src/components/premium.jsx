@@ -1,8 +1,7 @@
 import React from 'react'
-import { useContext } from 'react';
-import ModeContext from '../context/context.js'
+import { useAppearance } from '../context/AppearanceContext.jsx'
 const Premium = () => {
-  const { mode, show } = useContext(ModeContext);
+  const { theme, show } = useAppearance();
   return (
     <div className='h-[100vh] w-[100vw] fixed left-0 bg-background text-xl text-foreground transition-colors duration-280'>
 

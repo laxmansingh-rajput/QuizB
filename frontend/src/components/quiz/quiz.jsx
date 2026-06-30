@@ -1,13 +1,13 @@
 import React from 'react'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import Questions from './questions.jsx'
 import Question from './question.jsx'
-import a from '../../context/context.js'
+import { useAppearance } from '../../context/AppearanceContext.jsx'
 
 const Quiz = () => {
     const [totalQuestion, settotalQuestion] = useState(30)
     const [currQuestion, setcurrQuestion] = useState(1)
-    const { mode } = useContext(a)
+    const { theme } = useAppearance()
 
     const elements = {
         'box1': (

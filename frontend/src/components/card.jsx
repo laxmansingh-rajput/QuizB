@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
-import ModeContext from '../context/context.js';
+import React from 'react';
+import { useAppearance } from '../context/AppearanceContext.jsx';
 import { useNavigate } from 'react-router';
 const Card = ({ w, name, svg, darksvg }) => {
     const navigate = useNavigate()
-    const { mode } = useContext(ModeContext);
+    const { theme } = useAppearance();
 
     const handelCreate = () => {
         navigate(`/workspace?type=${name}`)
@@ -15,7 +15,7 @@ const Card = ({ w, name, svg, darksvg }) => {
             onClick={() => { handelCreate() }}
         >
             <div className={" h-35 w-48 flex items-center justify-center" + (w < 750 ? " h-45 w-55" : "")}>
-                <img src={mode === "dark" ? darksvg : svg} className="h-full" alt="" />
+                <img src={theme === "dark" ? darksvg : svg} className="h-full" alt="" />
             </div>
 
             <div className="rounded-md text-2xl font-semibold bottom-8 w-48">

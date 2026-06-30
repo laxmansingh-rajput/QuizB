@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Card from './card.jsx';
 import quiz from '../assets/quiz.svg';
 import darkquiz from '../assets/darkquiz.svg';
@@ -6,10 +6,10 @@ import survey from '../assets/survey.svg';
 import darksurvey from '../assets/darksurvey.svg';
 import bot from '../assets/bot.svg';
 import darkbot from '../assets/darkbot.svg';
-import ModeContext from '../context/context.js';
+import { useAppearance } from '../context/AppearanceContext.jsx';
 
 const Create = () => {
-  const { mode, show, setshow } = useContext(ModeContext);
+  const { theme, show, setShow } = useAppearance();
   const blockRef = useRef(null);
   const [width, setWidth] = useState(0);
 
