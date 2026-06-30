@@ -46,7 +46,6 @@ const Create = () => {
             }
           >
             <Card name="Quiz" w={width} svg={quiz} darksvg={darkquiz} />
-            <Card name="Survey" w={width} svg={survey} darksvg={darksurvey} />
             <Card name="Use AI" w={width} svg={bot} darksvg={darkbot} />
           </div>
         </div>
