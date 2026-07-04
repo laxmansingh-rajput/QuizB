@@ -1,12 +1,22 @@
-# React + Vite
+# QuizB Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend React client application for QuizB, powered by React 19, Vite, Tailwind CSS v4, and Clerk.
 
-Currently, two official plugins are available:
+For full project details, roadmap, and backend setup instructions, please refer to the main [Root README.md](../README.md).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Quick Start
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Install dependencies from the `frontend` directory:
+```bash
+npm install
+```
+
+### Running Locally
+
+To spin up the development server:
+```bash
+npm run dev
+```
+The client application will run at [http://localhost:5173/](http://localhost:5173/).

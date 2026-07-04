@@ -5,10 +5,10 @@ import useDrag2 from '../dragAndDrop/useDrag2';
 import useQuizBar from '../quizFunction/useQuizBar';
 import { animationBar, animationBar2 } from '../quizFunction/quizHandler';
 
-const questionBar = ({ list, generateErr, qno, setqno, setVisible, animate, setanimate, adjustment, setadjustment, draggedItem, setDraggedItem }) => {
+const questionBar = ({ questionList, generateErr, qno, setqno, setVisible, animate, setanimate, adjustment, setadjustment, draggedItem, setDraggedItem }) => {
 
   const { layout, setlayout, } = useDrag2()
-  const RenderQuestion = useRenderQuestion(qno, list)
+  const RenderQuestion = useRenderQuestion(qno, questionList)
   const { blockRef, getwidth, getwidth2 } = useQuizBar()
 
   const handelQuestionswitch = (i) => {
@@ -65,7 +65,7 @@ const questionBar = ({ list, generateErr, qno, setqno, setVisible, animate, seta
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               let value = Number(curr);
-              if (0 < value && value <= list.length) {
+              if (0 < value && value <= questionList.length) {
                 setqno(value)
               } else {
                 generateErr('Question doesnt exist')
@@ -76,16 +76,16 @@ const questionBar = ({ list, generateErr, qno, setqno, setVisible, animate, seta
           onBlur={() => { setcurr(qno) }}
         />
 
-        <span className='text-[12px] max-[600px]:text-[9px] font-medium'>of {list.length}</span>
+        <span className='text-[12px] max-[600px]:text-[9px] font-medium'>of {questionList.length}</span>
 
         <button
           className='text-[12px] max-[600px]:text-[9px] px-5 py-1 max-[600px]:px-2 max-[550px]:hidden  h-8 w-10 cursor-pointer rounded-lg flex items-center justify-center text-primary-foreground font-semibold bg-primary hover:scale-95 transition-all duration-200 shadow-soft'
-          onClick={() => setqno(qno < list.length ? qno + 1 : list.length)}>
+          onClick={() => setqno(qno < questionList.length ? qno + 1 : questionList.length)}>
           Next
         </button>
           <button
           className='text-[12px] max-[600px]:text-[9px] px-5 py-1 max-[600px]:px-2 min-[550px]:hidden h-8 w-10 max-[550px]:w-auto cursor-pointer rounded-lg flex items-center justify-center text-primary-foreground font-semibold bg-primary hover:scale-95 transition-all duration-200 shadow-soft'
-          onClick={() => setqno(qno < list.length ? qno + 1 : list.length)}>
+          onClick={() => setqno(qno < questionList.length ? qno + 1 : questionList.length)}>
           {">"}
         </button>
 

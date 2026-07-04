@@ -10,35 +10,37 @@ import lightUpload from '../../../assets/lightUpload.svg'
 import darkUpload from '../../../assets/darkUpload.svg'
 import Delete from '../../../assets/Delete.svg'
 import darkDelete from '../../../assets/darkDelete.svg'
-const toolBar = ({ list, setlist, type, qno, settype, setqno, setview }) => {
+import lightSave from '../../../assets/lightSave.svg'
+import darkSave from '../../../assets/darkSave.svg'
+const toolBar = ({ questionList, setQuestionList, type, qno, settype, setqno, setLeft }) => {
     const handelAddSingle = () => {
-        const updatedList = [...list]
-        updatedList.push({ question: "", options: ["", "", ""], correct: [false, false, false], type: true })
+        const updatedList = [...questionList]
+        updatedList.push({ question: "", option: ["", "", ""], correct_option: [], question_type: "Single" })
         settype(true)
-        setlist(updatedList)
-        setqno(list.length + 1)
-        setview(false)
+        setQuestionList(updatedList)
+        setqno(questionList.length + 1)
+        setLeft('questionbar')
     }
     const handelAddMultipe = () => {
-        const updatedList = [...list]
-        updatedList.push({ question: "", options: ["", "", ""], correct: [false, false, false], type: false })
+        const updatedList = [...questionList]
+        updatedList.push({ question: "", option: ["", "", ""], correct_option: [], question_type: "Multiple" })
         settype(false)
-        setlist(updatedList)
-        setqno(list.length + 1)
-        setview(false)
+        setQuestionList(updatedList)
+        setqno(questionList.length + 1)
+        setLeft('questionbar')
     }
     const handelDelete = () => {
         if (qno > 1) {
-            const updatedList = [...list]
+            const updatedList = [...questionList]
             updatedList.pop()
-            setlist(updatedList)
+            setQuestionList(updatedList)
             setqno(qno - 1)
-        } else if (qno == 1 && list.length == 1) {
-            setlist([{ question: "", options: ["", "", ""], correct: [false, false, false], type: true }])
+        } else if (qno == 1 && questionList.length == 1) {
+            setQuestionList([{ question: "", option: ["", "", ""], correct_option: [], question_type: "Single" }])
         } else {
-            const updatedList = [...list]
+            const updatedList = [...questionList]
             updatedList.slice(0, 1)
-            setlist(updatedList)
+            setQuestionList(updatedList)
         }
     }
 
@@ -47,9 +49,10 @@ const toolBar = ({ list, setlist, type, qno, settype, setqno, setview }) => {
             <div className='font-bold underline hidden md:block'>Tools</div>
             <Icons name="Add Single" svg={lightSingle} dark={darkSingle} onClick={() => { handelAddSingle() }} />
             <Icons name="Add Multiple" svg={lightMultiple} dark={darkMultiple} onClick={() => { handelAddMultipe() }} />
-            <Icons name="View" svg={lightEye} dark={darkEye} onClick={() => { setview(true) }} />
+            <Icons name="View" svg={lightEye} dark={darkEye} onClick={() => { setLeft('view') }} />
             <Icons name="Delete" svg={Delete} dark={darkDelete} onClick={() => { handelDelete() }} />
-            <Icons name="Share" svg={lightUpload} dark={darkUpload} />
+            <Icons name="Share" svg={lightUpload} dark={darkUpload} onClick={() => { setLeft('share') }}/>
+            <Icons name="Save" svg={lightSave} dark={darkSave} onClick={() => { setLeft('save') }} />
         </div>
     )
 }

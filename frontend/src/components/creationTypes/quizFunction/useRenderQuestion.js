@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 
-const arrChange = (qno, list) => {
+const arrChange = (qno, questionList) => {
     let arr = []
-    let size = list.length
+    let size = questionList.length
     if (size <= 5) {
-        for (let i = 1; i <= list.length; i++) {
+        for (let i = 1; i <= questionList.length; i++) {
             arr.push(i);
         }
     } else {
-        if (qno + 2 <= list.length && qno - 2 > 0) {
+        if (qno + 2 <= questionList.length && qno - 2 > 0) {
             arr = [qno - 2, qno - 1, qno, qno + 1, qno + 2]
         } else if (qno - 2 <= 0) {
-            for (let i = 1; i <= Math.min(list.length, 5); i++) {
+            for (let i = 1; i <= Math.min(questionList.length, 5); i++) {
                 arr.push(i);
             }
         } else {
@@ -25,13 +25,13 @@ const arrChange = (qno, list) => {
     return arr;
 }
 
-const useRenderQuestion = (qno, list) => {
-    const [RenderQuestion, setRenderQuestion] = useState(arrChange(qno, list));
+const useRenderQuestion = (qno, questionList) => {
+    const [RenderQuestion, setRenderQuestion] = useState(arrChange(qno, questionList));
     useEffect(() => {
-        setRenderQuestion(arrChange(qno, list));
+        setRenderQuestion(arrChange(qno, questionList));
         setTimeout(() => {
         }, 200);
-    }, [qno, list]);
+    }, [qno, questionList]);
     return RenderQuestion;
 };
 

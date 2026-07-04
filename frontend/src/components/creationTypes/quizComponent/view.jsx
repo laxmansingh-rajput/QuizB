@@ -1,27 +1,27 @@
 import React from 'react';
 import { useAppearance } from '../../../context/AppearanceContext.jsx';
 
-const View = ({ List, setview, setcurr, setList }) => {
+const View = ({ questionList, setLeft, setcurr, setQuestionList }) => {
     const { theme } = useAppearance();
 
     const handelEdit = (index) => {
         setcurr(index);
-        setview(false);
+        setLeft(false);
     };
 
     const handelDelete = (ind) => {
         let a = confirm("Do you want to delete Question No. " + (ind + 1) + "?");
         if (a) {
-            let updatedList = [...List];
+            let updatedList = [...questionList];
             if (updatedList.length === 1) {
                 // If deleting the last remaining question, reset to default empty template
-                setList([{ question: "", options: ["", "", ""], correct: [false, false, false], type: true }]);
+                setQuestionList([{ question: "", option: ["", "", ""], correct_option: [], question_type: "Single" }]);
                 setcurr(1);
             } else {
                 updatedList = updatedList.filter((_, index) => index !== ind);
                 // Maintain valid current selected question number
                 setcurr(Math.max(1, Math.min(ind + 1, updatedList.length)));
-                setList(updatedList);
+                setQuestionList(updatedList);
             }
         }
     };
@@ -37,7 +37,7 @@ const View = ({ List, setview, setcurr, setList }) => {
                     <p className="text-sm text-muted-foreground mt-1">Review all questions created in this workspace</p>
                 </div>
                 <button
-                    onClick={() => setview(false)}
+                    onClick={() => setLeft('questionbar')}
                     className="h-9 w-9 rounded-xl flex items-center justify-center border border-border hover:bg-secondary/80 text-muted-foreground hover:text-foreground transition-all duration-200 cursor-pointer shadow-sm"
                     title="Back to Editor"
                 >
@@ -50,7 +50,7 @@ const View = ({ List, setview, setcurr, setList }) => {
 
             {/* Questions Grid/List Container */}
             <div className="flex flex-col gap-6 overflow-y-auto pr-1">
-                {List.length === 0 || (List.length === 1 && !List[0].question && List[0].options.every(o => !o)) ? (
+                {questionList.length === 0 || (questionList.length === 1 && !questionList[0].question && questionList[0].option.every(o => !o)) ? (
                     <div className="text-xl text-center flex flex-col items-center justify-center font-semibold text-muted-foreground h-[40vh] gap-3">
                         <svg className="w-12 h-12 text-muted-foreground/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -58,21 +58,21 @@ const View = ({ List, setview, setcurr, setList }) => {
                         No questions available
                     </div>
                 ) : (
-                    List.map((item, index) => {
+                    questionList.map((item, index) => {
                         return (
                             <div 
                                 key={index} 
                                 className="group relative bg-background/50 hover:bg-background/80 border border-border/80 hover:border-primary/20 rounded-xl p-5 flex flex-col gap-4 transition-all duration-300 shadow-soft hover:shadow-card"
                             >
                                 {/* Top Header for each Card */}
-                                <div className="flex justify-between items-start gap-4">
-                                    <div className="flex flex-col gap-1.5">
-                                        <div className="flex items-center gap-2">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                                    <div className="flex flex-col gap-1.5 w-full">
+                                        <div className="flex flex-wrap items-center gap-2">
                                             <span className="text-sm font-bold bg-primary/10 text-primary px-2.5 py-0.5 rounded-full">
                                                 Question {index + 1}
                                             </span>
                                             <span className="text-[11px] font-semibold bg-secondary/80 text-muted-foreground px-2 py-0.5 rounded-full uppercase tracking-wider">
-                                                {item.type ? "Single Choice" : "Multiple Choice"}
+                                                {item.question_type === 'Single' ? "Single Choice" : "Multiple Choice"}
                                             </span>
                                         </div>
                                         <h3 className="text-lg font-semibold text-foreground leading-snug mt-1">
@@ -81,7 +81,7 @@ const View = ({ List, setview, setcurr, setList }) => {
                                     </div>
 
                                     {/* Action Buttons */}
-                                    <div className="flex items-center gap-2 shrink-0">
+                                    <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
                                         <button
                                             onClick={() => handelEdit(index + 1)}
                                             className="flex items-center justify-center gap-1.5 h-8 px-3 rounded-lg text-xs font-semibold bg-primary/10 hover:bg-primary text-primary hover:text-primary-foreground border border-primary/10 transition-all duration-200 cursor-pointer shadow-sm"
@@ -107,8 +107,8 @@ const View = ({ List, setview, setcurr, setList }) => {
 
                                 {/* Options list */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
-                                    {item.options && item.options.map((opt, i) => {
-                                        const isCorrect = item.correct && item.correct[i];
+                                    {item.option && item.option.map((opt, i) => {
+                                        const isCorrect = item.correct_option && item.correct_option.includes(opt);
 
                                         return (
                                             <div 

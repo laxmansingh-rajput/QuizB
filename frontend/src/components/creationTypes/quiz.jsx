@@ -4,6 +4,8 @@ import Questions from './quizComponent/questionBar.jsx'
 import useQuizState from './quizFunction/useQuizState.js';
 import Question from './quizComponent/Question.jsx';
 import View from './quizComponent/view.jsx';
+import Share from './quizComponent/Share.jsx';
+import Save from './quizComponent/Save.jsx';
 import useDrag from './dragAndDrop/useDrag.js';
 import { handleDragStart1, handleDragOver1, handleDrop1, handleDragEnd1 } from './dragAndDrop/dragFunctions.js'
 import {
@@ -19,17 +21,37 @@ const quiz = () => {
         draggedItem, setDraggedItem, x, setx, y, sety, Visible, setVisible,
         animate, setanimate } = useDrag()
 
-    const { list, setlist, err, seterr, qno, setqno,
+    const { questionList, setQuestionList, err, seterr, qno, setqno,
         type, settype, Arr, height, setheight, blockRef } = useQuizState();
 
     const [view, setview] = useState(false);
+    const [left, setLeft] = useState('questionbar')
+    const [showPrompt, setShowPrompt] = useState(false);
 
-    const QuestionHandeler = (e) => QuestionHandeler1(e, list, setlist, qno)
-    const optionHandeler = (e, index) => optionHandeler1(e, index, list, setlist, qno)
+    useEffect(() => {
+        const saved = localStorage.getItem('question_list');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                if (parsed && parsed.length > 0) {
+                    // Show prompt if there's any text or options filled, or multiple questions
+                    const hasContent = parsed.length > 1 || parsed[0].question || parsed[0].option.some(o => o);
+                    if (hasContent) {
+                        setShowPrompt(true);
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    }, []);
+
+    const QuestionHandeler = (e) => QuestionHandeler1(e, questionList, setQuestionList, qno)
+    const optionHandeler = (e, index) => optionHandeler1(e, index, questionList, setQuestionList, qno)
     const generateErr = (txt) => generateErr1(txt, seterr)
-    const handelRemoveOption = (i) => handelRemoveOption1(i, list, generateErr, setlist, qno)
-    const handelAddOption = (i) => handelAddOption1(i, list, setlist, generateErr, qno)
-    const handelCorrect = (e) => handelCorrect1(e, list, qno, setlist, type)
+    const handelRemoveOption = (i) => handelRemoveOption1(i, questionList, generateErr, setQuestionList, qno)
+    const handelAddOption = (i) => handelAddOption1(i, questionList, setQuestionList, generateErr, qno)
+    const handelCorrect = (e) => handelCorrect1(e, questionList, qno, setQuestionList, type)
 
     const handleDragStart = (e, boxName) => handleDragStart1(e, boxName, setDraggedItem, setVisible, setanimate)
     const handleDragOver = (e, block) => handleDragOver1(e, block, setadjustment, draggedItem, 'quiz', animate, setanimate)
@@ -49,12 +71,12 @@ const quiz = () => {
             }}
         >
             <Question
-                list={list}
+                questionList={questionList}
                 qno={qno}
                 type={type}
                 err={err}
                 Arr={Arr}
-                setlist={setlist}
+                setQuestionList={setQuestionList}
                 settype={settype}
                 QuestionHandeler={QuestionHandeler}
                 optionHandeler={optionHandeler}
@@ -71,8 +93,8 @@ const quiz = () => {
             >
 
                 < div className=' max-h-f-full h-full rounded-md row-start-2 row-end-2 col-start-1 col-end-1 ' >
-                    <Questions list={list}
-                        setlist={setlist}
+                    <Questions questionList={questionList}
+                        setQuestionList={setQuestionList}
                         generateErr={generateErr}
                         type={type}
                         settype={settype}
@@ -121,13 +143,17 @@ const quiz = () => {
                     </div>
                 }
                 {
-                    view ? (
-                        <View List={list} setview={setview} setcurr={setqno} setList={setlist} />
-                    ) : (
-                        verticalLayout.map((box) => (
+                    (left == 'view') ?
+                        (<View questionList={questionList} setview={setview} setLeft={setLeft} setcurr={setqno} setQuestionList={setQuestionList} />)
+                        : (left == 'share')?
+                            (<Share setLeft={setLeft} quizData={questionList}/>)
+                        : (left == 'save')?
+                            (<Save setLeft={setLeft} quizData={questionList}/>)
+                        : (
+                            verticalLayout.map((box) => (
                             vertical[box]
                         ))
-                    )
+                        )
                 }
             </div>
         ),
@@ -146,7 +172,7 @@ const quiz = () => {
                 }}
             >
                 <div className='h-full w-full rounded-md p-1 bg-card'>
-                    <ToolBar list={list} setlist={setlist} type={type} settype={settype} qno={qno} setqno={setqno} setview={setview} />
+                    <ToolBar questionList={questionList} setQuestionList={setQuestionList} type={type} settype={settype} qno={qno} setqno={setqno} setLeft={setLeft} />
                 </div>
             </div>
         )
@@ -165,7 +191,7 @@ const quiz = () => {
             <div className=' tools hidden'></div>
             {
                 <div className={`absolute h-full w-full top-0 left-0 pointer-events-none bg-primary/10 pt-1.5
-                ${(!Visible ? " hidden":' ')}
+                ${(!Visible ? " hidden" : ' ')}
                 `}>
                     <div className='h-2 top-15 w-full flex items-center absolute justify-center'>
                         <div className=' h-full w-50 bg-primary border-1  rounded-b-full '>
@@ -188,9 +214,44 @@ const quiz = () => {
                         </div>
                     </div>
                 </div>
-               
+
             }
-           
+
+            {showPrompt && (
+                <div className="fixed inset-0 bg-background/80 backdrop-blur-md z-50 flex items-center justify-center p-4 transition-all duration-300">
+                    <div className="bg-card border border-border text-foreground rounded-2xl shadow-soft max-w-md w-full p-6 flex flex-col gap-6 text-center animate-in fade-in zoom-in duration-200">
+                        <div className="flex flex-col gap-2">
+                            <h3 className="text-xl font-bold">Continue Saved Work?</h3>
+                            <p className="text-sm text-muted-foreground">
+                                We found previously saved questions. Would you like to continue editing them or start fresh?
+                            </p>
+                        </div>
+                        <div className="flex gap-4 justify-center">
+                            <button
+                                onClick={() => {
+                                    setShowPrompt(false);
+                                }}
+                                className="flex-1 bg-primary text-primary-foreground hover:scale-95 font-semibold transition-all duration-200 cursor-pointer rounded-xl py-2.5 shadow-sm"
+                            >
+                                Continue Saved
+                            </button>
+                            <button
+                                onClick={() => {
+                                    localStorage.removeItem('question_list');
+                                    setQuestionList([{ question: "", option: ["", "", ""], correct_option: [], question_type: "Single" }]);
+                                    setqno(1);
+                                    settype(true);
+                                    setShowPrompt(false);
+                                }}
+                                className="flex-1 bg-destructive/10 hover:bg-destructive hover:text-destructive-foreground text-destructive hover:scale-95 font-semibold transition-all duration-200 cursor-pointer rounded-xl py-2.5 shadow-sm border border-destructive/20"
+                            >
+                                Start Fresh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </div >
     );
 };

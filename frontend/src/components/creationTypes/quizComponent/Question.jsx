@@ -3,12 +3,12 @@ import single from '../../../assets/s.svg'
 import multiple from '../../../assets/m.svg'
 import cross from '../../../assets/cross.svg'
 const Question = ({
-    list,
+    questionList,
     qno,
     type,
     err,
     Arr,
-    setlist,
+    setQuestionList,
     settype,
   
     QuestionHandeler,
@@ -22,14 +22,14 @@ const Question = ({
             <div draggable className='bg-card text-card-foreground shadow-soft max-h-full h-full p-6 box-border rounded-2xl relative flex flex-col gap-6'
             >
                 <textarea className="question h-20 max-h-25 max-[770px]:h-15 w-full border-b border-border bg-transparent text-foreground p-2 focus:border-primary focus:outline-none resize-none" placeholder="Enter The Question"
-                    value={`${list[qno - 1].question}`} maxLength={150} onChange={(e) => { QuestionHandeler(e) }} >
+                    value={`${questionList[qno - 1].question}`} maxLength={150} onChange={(e) => { QuestionHandeler(e) }} >
                 </textarea>
                 <div className="options flex flex-col h-3/4 gap-2 w-full items-center">
                     <div className='flex flex-col gap-3 w-11/12 md:w-2/3 h-full relative'>
                         {
-                            list[qno - 1].options.map((opt, i) => (
+                            questionList[qno - 1].option.map((opt, i) => (
                                 <div key={i} className='h-10 w-full text-sm rounded-xl border border-border bg-input p-2 flex items-center text-foreground shadow-soft'>
-                                    <input type="text" className='h-full w-full bg-transparent focus:outline-none text-foreground' placeholder={`Enter option ${i + 1}`} maxLength={150} value={`${list[qno - 1].options[i]}`} onChange={(e) => optionHandeler(e, i)} />
+                                    <input type="text" className='h-full w-full bg-transparent focus:outline-none text-foreground' placeholder={`Enter option ${i + 1}`} maxLength={150} value={`${questionList[qno - 1].option[i]}`} onChange={(e) => optionHandeler(e, i)} />
                                     <img src={cross} className='h-5 cursor-pointer' onClick={() => { handelRemoveOption(i) }} alt="" />
                                 </div>
                             ))
@@ -37,9 +37,9 @@ const Question = ({
                         <div className='w-full min-[770px]:absolute min-[770px]:bottom-25 border border-border rounded-xl text-sm h-10 flex items-center justify-around bg-secondary/80 text-foreground'>
                             <div className='font-bold'>Correct answer{type ? "" : "s"}:</div>
                             {
-                                list[qno - 1].options.map((checked, i) => (
+                                questionList[qno - 1].option.map((checked, i) => (
                                     <div key={i} className='flex items-center justify-center gap-1 text-ms'>
-                                        <input type={type ? "radio" : "checkbox"} value={i} name='curr' checked={list[qno - 1].correct[i]}
+                                        <input type={type ? "radio" : "checkbox"} value={i} name='curr' checked={questionList[qno - 1].correct_option.includes(questionList[qno - 1].option[i])}
                                             onChange={(e, i) => handelCorrect(e)}
                                         />
                                         <div>{Arr[i]}</div>
@@ -63,12 +63,12 @@ const Question = ({
                 <div className='absolute bottom-2 right-2 w-45 flex items-center justify-around max-[600px]:justify-end'>
                     <span className='text-sm font-bold max-[600px]:hidden'>{(type) ? "Single Choice" : "Multiple Choice"}</span>
                     <div className=' h-[20px] w-[40px] border-[1px] rounded-full flex items-center
-                 ' onClick={() => {
-                            settype(!type)
-                            const updatedList = [...list]
-                            updatedList[qno - 1].type = updatedList[qno - 1].type ? false : true
-                            setlist(updatedList)
-                            settype(updatedList[qno - 1].type ? true : false)
+                  ' onClick={() => {
+                            const updatedList = [...questionList]
+                            const isCurrentlySingle = updatedList[qno - 1].question_type === 'Single'
+                            updatedList[qno - 1].question_type = isCurrentlySingle ? 'Multiple' : 'Single'
+                            setQuestionList(updatedList)
+                            settype(!isCurrentlySingle)
                         }}>
                         <img src={type == true ? single : multiple} className={`select-none h-full transition-transform duration-100 ease-in-out transform ${type == true ? "translate-x-0" : "translate-x-[20px]"} `} alt="" />
                     </div>

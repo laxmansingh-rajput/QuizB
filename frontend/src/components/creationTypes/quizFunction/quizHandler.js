@@ -1,12 +1,18 @@
-export const QuestionHandeler1 = (e, list, setlist, qno) => {
-    const updatedList = [...list];
+export const QuestionHandeler1 = (e, questionList, setQuestionList, qno) => {
+    const updatedList = [...questionList];
     updatedList[qno - 1].question = e.target.value;
-    setlist(updatedList)
+    setQuestionList(updatedList)
 }
-export const optionHandeler1 = (e, index, list, setlist, qno) => {
-    const updatedList = [...list];
-    updatedList[qno - 1].options[index] = e.target.value;
-    setlist(updatedList);
+export const optionHandeler1 = (e, index, questionList, setQuestionList, qno) => {
+    const updatedList = [...questionList];
+    const oldVal = updatedList[qno - 1].option[index];
+    const newVal = e.target.value;
+    updatedList[qno - 1].option[index] = newVal;
+    const correctIndex = updatedList[qno - 1].correct_option.indexOf(oldVal);
+    if (correctIndex !== -1) {
+        updatedList[qno - 1].correct_option[correctIndex] = newVal;
+    }
+    setQuestionList(updatedList);
 }
 export const generateErr1 = (txt, seterr) => {
     seterr(txt);
@@ -14,44 +20,44 @@ export const generateErr1 = (txt, seterr) => {
         seterr("")
     }, 3000);
 }
-export const handelRemoveOption1 = (i, list, generateErr, setlist, qno) => {
-    const updatedList = [...list];
-    if (updatedList[qno - 1].options.length <= 2) {
+export const handelRemoveOption1 = (i, questionList, generateErr, setQuestionList, qno) => {
+    const updatedList = [...questionList];
+    if (updatedList[qno - 1].option.length <= 2) {
         generateErr('Question should have minimum two options')
     } else {
-        updatedList[qno - 1].options.splice(i, 1)
-        updatedList[qno - 1].correct.splice(i, 1)
-        setlist(updatedList)
+        const removedVal = updatedList[qno - 1].option[i];
+        updatedList[qno - 1].option.splice(i, 1);
+        updatedList[qno - 1].correct_option = updatedList[qno - 1].correct_option.filter(val => val !== removedVal);
+        setQuestionList(updatedList)
     }
 }
-export const handelAddOption1 = (i, list, setlist, generateErr, qno) => {
-    const updatedList = [...list];
-    if (updatedList[qno - 1].options.length == 4) {
+export const handelAddOption1 = (i, questionList, setQuestionList, generateErr, qno) => {
+    const updatedList = [...questionList];
+    if (updatedList[qno - 1].option.length == 4) {
         generateErr('Max options created')
     } else {
-        updatedList[qno - 1].options.push("")
-        updatedList[qno - 1].correct.push(false)
-        setlist(updatedList)
+        updatedList[qno - 1].option.push("")
+        setQuestionList(updatedList)
     }
 }
-export const handelCorrect1 = (e, list, qno, setlist, type) => {
-    const correct = list[qno - 1].correct;
+export const handelCorrect1 = (e, questionList, qno, setQuestionList, type) => {
+    const updatedList = [...questionList];
+    const q = updatedList[qno - 1];
+    const optVal = q.option[Number(e.target.value)];
     if (type) {
-        correct.forEach((value, index) => {
-            if (index == e.target.value) {
-                correct[index] = !value;
-            } else { correct[index] = false; }
-        });
+        if (q.correct_option.includes(optVal)) {
+            q.correct_option = [];
+        } else {
+            q.correct_option = [optVal];
+        }
     } else {
-        correct.forEach((value, index) => {
-            if (index == e.target.value) {
-                correct[index] = !value;
-            }
-        });
+        if (q.correct_option.includes(optVal)) {
+            q.correct_option = q.correct_option.filter(val => val !== optVal);
+        } else {
+            q.correct_option.push(optVal);
+        }
     }
-    const updatedList = [...list]
-    updatedList[qno - 1].correct = [...correct];
-    setlist(updatedList)
+    setQuestionList(updatedList)
 }
 
 export const animation = (animate) => {
