@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { addQuiz } from '../../../controller/addQuiz'
+import { useAuth } from "@clerk/react"
 
 const Share = ({ setLeft, quizData }) => {
     // Controlled states for form fields
     const [title, setTitle] = useState('');
     const [password, setPassword] = useState('');
+    const [duration, setDuration] = useState('');
+    const { getToken } = useAuth();
 
     // Controlled states for scheduling fields
     const [startDate, setStartDate] = useState('');
@@ -21,6 +24,7 @@ const Share = ({ setLeft, quizData }) => {
 
     // State for success feedback
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     // Limit and clean password/PIN inputs (allow only numbers, up to 6 digits)
     const handlePasswordChange = (e) => {
@@ -30,6 +34,17 @@ const Share = ({ setLeft, quizData }) => {
             setPassword(val);
             if (val.length === 6) {
                 setErrors((prev) => ({ ...prev, password: '' }));
+            }
+        }
+    };
+
+    // Limit and clean duration input (allow only numbers)
+    const handleDurationChange = (e) => {
+        const val = e.target.value;
+        if (val === '' || /^\d+$/.test(val)) {
+            setDuration(val);
+            if (val !== '') {
+                setErrors((prev) => ({ ...prev, duration: '' }));
             }
         }
     };
@@ -73,6 +88,15 @@ const Share = ({ setLeft, quizData }) => {
             newErrors.password = 'Password must contain only numeric digits.';
         }
 
+        // Duration validation
+        if (!duration) {
+            newErrors.duration = 'Quiz Duration is required.';
+        } else if (isNaN(duration) || parseInt(duration, 10) <= 0) {
+            newErrors.duration = 'Duration must be a positive number.';
+        } else if (parseInt(duration, 10) > 300) {
+            newErrors.duration = 'Duration must not exceed 300 min';
+        }
+
         // Start Date validation (Compulsory)
         if (!startDate) {
             newErrors.startDate = 'Start Date is required.';
@@ -104,8 +128,10 @@ const Share = ({ setLeft, quizData }) => {
             setIsSuccess(false);
         } else {
             setErrors({});
-            setIsSuccess(true);
-            await addQuiz({
+            setIsLoading(true);
+            const token = await getToken();
+
+            const response_data = await addQuiz(token, {
                 title,
                 quizData,
                 password,
@@ -113,16 +139,14 @@ const Share = ({ setLeft, quizData }) => {
                 startTime,
                 endDate,
                 endTime,
-                type:'Normal'
+                type: 'Normal',
+                duration: parseInt(duration, 10)
             })
-            console.log('Quiz Shared Settings:', {
-                title,
-                password,
-                startDate,
-                startTime,
-                endDate,
-                endTime
-            });
+            console.log(response_data)
+            if (response_data && response_data.success) {
+                setIsSuccess(true);
+            }
+            setIsLoading(false);
         }
     };
 
@@ -136,8 +160,9 @@ const Share = ({ setLeft, quizData }) => {
                 </div>
                 <button
                     type="button"
-                    onClick={() => setLeft('questionbar')}
-                    className="h-9 w-9 rounded-xl flex items-center justify-center border border-border hover:bg-secondary/80 text-muted-foreground hover:text-foreground transition-all duration-200 cursor-pointer shadow-sm focus:outline-none"
+                    onClick={() => !isLoading && setLeft('questionbar')}
+                    disabled={isLoading}
+                    className={`h-9 w-9 rounded-xl flex items-center justify-center border border-border hover:bg-secondary/80 text-muted-foreground hover:text-foreground transition-all duration-200 cursor-pointer shadow-sm focus:outline-none ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     title="Back to Editor"
                 >
                     {/* Inline Close SVG Icon */}
@@ -212,6 +237,28 @@ const Share = ({ setLeft, quizData }) => {
                             {errors.password && (
                                 <span className="text-[10px] font-semibold text-destructive mt-0.5">
                                     {errors.password}
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Quiz Duration (in minutes) Field */}
+                        <div className="flex flex-col gap-1.5">
+                            <label htmlFor="quiz-duration" className="text-xs font-semibold text-foreground flex items-center justify-between">
+                                <span>Quiz Duration (in minutes) <span className="text-destructive font-bold">*</span></span>
+                            </label>
+                            <input
+                                id="quiz-duration"
+                                type="text"
+                                inputMode="numeric"
+                                placeholder="e.g. 30"
+                                value={duration}
+                                onChange={handleDurationChange}
+                                className={`w-full px-3 py-2 bg-input border ${errors.duration ? 'border-destructive focus:ring-2 focus:ring-destructive' : 'border-border focus:ring-2 focus:ring-ring'
+                                    } text-foreground rounded-xl placeholder:text-muted-foreground/40 focus:outline-none transition-all duration-200 text-xs`}
+                            />
+                            {errors.duration && (
+                                <span className="text-[10px] font-semibold text-destructive mt-0.5">
+                                    {errors.duration}
                                 </span>
                             )}
                         </div>
@@ -317,16 +364,18 @@ const Share = ({ setLeft, quizData }) => {
                 <div className="flex items-center justify-end gap-3 mt-4 pt-4 border-t border-border">
                     <button
                         type="button"
-                        onClick={() => setLeft('questionbar')}
-                        className="px-5 h-10 rounded-xl text-sm font-semibold border border-border hover:bg-secondary/80 text-muted-foreground hover:text-foreground transition-all duration-200 cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                        onClick={() => !isLoading && setLeft('questionbar')}
+                        disabled={isLoading}
+                        className={`px-5 h-10 rounded-xl text-sm font-semibold border border-border hover:bg-secondary/80 text-muted-foreground hover:text-foreground transition-all duration-200 cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-ring ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         Cancel
                     </button>
                     <button
                         type="submit"
-                        className="px-6 h-10 rounded-xl text-sm font-semibold bg-primary hover:bg-primary/95 text-primary-foreground transition-all duration-200 cursor-pointer shadow-md focus:outline-none focus:ring-2 focus:ring-ring"
+                        disabled={isLoading}
+                        className={`px-6 h-10 rounded-xl text-sm font-semibold bg-primary hover:bg-primary/95 text-primary-foreground transition-all duration-200 cursor-pointer shadow-md focus:outline-none focus:ring-2 focus:ring-ring ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
-                        Share Quiz
+                        {isLoading ? 'Sharing...' : 'Share Quiz'}
                     </button>
                 </div>
             </form>

@@ -5,6 +5,7 @@ const Save = ({ setLeft, quizData }) => {
     const [title, setTitle] = useState('');
     const [errors, setErrors] = useState({});
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validate = () => {
         const newErrors = {};
@@ -23,9 +24,13 @@ const Save = ({ setLeft, quizData }) => {
             setIsSuccess(false);
         } else {
             setErrors({});
-            setIsSuccess(true);
-            await saveQuiz({ title, quizData });
+            setIsLoading(true);
+            const response_data = await saveQuiz({ title, quizData });
             console.log('Quiz Saved:', { title });
+            if (response_data && response_data.success) {
+                setIsSuccess(true);
+            }
+            setIsLoading(false);
         }
     };
 
@@ -39,8 +44,9 @@ const Save = ({ setLeft, quizData }) => {
                 </div>
                 <button
                     type="button"
-                    onClick={() => setLeft('questionbar')}
-                    className="h-9 w-9 rounded-xl flex items-center justify-center border border-border hover:bg-secondary/80 text-muted-foreground hover:text-foreground transition-all duration-200 cursor-pointer shadow-sm focus:outline-none"
+                    onClick={() => !isLoading && setLeft('questionbar')}
+                    disabled={isLoading}
+                    className={`h-9 w-9 rounded-xl flex items-center justify-center border border-border hover:bg-secondary/80 text-muted-foreground hover:text-foreground transition-all duration-200 cursor-pointer shadow-sm focus:outline-none ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     title="Back to Editor"
                 >
                     {/* Inline Close SVG Icon */}
@@ -102,16 +108,18 @@ const Save = ({ setLeft, quizData }) => {
                 <div className="flex items-center justify-end gap-3 mt-4 pt-4 border-t border-border">
                     <button
                         type="button"
-                        onClick={() => setLeft('questionbar')}
-                        className="px-5 h-10 rounded-xl text-sm font-semibold border border-border hover:bg-secondary/80 text-muted-foreground hover:text-foreground transition-all duration-200 cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                        onClick={() => !isLoading && setLeft('questionbar')}
+                        disabled={isLoading}
+                        className={`px-5 h-10 rounded-xl text-sm font-semibold border border-border hover:bg-secondary/80 text-muted-foreground hover:text-foreground transition-all duration-200 cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-ring ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         Cancel
                     </button>
                     <button
                         type="submit"
-                        className="px-6 h-10 rounded-xl text-sm font-semibold bg-primary hover:bg-primary/95 text-primary-foreground transition-all duration-200 cursor-pointer shadow-md focus:outline-none focus:ring-2 focus:ring-ring"
+                        disabled={isLoading}
+                        className={`px-6 h-10 rounded-xl text-sm font-semibold bg-primary hover:bg-primary/95 text-primary-foreground transition-all duration-200 cursor-pointer shadow-md focus:outline-none focus:ring-2 focus:ring-ring ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
-                        Save Quiz
+                        {isLoading ? 'Saving...' : 'Save Quiz'}
                     </button>
                 </div>
             </form>
