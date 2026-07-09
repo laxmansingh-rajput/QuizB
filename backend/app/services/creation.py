@@ -9,7 +9,7 @@ from ..config.logger import logger
 from ..utils.basic_utils import get_secret_sting
 import traceback
 
-def addQuiz(quizData:Quiz, credentials: HTTPAuthorizationCredentials = Depends(clerk_auth_guard)):
+async def addQuiz(quizData:Quiz, credentials: HTTPAuthorizationCredentials = Depends(clerk_auth_guard)):
     try:
         quiz = quizData.model_dump()
         user_id = credentials.decoded["sub"]
@@ -26,16 +26,16 @@ def addQuiz(quizData:Quiz, credentials: HTTPAuthorizationCredentials = Depends(c
             'publish_code': None if quiz['quiz_type'] == 'Saved' else quiz_string
         }
 
-        status = insert_quiz(payload, quiz['questions'],user_id)
+        status = await insert_quiz(payload, quiz['questions'],user_id)
 
-        if status:
+        if status['success']:
             return {
                 'success':True,
                 'message':'Recived the data successs fully'
             }
         
         else: 
-            raise Exception('Failed to add data in the db')
+            raise Exception(status['message'])
         
     except Exception as e :
         logger.error(f"unable to process the addQuiz: {e}")
@@ -43,6 +43,6 @@ def addQuiz(quizData:Quiz, credentials: HTTPAuthorizationCredentials = Depends(c
 
         raise HTTPException(
             status_code=400,
-            detail="Some thing went wrong"
+            detail=status['message']
         )
     

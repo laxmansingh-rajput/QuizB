@@ -6,12 +6,12 @@ create_quiz_table = """
 CREATE TABLE IF NOT EXISTS Quiz_table (
     quiz_id SERIAL PRIMARY KEY,
     quiz_title VARCHAR(255),
-    published_date TIMESTAMP,
+    published_date TIMESTAMPTZ,
     quiz_type VARCHAR(255),
-    start_date TIMESTAMP,
-    expiry_date TIMESTAMP,
+    start_date TIMESTAMPTZ,
+    expiry_date TIMESTAMPTZ,
     quiz_duration INTEGER,
-    quiz_password VARCHAR(255),
+    quiz_password INTEGER,
     publish_code VARCHAR(255) UNIQUE,
     attempted_count INTEGER DEFAULT 0,
     average_score NUMERIC(5,2) DEFAULT 0
@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS Question_table (
     correct_option VARCHAR(255)[]
 );
 """
+
 create_quiz_question_map_table = """
 CREATE TABLE IF NOT EXISTS Quiz_Question_map_table (
     qq_id SERIAL PRIMARY KEY,
@@ -39,22 +40,18 @@ CREATE TABLE IF NOT EXISTS Quiz_Question_map_table (
 
 create_quiz_user_map_table = """
 CREATE TABLE IF NOT EXISTS Quiz_User_map_table (
-    qu_id SERIAL PRIMARY KEY,   
+    qu_id SERIAL PRIMARY KEY,
     quiz_id INTEGER NOT NULL REFERENCES Quiz_table(quiz_id),
     user_id VARCHAR(255) NOT NULL,
-    last_edited TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+    last_edited TIMESTAMPTZ DEFAULT NOW()
+);
 """
 
-def create_query_table(conn):
-        cur = conn.cursor()
+async def create_query_table(conn):
         try:
-            cur.execute(create_quiz_table)
-            cur.execute(create_question_table)
-            cur.execute(create_quiz_question_map_table)
-            cur.execute(create_quiz_user_map_table)
-            conn.commit()
+            await conn.fetch(create_quiz_table)
+            await conn.fetch(create_question_table)
+            await conn.fetch(create_quiz_question_map_table)
+            await conn.fetch(create_quiz_user_map_table)
         except Exception as e:
-            conn.rollback()
             logger.error(f"Unable to create table : {e}")
-        finally:
-            cur.close()

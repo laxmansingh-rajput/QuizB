@@ -29,7 +29,7 @@ export const addQuiz = async (token, { title, quizData, password, startDate, sta
         return error.response?.data || { success: false, message: error.message }
     }
 }
-export const saveQuiz = async ({ title, quizData }) => {
+export const saveQuiz = async (token,{ title, quizData }) => {
     try {
         const response = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}add_quiz`,
@@ -38,8 +38,10 @@ export const saveQuiz = async ({ title, quizData }) => {
                 questions: quizData,
                 quiz_type: 'Saved'
             },
-            {
-                withCredentials: true
+             {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             }
         )
         return response.data

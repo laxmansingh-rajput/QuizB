@@ -5,26 +5,17 @@ from .utils.basic_utils import get_frontend_url
 from .routes.quiz import creationRouter
 from .error_handler.req_validation_error import req_validation_error
 from .config import postgres
-from .db.connection import getConnection,returnConnection
 from .db.creation_queries import create_query_table
 from .config.logger import logger
-
 app = FastAPI()
 
 @app.on_event("startup")
-def startup():
+async def startup():
     try:
+        await postgres.getConnectionPool()
         connection_pool= postgres.connection_pool
-        if connection_pool:
-            connection = getConnection(connection_pool)
-            if connection:
-                create_query_table(connection)
-                returnConnection(connection_pool, connection)
-
-            else:
-                raise Exception("DB connection Failure")
-        else:
-            raise Exception("DB connection Failure")
+        async with connection_pool.acquire() as connection:
+           await create_query_table(connection)
     except Exception as e:
         logger.error(f"unable to setup the connection and table due to {e}")
 

@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { saveQuiz } from '../../../controller/addQuiz';
+import { useAuth } from "@clerk/react";
+import { useNavigate } from 'react-router';
 
 const Save = ({ setLeft, quizData }) => {
     const [title, setTitle] = useState('');
     const [errors, setErrors] = useState({});
+    const { getToken } = useAuth();
     const [isSuccess, setIsSuccess] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    const [apiError, setApiError] = useState('');
 
     const validate = () => {
         const newErrors = {};
@@ -22,13 +27,22 @@ const Save = ({ setLeft, quizData }) => {
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             setIsSuccess(false);
+            setApiError('');
         } else {
             setErrors({});
+            setApiError('');
             setIsLoading(true);
-            const response_data = await saveQuiz({ title, quizData });
+            const token = await getToken();
+
+            const response_data = await saveQuiz(token,{ title, quizData });
             console.log('Quiz Saved:', { title });
             if (response_data && response_data.success) {
                 setIsSuccess(true);
+                navigate('/creation');
+            } else {
+                const errorMsg = response_data?.detail || response_data?.message || (typeof response_data === 'string' ? response_data : JSON.stringify(response_data)) || 'An error occurred';
+                setApiError(errorMsg);
+                setIsSuccess(false);
             }
             setIsLoading(false);
         }
@@ -72,6 +86,19 @@ const Save = ({ setLeft, quizData }) => {
                         </div>
                     )}
 
+                    {/* Error Alert Banner */}
+                    {apiError && (
+                        <div className="bg-destructive/10 border border-destructive/30 text-destructive p-4 rounded-xl flex items-start gap-3 transition-all duration-300">
+                            <svg className="w-5 h-5 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            <div className="text-sm">
+                                <p className="font-bold">Error saving quiz</p>
+                                <p className="opacity-90 mt-0.5">{apiError}</p>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Settings Group */}
                     <div className="flex flex-col gap-4">
                         <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80 border-b border-border/40 pb-1.5">General Settings</h3>
@@ -91,6 +118,7 @@ const Save = ({ setLeft, quizData }) => {
                                     if (e.target.value.trim()) {
                                         setErrors((prev) => ({ ...prev, title: '' }));
                                     }
+                                    setApiError('');
                                 }}
                                 className={`w-full px-3 py-2 bg-input border ${errors.title ? 'border-destructive focus:ring-2 focus:ring-destructive' : 'border-border focus:ring-2 focus:ring-ring'
                                     } text-foreground rounded-xl placeholder:text-muted-foreground/40 focus:outline-none transition-all duration-200 text-xs`}

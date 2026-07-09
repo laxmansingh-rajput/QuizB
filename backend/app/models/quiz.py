@@ -9,7 +9,7 @@ class Quiz(BaseModel):
     start:  Optional[datetime]=None
     end: Optional[datetime]=None
     quiz_type: str
-    password:Optional[int] # it is in minutes
+    password:Optional[int]=None # it is in minutes
     quiz_duration:Optional[int] =None
 
     @field_validator('quiz_type')

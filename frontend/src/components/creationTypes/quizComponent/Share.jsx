@@ -1,154 +1,29 @@
-import React, { useState } from 'react';
-import { addQuiz } from '../../../controller/addQuiz'
-import { useAuth } from "@clerk/react"
+import React from 'react';
+import useShareState from '../quizFunction/useShareState';
 
 const Share = ({ setLeft, quizData }) => {
-    // Controlled states for form fields
-    const [title, setTitle] = useState('');
-    const [password, setPassword] = useState('');
-    const [duration, setDuration] = useState('');
-    const { getToken } = useAuth();
-
-    // Controlled states for scheduling fields
-    const [startDate, setStartDate] = useState('');
-    const [startTime, setStartTime] = useState('');
-
-    // Controlled state for end date
-    // TODO: Implement the logic to default the end date (expiry date) to tomorrow's date.
-    // I want to implement and learn this part myself.
-    const [endDate, setEndDate] = useState('');
-    const [endTime, setEndTime] = useState('');
-
-    // State for validation errors
-    const [errors, setErrors] = useState({});
-
-    // State for success feedback
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-
-    // Limit and clean password/PIN inputs (allow only numbers, up to 6 digits)
-    const handlePasswordChange = (e) => {
-        const val = e.target.value;
-        // Allow empty string or only digits up to 6 characters
-        if (val === '' || (/^\d+$/.test(val) && val.length <= 6)) {
-            setPassword(val);
-            if (val.length === 6) {
-                setErrors((prev) => ({ ...prev, password: '' }));
-            }
-        }
-    };
-
-    // Limit and clean duration input (allow only numbers)
-    const handleDurationChange = (e) => {
-        const val = e.target.value;
-        if (val === '' || /^\d+$/.test(val)) {
-            setDuration(val);
-            if (val !== '') {
-                setErrors((prev) => ({ ...prev, duration: '' }));
-            }
-        }
-    };
-
-    // Automatically set Start Date & Start Time to current local values
-    const handleStartNow = () => {
-        const now = new Date();
-
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const dateStr = `${year}-${month}-${day}`;
-
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const timeStr = `${hours}:${minutes}`;
-
-        setStartDate(dateStr);
-        setStartTime(timeStr);
-
-        setErrors((prev) => ({
-            ...prev,
-            startDate: ''
-        }));
-    };
-
-    const validate = () => {
-        const newErrors = {};
-
-        // Title validation
-        if (!title.trim()) {
-            newErrors.title = 'Quiz Title is required.';
-        }
-
-        // Password/PIN validation
-        if (!password) {
-            newErrors.password = 'Quiz Password is required.';
-        } else if (password.length !== 6) {
-            newErrors.password = 'Password must be exactly 6 digits.';
-        } else if (!/^\d{6}$/.test(password)) {
-            newErrors.password = 'Password must contain only numeric digits.';
-        }
-
-        // Duration validation
-        if (!duration) {
-            newErrors.duration = 'Quiz Duration is required.';
-        } else if (isNaN(duration) || parseInt(duration, 10) <= 0) {
-            newErrors.duration = 'Duration must be a positive number.';
-        } else if (parseInt(duration, 10) > 300) {
-            newErrors.duration = 'Duration must not exceed 300 min';
-        }
-
-        // Start Date validation (Compulsory)
-        if (!startDate) {
-            newErrors.startDate = 'Start Date is required.';
-        }
-
-        // End Date validation (Compulsory)
-        if (!endDate) {
-            newErrors.endDate = 'End Date is required.';
-        }
-
-        // Logical date check
-        if (startDate && endDate) {
-            const start = new Date(`${startDate}T${startTime || '00:00'}`);
-            const end = new Date(`${endDate}T${endTime || '00:00'}`);
-            if (end < start) {
-                newErrors.endDate = 'End date cannot be before start date.';
-            }
-        }
-
-        return newErrors;
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const validationErrors = validate();
-
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            setIsSuccess(false);
-        } else {
-            setErrors({});
-            setIsLoading(true);
-            const token = await getToken();
-
-            const response_data = await addQuiz(token, {
-                title,
-                quizData,
-                password,
-                startDate,
-                startTime,
-                endDate,
-                endTime,
-                type: 'Normal',
-                duration: parseInt(duration, 10)
-            })
-            console.log(response_data)
-            if (response_data && response_data.success) {
-                setIsSuccess(true);
-            }
-            setIsLoading(false);
-        }
-    };
+    const {
+        title,
+        password,
+        duration,
+        startDate,
+        startTime,
+        endDate,
+        endTime,
+        errors,
+        isSuccess,
+        isLoading,
+        apiError,
+        setTitle,
+        setStartDate,
+        setEndDate,
+        setApiError,
+        setErrors,
+        handlePasswordChange,
+        handleDurationChange,
+        handleStartNow,
+        handleSubmit
+    } = useShareState(quizData);
 
     return (
         <div className="h-full w-full bg-card border border-border text-foreground rounded-2xl shadow-soft p-6 box-border flex flex-col gap-6 text-start overflow-y-auto max-h-[85vh] transition-all duration-300">
@@ -188,6 +63,19 @@ const Share = ({ setLeft, quizData }) => {
                         </div>
                     )}
 
+                    {/* Error Alert Banner */}
+                    {apiError && (
+                        <div className="bg-destructive/10 border border-destructive/30 text-destructive p-4 rounded-xl flex items-start gap-3 transition-all duration-300">
+                            <svg className="w-5 h-5 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            <div className="text-sm">
+                                <p className="font-bold">Error sharing quiz</p>
+                                <p className="opacity-90 mt-0.5">{apiError}</p>
+                            </div>
+                        </div>
+                    )}
+
                     {/* General Settings Group */}
                     <div className="flex flex-col gap-4">
                         <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80 border-b border-border/40 pb-1.5">General Settings</h3>
@@ -207,6 +95,7 @@ const Share = ({ setLeft, quizData }) => {
                                     if (e.target.value.trim()) {
                                         setErrors((prev) => ({ ...prev, title: '' }));
                                     }
+                                    setApiError('');
                                 }}
                                 className={`w-full px-3 py-2 bg-input border ${errors.title ? 'border-destructive focus:ring-2 focus:ring-destructive' : 'border-border focus:ring-2 focus:ring-ring'
                                     } text-foreground rounded-xl placeholder:text-muted-foreground/40 focus:outline-none transition-all duration-200 text-xs`}
@@ -293,6 +182,7 @@ const Share = ({ setLeft, quizData }) => {
                                         if (e.target.value) {
                                             setErrors((prev) => ({ ...prev, startDate: '' }));
                                         }
+                                        setApiError('');
                                     }}
                                     className={`w-full px-3 py-2 bg-input border ${errors.startDate ? 'border-destructive focus:ring-2 focus:ring-destructive' : 'border-border focus:ring-2 focus:ring-ring'
                                         } text-foreground rounded-xl focus:outline-none transition-all duration-200 text-xs`}
@@ -332,6 +222,7 @@ const Share = ({ setLeft, quizData }) => {
                                         if (e.target.value) {
                                             setErrors((prev) => ({ ...prev, endDate: '' }));
                                         }
+                                        setApiError('');
                                     }}
                                     className={`w-full px-3 py-2 bg-input border ${errors.endDate ? 'border-destructive focus:ring-2 focus:ring-destructive' : 'border-border focus:ring-2 focus:ring-ring'
                                         } text-foreground rounded-xl focus:outline-none transition-all duration-200 text-xs`}
