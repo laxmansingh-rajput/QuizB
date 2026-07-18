@@ -43,6 +43,16 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
+  --color-scheduled: var(--scheduled);
+  --color-scheduled-foreground: var(--scheduled-foreground);
+  --color-scheduled-bg: var(--scheduled-bg);
+  --color-scheduled-border: var(--scheduled-border);
+
+  --color-live: var(--live);
+  --color-live-foreground: var(--live-foreground);
+  --color-live-bg: var(--live-bg);
+  --color-live-border: var(--live-border);
+
   --font-sans: "Outfit", "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --font-display: "Plus Jakarta Sans", "Outfit", sans-serif;
 }
@@ -91,6 +101,16 @@
   --chart-3: #D9442C;
   --chart-4: #FFAFA0;
   --chart-5: #B2321E;
+
+  --scheduled: #D97706;
+  --scheduled-foreground: #F59E0B;
+  --scheduled-bg: rgba(245, 158, 11, 0.08);
+  --scheduled-border: rgba(245, 158, 11, 0.16);
+
+  --live: #059669;
+  --live-foreground: #10B981;
+  --live-bg: rgba(16, 185, 129, 0.08);
+  --live-border: rgba(16, 185, 129, 0.16);
 
   --radius: 16px;
 
@@ -143,6 +163,16 @@
   --chart-3: #d14a30;
   --chart-4: #ffa48f;
   --chart-5: #b54029;
+
+  --scheduled: #F59E0B;
+  --scheduled-foreground: #FBBF24;
+  --scheduled-bg: rgba(245, 158, 11, 0.12);
+  --scheduled-border: rgba(245, 158, 11, 0.22);
+
+  --live: #10B981;
+  --live-foreground: #34D399;
+  --live-bg: rgba(16, 185, 129, 0.12);
+  --live-border: rgba(16, 185, 129, 0.22);
 
   --shadow-soft: 0 1px 2px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.3);
   --shadow-card: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px rgba(0,0,0,0.35);

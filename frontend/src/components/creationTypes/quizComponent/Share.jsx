@@ -17,6 +17,7 @@ const Share = ({ setLeft, quizData }) => {
         setTitle,
         setStartDate,
         setEndDate,
+        setEndTime,
         setApiError,
         setErrors,
         handlePasswordChange,
